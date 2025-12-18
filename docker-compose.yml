@@ -1,0 +1,56 @@
+services:
+
+  api:
+    container_name: flowforge-api
+    build:
+      context: ./api
+      dockerfile: docker/Dockerfile.dev
+    depends_on:
+      - postgres
+    env_file:
+      - ./api/.env.dev
+    volumes:
+      - ./api:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - flowforge-back-net
+      - flowforge-bf-net
+
+  # web:
+  #   container_name: flowforge-web
+  #   build:
+  #     context: ./web
+  #     dockerfile: docker/Dockerfile.dev
+  #   depends_on:
+  #     - api
+  #   env_file:
+  #     - ./web/.env.dev
+  #   volumes:
+  #     - ./web:/app
+  #   ports:
+  #     - "5173:3000"
+  #   networks:
+  #     - flowforge-bf-net
+
+  postgres:
+    container_name: flowforge-postgres
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - ./db/.env.db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - flowforge-back-net
+
+volumes:
+  postgres_data:
+
+networks:
+  flowforge-back-net:
+    driver: bridge
+  flowforge-bf-net:
+    driver: bridge
