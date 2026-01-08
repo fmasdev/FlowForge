@@ -1,29 +1,41 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "removeComments": true,
+    /* Module */
+    "module": "commonjs",
+    "moduleResolution": "node",
+    /* Output */
+    "outDir": "./dist",
+    "sourceMap": true,
+    /* Decorators (NestJS) */
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
+    /* Strictness */
+    "strict": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
+    /* Interop */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    /* Target */
+    "target": "ES2023",
+    /* Paths */
+    // baseUrl is still required for NestJS path aliases
+    // will be revisited when TS 7 is released
+    "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"],
-       "@/*": ["src/*"]
-    }
-  }
+      "@/*": ["src/*"]
+    },
+    /* Types */
+    "typeRoots": [
+      "./node_modules/@types", 
+      "./src/types"
+    ],
+    /* Performance */
+    "incremental": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*.ts"
+  ]
 }

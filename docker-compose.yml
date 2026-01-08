@@ -8,7 +8,9 @@ services:
     depends_on:
       - postgres
     env_file:
-      - ./api/.env.dev
+      - ./api/.env.development
+    environment:
+      NODE_ENV=development
     volumes:
       - ./api:/app
     ports:
