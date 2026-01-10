@@ -9,25 +9,25 @@ import {
 
 export class CreateUserDto {
   @IsEmail()
-  email: string;
+  email!: string;
 
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 
   @IsString()
   @MinLength(6)
   @Match('password', { message: 'Passwords must match' })
-  confirmPassword: string;
+  confirmPassword!: string;
 
   @IsString()
-  firstname: string;
+  firstname!: string;
 
   @IsString()
-  lastname: string;
+  lastname!: string;
 
   @IsOptional()
   @ValidateIf((_, value) => value !== null)
   @IsString()
-  role: string | null;
+  role!: string | null;
 }

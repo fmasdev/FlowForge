@@ -12,7 +12,7 @@ export interface CreateUserCli {
 
 export const createUserCommand = (userService: UserService): Command => {
   const command = new Command('create-user');
-
+  
   command
     .description('Create a new user')
     .requiredOption('-e, --email <email>', 'User email')

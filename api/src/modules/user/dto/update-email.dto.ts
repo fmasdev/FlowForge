@@ -2,12 +2,12 @@ import { IsEmail, IsString, MinLength } from 'class-validator';
 
 export class UpdateEmailDto {
   @IsEmail()
-  oldEmail: string;
+  oldEmail!: string;
 
   @IsEmail()
-  newEmail: string;
+  newEmail!: string;
 
   @IsString()
   @MinLength(6)
-  password: string;
+  password!: string;
 }

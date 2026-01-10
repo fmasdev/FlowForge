@@ -4,8 +4,11 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 
-export interface SignInType {
-  access_token: string;
+export interface JwtUserPayload {
+  sub: string;
+  email: string;
+  role: string;
+  firstname: string;
 }
 
 @Injectable()
@@ -13,10 +16,12 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
-  async signIn(email: string, password: string): Promise<SignInType> {
-    const user: User | null = await this.userService.findOne(email);
+  async login(email: string, password: string) {
+
+    const user: User | null = await this.userService.findByEmail(email);
+
     if (!user)
       throw new UnauthorizedException('Invalid email password association');
 
@@ -24,13 +29,13 @@ export class AuthService {
     if (!isValid)
       throw new UnauthorizedException('Invalid email password association');
 
-    const payload = {
+    const payload: JwtUserPayload = {
       sub: user.id,
-      user: user,
+      email: user.email,
+      role: user.role,
+      firstname: user.firstname
     };
 
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    return await this.jwtService.signAsync(payload);
   }
 }

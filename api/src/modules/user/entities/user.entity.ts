@@ -6,18 +6,18 @@ import { BaseEntity } from '@/common/entities/base.entity';
 @Entity('users')
 export class User extends BaseEntity {
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Exclude()
   @Column({ name: 'password_hash' })
-  passwordHash: string;
+  passwordHash!: string;
 
   @Column()
-  firstname: string;
+  firstname!: string;
 
   @Column()
-  lastname: string;
+  lastname!: string;
 
   @Column({ type: 'enum', enum: Role, default: Role.USER })
-  role: string;
+  role!: string;
 }

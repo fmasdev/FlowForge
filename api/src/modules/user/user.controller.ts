@@ -18,14 +18,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdatePasswordDto } from '@/modules/user/dto/update-password.dto';
 import { UpdateEmailDto } from '@/modules/user/dto/update-email.dto';
 import { RolesGuard } from '@/common/guards/roles.guard';
-import { AuthGuard } from '@/modules/auth/auth.guard';
+import { JwtAuthGuard } from '@/modules/auth/auth.guard';
 import { User } from '@/modules/user/entities/user.entity';
 import { Request } from 'express';
 import { AuthUserType } from '@/common/types/auth-user.type';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -41,16 +41,7 @@ export class UserController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<User | null> {
-    return await this.userService.findOne(id);
-  }
-
-  @Get('/profile')
-  async profile(@Req() req: Request): Promise<User | null> {
-    if (!req.user) {
-      throw new UnauthorizedException('User not authenticated');
-    }
-    const user = req.user as AuthUserType;
-    return await this.userService.findOne(user.id);
+    return await this.userService.findOneById(id);
   }
 
   @Patch(':id')

@@ -2,8 +2,8 @@ import { IsString } from 'class-validator';
 
 export class UpdateUserDto {
   @IsString()
-  firstname: string;
+  firstname!: string;
 
   @IsString()
-  lastname: string;
+  lastname!: string;
 }

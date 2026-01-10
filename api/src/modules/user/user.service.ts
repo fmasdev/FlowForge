@@ -70,7 +70,7 @@ export class UserService {
     });
   }
 
-  async findOne(id: string): Promise<User | null> {
+  async findOneById(id: string): Promise<User | null> {
     return await this.userRepository.findOneBy({ id: id });
   }
 
