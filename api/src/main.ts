@@ -10,11 +10,12 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
+  // todo: put this variable in env file
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: 'http://127.0.0.1',
     credentials: true,
   });
-  
+
   // request validation
   app.useGlobalPipes(
     new ValidationPipe({
@@ -29,8 +30,6 @@ async function bootstrap() {
 
   // response exception format
   app.useGlobalFilters(new AllExceptionsFilter());
-
-  
 
   await app.listen(process.env.PORT ?? 3000);
 }
