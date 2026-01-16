@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
-    console.log('logout auth context')
     await apiService.post('/auth/logout');
     setUser(null);
     setIsAuthenticated(false);
