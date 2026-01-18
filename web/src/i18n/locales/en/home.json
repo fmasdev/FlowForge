@@ -1,0 +1,33 @@
+{
+  "title": "FlowForge",
+  "hero": {
+    "title": "Build, Run, and Monitor Workflows with Confidence",
+    "text": "FlowForge is a modern, web-based workflow automation platform designed to help you **build**, **execute**, and **monitor** technical workflows in a clear and structured way. Inspired by tools like n8n, Zapier, and Temporal, FlowForge focuses on simplicity, reliability, and a clean separation between design and execution.",
+    "cta1": "Get started",
+    "cta2": "Explore the architecture"
+  },
+  "objectives": {
+    "title": "A Practical Approach to Workflow Automation",
+    "text": "FlowForge was built as a functional MVP with a strong technical foundation. \n Rather than replicating every feature of large automation platforms, the project demonstrates how a well-designed workflow engine can remain **simple**, **scalable**, and **maintainable**, while following real-world backend and frontend best practices."
+  },
+  "features": {
+    "title": "Design, Execute, and Observe Your Workflows",
+    "text": "With FlowForge, you can visually design workflows composed of **triggers** and **actions**, define their execution order through explicit connections, and launch executions manually. \n Each execution can be monitored in real time, with access to detailed statuses and execution logs for every step."
+  },
+  "concepts": {
+    "title": "Clear Concepts, Predictable Behavior",
+    "text": "FlowForge is built around a small set of well-defined concepts: \n - **Workflows** define what should happen \n - **Nodes** represent each step (triggers, actions, logs) \n - **Executions** represent what actually happens at runtime \n - **Execution logs** provide a detailed trace of each step  \n \n This clear model makes workflows easier to reason about and debug."
+  },
+  "design": {
+    "title": "Designed Once, Executed Many Times",
+    "text": "FlowForge clearly separates **design time** from **execution time**. \n\n A workflow is a static definition that never changes during execution, while each execution is an isolated runtime instance with its own state and logs. \n This approach prevents side effects and mirrors the behavior of production-grade workflow systems."
+  },
+  "orientation": {
+    "title": "A Focused MVP with Strong Foundations",
+    "text": "FlowForge is developed in a near-production environment using modern tooling and architecture patterns. \n It showcases a clean backend structure, a deterministic execution engine, and a frontend focused on clarity, usability, and observability."
+  },
+  "closing": {
+    "title": "A Focused MVP with Strong Foundations",
+    "text": "FlowForge is intentionally limited in scope, but not in quality. \n Every feature serves a clear purpose, making the platform a solid foundation for future extensions, integrations, and automation scenarios."
+  }
+}

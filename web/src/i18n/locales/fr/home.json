@@ -1,0 +1,33 @@
+{
+  "title": "FlowForge",
+  "hero": {
+    "title": "Concevez, exécutez et surveillez vos workflows en toute confiance",
+    "text": "FlowForge est une plateforme moderne d’automatisation de workflows basée sur le web, conçue pour vous aider à **concevoir**, **exécuter** et **surveiller** des workflows techniques de manière claire et structurée.\n\nInspiré par des outils comme n8n, Zapier et Temporal, FlowForge met l’accent sur la simplicité, la fiabilité et une séparation nette entre la conception et l’exécution.",
+    "cta1": "Commencer",
+    "cta2": "Explorer l’architecture"
+  },
+  "objectives": {
+    "title": "Une approche pragmatique de l’automatisation",
+    "text": "FlowForge a été conçu comme un MVP fonctionnel reposant sur des bases techniques solides.\n\nPlutôt que de reproduire l’ensemble des fonctionnalités des grandes plateformes d’automatisation, le projet démontre comment un moteur de workflow bien conçu peut rester **simple**, **scalable** et **maintenable**, tout en respectant les bonnes pratiques du backend et du frontend modernes."
+  },
+  "features": {
+    "title": "Concevez, exécutez et observez vos workflows",
+    "text": "Avec FlowForge, vous pouvez concevoir visuellement des workflows composés de **déclencheurs** et d’**actions**, définir leur ordre d’exécution via des connexions explicites, et lancer des exécutions manuellement.\n\nChaque exécution peut être surveillée en temps réel, avec un accès aux statuts détaillés et aux journaux d’exécution de chaque étape."
+  },
+  "concepts": {
+    "title": "Des concepts clairs, un comportement prévisible",
+    "text": "FlowForge repose sur un ensemble restreint de concepts bien définis :\n\n- Les **workflows** définissent ce qui doit se produire\n- Les **nœuds** représentent chaque étape (déclencheurs, actions, logs)\n- Les **exécutions** représentent ce qui se passe réellement à l’exécution\n- Les **journaux d’exécution** fournissent une trace détaillée de chaque étape\n\nCe modèle clair rend les workflows plus simples à comprendre, à analyser et à déboguer."
+  },
+  "design": {
+    "title": "Conçu une fois, exécuté plusieurs fois",
+    "text": "FlowForge sépare clairement le **temps de conception** du **temps d’exécution**.\n\nUn workflow est une définition statique qui ne change jamais pendant l’exécution, tandis que chaque exécution est une instance isolée disposant de son propre état et de ses propres journaux.\n\nCette approche évite les effets de bord et reflète le fonctionnement des systèmes de workflow de niveau production."
+  },
+  "orientation": {
+    "title": "Conçu comme un système de production",
+    "text": "FlowForge est développé dans un environnement proche de la production, en utilisant des outils modernes et des architectures éprouvées.\n\nIl met en valeur une structure backend propre, un moteur d’exécution déterministe et une interface frontend axée sur la clarté, l’utilisabilité et l’observabilité."
+  },
+  "closing": {
+    "title": "Un MVP ciblé aux bases solides",
+    "text": "FlowForge est volontairement limité en termes de périmètre, mais pas en termes de qualité.\n\nChaque fonctionnalité répond à un objectif précis, faisant de la plateforme une base solide pour de futures extensions, intégrations et scénarios d’automatisation."
+  }
+}
