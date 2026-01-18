@@ -1,3 +1,5 @@
+// src/modules/auth/components/PasswordInput.tsx
+
 'use client';
 
 import { SvgIcon } from '@/components/SvgIcon';
@@ -17,7 +19,7 @@ export function PasswordInput({
   name,
   value,
   onChange,
-  placeholder = 'Password',
+  placeholder,
   error,
   autoComplete = 'current-password',
   classname,

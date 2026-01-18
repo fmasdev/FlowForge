@@ -1,3 +1,4 @@
+// src/modules/auth/types/user.types.ts
 
 export interface UserType {
   email: string;

@@ -1,3 +1,5 @@
+// src/assets/svg/UserIcon.tsx
+
 export const UserIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} 
     xmlns="http://www.w3.org/2000/svg" 

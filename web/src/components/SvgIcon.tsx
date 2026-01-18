@@ -1,5 +1,8 @@
-import React from 'react';
+// src/components/SvgIcon.tsx
 
+'use client';
+
+import React from 'react';
 import { InfoIcon } from '../assets/svg/InfoIcon';
 import { SuccessIcon } from '../assets/svg/SuccessIcon';
 import { ErrorIcon } from '../assets/svg/ErrorIcon';

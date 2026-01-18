@@ -1,4 +1,4 @@
-'use client';
+// src/app/auth/reset-password/[token]/page.tsx
 
 import { useParams } from "next/navigation";
 

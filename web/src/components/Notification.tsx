@@ -1,3 +1,5 @@
+// src/components/Notification.tsx
+
 'use client';
 
 import { IconName, SvgIcon } from '@/components/SvgIcon';

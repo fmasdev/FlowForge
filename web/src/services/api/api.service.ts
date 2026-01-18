@@ -1,7 +1,9 @@
+// src/services/api/api.service.ts
+
 import {
   ApiErrorResponse,
   ApiResponse
-} from '@/types/api.types';
+} from '@/services/api/api.types';
 import axios, {
   AxiosInstance,
   AxiosRequestConfig,
@@ -9,7 +11,6 @@ import axios, {
 } from 'axios';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:3000';
-
 
 class ApiService {
   private instance: AxiosInstance;

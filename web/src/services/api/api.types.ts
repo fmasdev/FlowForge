@@ -1,3 +1,4 @@
+// src/services/api/api.types.ts
 
 export interface ApiResponse<T = any> {
   success: boolean;

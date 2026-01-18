@@ -1,18 +1,11 @@
+// src/modules/auth/auth.context.ts
+
 'use client';
 
+import { authService } from '@/modules/auth/auth.service';
+import { AuthContextType } from '@/modules/auth/types/auth.types';
 import { UserType } from '@/modules/auth/types/user.types';
 import { createContext, useState, ReactNode, useEffect } from 'react';
-import { apiService } from '@/services/api/api.service';
-import { useRouter } from 'next/navigation';
-import { AxiosResponse } from 'axios';
-
-interface AuthContextType {
-  user: UserType | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  login: () => void;
-  logout: () => void;
-}
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -28,14 +21,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
-    await apiService.post('/auth/logout');
+    await authService.logout;
     setUser(null);
     setIsAuthenticated(false);
   };
 
   const initAuth = async () => {
     try {
-      const res = await apiService.get<UserType>('/auth/me');
+      const res = await authService.me();
       setUser(res.data);
       setIsAuthenticated(true);
     } catch {

@@ -1,36 +1,29 @@
+// src/modules/auth/components/RegisterForm.tsx
+
 'use client';
 
 import { Notification } from '@/components/Notification';
 import { isApiErrorResponse } from '@/helpers/typeGuards';
 import { PasswordInput } from '@/modules/auth/components/PasswordInput';
-import { apiService } from '@/services/api/api.service';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
-
-type FormValues = {
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
-type FormErrors = Partial<Record<keyof FormValues, string>>;
+import { authService } from '@/modules/auth/auth.service';
+import { RegisterFormErrors, RegisterFormValues } from '@/modules/auth/types/auth.types';
 
 const RegisterForm = () => {
   const router = useRouter();
   const { t } = useTranslation('auth');
 
-  const [formValues, setFormValues] = useState<FormValues>({
+  const [formValues, setFormValues] = useState<RegisterFormValues>({
     firstname: '',
     lastname: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<RegisterFormErrors>({});
   const [requestErrors, setRequestErrors] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -48,31 +41,31 @@ const RegisterForm = () => {
     }));
   };
 
-  const validate = (): FormErrors => {
-    const newErrors: FormErrors = {};
+  const validate = (): RegisterFormErrors => {
+    const newErrors: RegisterFormErrors = {};
 
     if (formValues.firstname.trim().length < 2) {
-      newErrors.firstname = t('formError.firstname');
+      newErrors.firstname = t('register.form.error.firstname');
     }
 
     if (formValues.lastname.trim().length < 2) {
-      newErrors.lastname = t('formError.lastname');
+      newErrors.lastname = t('register.form.error.lastname');
     }
 
     if (!formValues.email) {
-      newErrors.email = t('formError.email.required');
+      newErrors.email = t('register.form.error.email.required');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
-      newErrors.email = t('formError.email.format');
+      newErrors.email = t('register.form.error.email.format');
     }
 
     if (!formValues.password) {
-      newErrors.password = t('formError.password.required');
+      newErrors.password = t('register.form.error.password.required');
     } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(formValues.password)) {
-      newErrors.password = t('formError.password.format');
+      newErrors.password = t('register.form.error.password.format');
     }
 
     if (formValues.confirmPassword !== formValues.password) {
-      newErrors.confirmPassword = t('formError.password.confirm');
+      newErrors.confirmPassword = t('register.form.error.password.confirm');
     }
 
     return newErrors;
@@ -88,7 +81,8 @@ const RegisterForm = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await apiService.post('/auth/register', formValues);
+      const res = await authService.register(formValues);
+      console.log(res)
       router.replace('/login')
     } catch (error) {
 
@@ -119,7 +113,7 @@ const RegisterForm = () => {
           <input
             type="text"
             name={field}
-            placeholder={t(`form.${field}`)}
+            placeholder={t(`register.form.field.${field}`)}
             value={formValues[field]}
             onChange={handleChange}
             className="w-full rounded border px-3 py-2"
@@ -132,7 +126,7 @@ const RegisterForm = () => {
         name="password"
         value={formValues.password}
         onChange={handleChange}
-        placeholder="Password"
+        placeholder={t('register.form.field.password')}
         error={errors.password}
       />
 
@@ -140,7 +134,7 @@ const RegisterForm = () => {
         name="confirmPassword"
         value={formValues.confirmPassword}
         onChange={handleChange}
-        placeholder="Confirm Password"
+        placeholder={t('register.form.field.confirmPassword')}
         error={errors.confirmPassword}
       />
 
@@ -149,7 +143,7 @@ const RegisterForm = () => {
         disabled={isSubmitting}
         className="w-full rounded bg-blue-600 py-2 text-white disabled:opacity-50"
       >
-        {isSubmitting ? t('register.submiting') : t('register.submit')}
+        {isSubmitting ? t('register.form.field.loading') : t('register.form.field.submit')}
       </button>
 
       {!!requestErrors && (

@@ -1,3 +1,5 @@
+// src/assets/svg/OpenEyeIcon.tsx
+
 export const OpenEyeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} 
     xmlns="http://www.w3.org/2000/svg"

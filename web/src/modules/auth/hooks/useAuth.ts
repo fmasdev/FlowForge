@@ -1,4 +1,7 @@
+// src/modules/auth/hooks/useAuth.ts
+
 'use client';
+
 import { AuthContext } from "@/modules/auth/auth.context";
 import { useContext } from "react";
 

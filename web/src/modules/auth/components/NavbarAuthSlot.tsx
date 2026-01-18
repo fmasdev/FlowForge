@@ -1,3 +1,5 @@
+// src/modules/auth/components/NavbarAuthSlot.tsx
+
 'use client';
 
 import CtaButton, { type CtaButtonType } from '@/components/CtaButton';

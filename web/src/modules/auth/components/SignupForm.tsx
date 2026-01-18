@@ -1,4 +1,4 @@
-// src/modules/auth/components/SignupForm.tsx
+// src/modules/auth/components/Signup.tsx
 
 'use client';
 

@@ -1,3 +1,4 @@
+// src/config/routes.ts
 
 export const PUBLIC_ROUTES = [
   '/auth/login',

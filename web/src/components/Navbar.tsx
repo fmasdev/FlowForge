@@ -1,3 +1,7 @@
+// src/components/Navbar.tsx
+
+'use client';
+
 import CtaButton, { CtaButtonType } from '@/components/CtaButton';
 import NavbarAuthSlot from '@/modules/auth/components/NavbarAuthSlot';
 import { useAuth } from '@/modules/auth/hooks/useAuth';

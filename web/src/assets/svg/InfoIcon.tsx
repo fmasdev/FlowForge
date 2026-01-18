@@ -1,3 +1,5 @@
+// src/assets/svg/InfoIcon.tsx
+
 export const InfoIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg {...props} 
     xmlns="http://www.w3.org/2000/svg" 

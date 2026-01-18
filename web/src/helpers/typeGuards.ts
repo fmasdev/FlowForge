@@ -1,4 +1,6 @@
-import { ApiErrorResponse } from "@/types/api.types";
+// src/helpers/typeGuards.ts
+
+import { ApiErrorResponse } from "@/services/api/api.types";
 
 export const isApiErrorResponse = (obj: any): obj is ApiErrorResponse => {
   return (

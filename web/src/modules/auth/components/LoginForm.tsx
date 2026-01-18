@@ -1,3 +1,5 @@
+// src/modules/auth/components/LoginForm.tsx
+
 'use client';
 
 import { authService } from '@/modules/auth/auth.service';
@@ -46,7 +48,7 @@ export default function LoginForm() {
 
         <input
           type="email"
-          placeholder={t('form.email')}
+          placeholder={t('login.form.email')}
           value={email}
           required
           onChange={(e) => setEmail(e.target.value)}
@@ -57,7 +59,7 @@ export default function LoginForm() {
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder={t('form.password')}
+          placeholder={t('login.form.password')}
           classname="border p-2 rounded"
         />
 
@@ -68,7 +70,7 @@ export default function LoginForm() {
           disabled={loading}
           className="bg-black text-white py-2 rounded disabled:opacity-50"
         >
-          {loading ? t('login.submiting') : t('login.submit')}
+          {loading ? t('login.form.loading') : t('login.form.submit')}
         </button>
 
         <div>

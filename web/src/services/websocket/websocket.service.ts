@@ -1,4 +1,5 @@
-type MessageHandler = (data: any) => void;
+// src/services/websocket/websocket.service.ts
+
 
 export class WebSocketService {
   private socket: WebSocket | null = null;
