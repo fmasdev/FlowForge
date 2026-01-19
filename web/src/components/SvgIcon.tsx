@@ -9,8 +9,9 @@ import { ErrorIcon } from '../assets/svg/ErrorIcon';
 import { OpenEyeIcon } from '../assets/svg/OpenEyeIcon';
 import { ClosedEyeIcon } from '../assets/svg/ClosedEyeIcon';
 import { UserIcon } from '../assets/svg/UserIcon';
+import { FlowForgeIcon } from '@/assets/svg/FlowForgeIcon';
 
-export type IconName = 'info' | 'success' | 'error' | 'openEye' | 'closedEye' | 'user';
+export type IconName = 'info' | 'success' | 'error' | 'openEye' | 'closedEye' | 'user' | 'flowforge';
 
 type IconColor = 'info' | 'success' | 'danger' | 'default';
 
@@ -28,6 +29,7 @@ const svgIcons: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   openEye: OpenEyeIcon,
   closedEye: ClosedEyeIcon,
   user: UserIcon,
+  flowforge: FlowForgeIcon,
 };
 
 // mapping de couleur Tailwind

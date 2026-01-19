@@ -1,5 +1,14 @@
-import { PRIVATE_ROUTE_PREFIXES, PUBLIC_ROUTES } from "@/config/routes";
+// src/proxy.ts
+
 import { NextRequest, NextResponse } from "next/server"
+
+const PRIVATE_ROUTE_PREFIXES = [
+  '/dashboard',
+  '/profile',
+  '/teams',
+  '/notifications',
+  '/logout',
+];
 
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -10,23 +19,10 @@ export default function proxy(request: NextRequest) {
       pathname.startsWith(route)
     );
 
-    const isPublicRoute =
-      pathname === '/' ||
-      PUBLIC_ROUTES
-        .filter(route => route !== '/')
-        .some(route => pathname === route || pathname.startsWith(`${route}/`));
-
     // Not authenticated
     if (!token && isPrivateRoute) {
       return NextResponse.redirect(
         new URL('/auth/login', request.url)
-      );
-    }
-
-    // Authenticated
-    if (token && isPublicRoute) {
-      return NextResponse.redirect(
-        new URL('/dashboard', request.url)
       );
     }
 

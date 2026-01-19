@@ -46,7 +46,7 @@ const NavbarAuthSlot = () => {
 
   return (
     <>
-      {!!ctas && ctas.map((cta, index) => (
+      {!!ctas && ctas.map((cta: CtaButtonType, index: number) => (
         <CtaButton
           key={index}
           textContent={cta.textContent}

@@ -3,16 +3,19 @@
 'use client';
 
 import CtaButton, { CtaButtonType } from '@/components/CtaButton';
+import { SvgIcon } from '@/components/SvgIcon';
 import NavbarAuthSlot from '@/modules/auth/components/NavbarAuthSlot';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { MediaImg } from '@/types/media.types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const NavBar = () => {
   const pathname = usePathname();
   const { isAuthenticated, user } = useAuth();
+  const { t } = useTranslation('navigation');
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 
@@ -24,26 +27,21 @@ const NavBar = () => {
 
   const navigationItems: CtaButtonType[] = [
     {
-      textContent: 'Dashboard',
+      textContent: t('navbar.dashboard'),
       link: '/dashboard',
       isActive: pathname === '/dashboard',
     },
     {
-      textContent: 'Profile',
-      link: '/profile',
-      isActive: pathname === '/profile'
-    },
-    {
-      textContent: 'Projects',
+      textContent: t('navbar.projects'),
       link: '/projects',
       isActive: pathname === '/projects'
     },
     {
-      textContent: 'Teams',
+      textContent: t('navbar.teams'),
       link: '/teams',
       isActive: pathname === '/teams'
     },{
-      textContent: 'notifications',
+      textContent: t('navbar.notifications'),
       link: '/notifications',
       isActive: pathname === '/notifications'
     },
@@ -59,6 +57,7 @@ const NavBar = () => {
   return (
     <nav className="bg-gray-900 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        
         {/* Mobile button */}
         {isAuthenticated && (
           <div className="flex md:hidden">
@@ -106,11 +105,9 @@ const NavBar = () => {
         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex shrink-0 items-center">
             <Link href="/">
-             <img 
-              src={logoImage.src} 
-              alt={logoImage.alt}
-              className={logoImage.className}
-            />
+              <SvgIcon
+                name='flowforge'
+              />
             </Link>
           </div>
           <div className="hidden sm:block sm:ml-6">

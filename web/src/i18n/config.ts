@@ -5,20 +5,24 @@ import { initReactI18next } from 'react-i18next';
 import enAuth from './locales/en/auth.json';
 import enCommon from './locales/en/common.json';
 import enHome from './locales/en/home.json';
+import enNavigation from './locales/en/navigation.json';
 import frAuth from './locales/fr/auth.json';
 import frCommon from './locales/fr/common.json';
 import frHome from './locales/fr/home.json';
+import frNavigation from './locales/fr/navigation.json';
 
 export const resources = {
   en: {
     auth: enAuth,
     common: enCommon,
     home: enHome,
+    navigation: enNavigation,
   },
   fr: {
     auth: frAuth,
     common: frCommon,
     home: frHome,
+    navigation: frNavigation,
   },
 } as const;
 

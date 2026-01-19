@@ -1,0 +1,11 @@
+{
+  "navbar": {
+    "dashboard": "Dashboard",
+    "projects": "Projets",
+    "teams": "Teams",
+    "notifications": "Notifications"
+  },
+  "footer": {
+
+  }
+}
