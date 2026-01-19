@@ -2,8 +2,8 @@
 
 'use client';
 
-const ResetPasswordForm = () => {
+import { JSX } from "react";
+
+export const ResetPasswordForm = (): JSX.Element => {
   return (<div>reset password</div>)
 }
-
-export default ResetPasswordForm;

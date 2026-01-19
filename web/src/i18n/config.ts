@@ -11,7 +11,14 @@ import frCommon from './locales/fr/common.json';
 import frHome from './locales/fr/home.json';
 import frNavigation from './locales/fr/navigation.json';
 
-export const resources = {
+type TranslationNamespaces = {
+  auth: typeof enAuth | typeof frAuth;
+  common: typeof enCommon | typeof frCommon;
+  home: typeof enHome | typeof frHome;
+  navigation: typeof enNavigation | typeof frNavigation;
+};
+
+export const resources: Record<'en' | 'fr', TranslationNamespaces> = {
   en: {
     auth: enAuth,
     common: enCommon,
@@ -24,7 +31,7 @@ export const resources = {
     home: frHome,
     navigation: frNavigation,
   },
-} as const;
+};
 
 if (!i18n.isInitialized) {
   i18n

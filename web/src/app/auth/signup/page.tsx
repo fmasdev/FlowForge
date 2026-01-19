@@ -1,13 +1,12 @@
 // src/app/auth/signup/page.tsx
 
-import RegisterForm from '@/modules/auth/components/RegisterForm';
+import { RegisterForm } from '@/modules/auth/components/RegisterForm';
+import { JSX } from 'react';
 
-const Page = () => {
+export default function Page(): JSX.Element {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <RegisterForm />
     </div>
   );
 };
-
-export default Page;

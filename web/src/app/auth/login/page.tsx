@@ -1,8 +1,9 @@
 // src/app/auth/login/page.tsx
 
-import LoginForm from "@/modules/auth/components/LoginForm";
+import { LoginForm } from "@/modules/auth/components/LoginForm";
+import { JSX } from "react";
 
-const Page = () => {
+export default function Page(): JSX.Element {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -10,5 +11,3 @@ const Page = () => {
     </div>
   )
 }
-
-export default Page;

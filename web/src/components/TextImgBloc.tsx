@@ -1,8 +1,11 @@
+// src/components/TextImgBloc.tsx
+
 'use client';
 
-import React from 'react';
+import React, { JSX } from 'react';
 import clsx from 'clsx';
-import CtaButton from '@/components/CtaButton';
+import { CtaButton } from '@/components/CtaButton';
+
 
 export type TextBlockCta = {
   text: string;
@@ -11,7 +14,7 @@ export type TextBlockCta = {
   variant?: 'primary' | 'secondary'; // personnalisation possible
 };
 
-export interface TextBlockProps {
+export interface TextImgBlockProps {
   title: string;
   description: string;
   imageSrc?: string;
@@ -21,7 +24,9 @@ export interface TextBlockProps {
   className?: string;
 }
 
-export const TextBlock: React.FC<TextBlockProps> = ({
+export interface TextImgBlocType extends TextImgBlockProps {};
+
+export const TextImgBlock = ({
   title,
   description,
   imageSrc,
@@ -29,7 +34,7 @@ export const TextBlock: React.FC<TextBlockProps> = ({
   imagePosition = 'left',
   ctas = [],
   className,
-}) => {
+}: TextImgBlockProps): JSX.Element => {
   const hasImage = !!imageSrc;
 
   return (

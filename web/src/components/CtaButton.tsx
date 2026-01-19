@@ -2,7 +2,7 @@
 
 'use client';
 
-import { ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { MediaImg } from '@/types/media.types';
@@ -27,7 +27,7 @@ interface CtaButtonProps {
 
 export interface CtaButtonType extends CtaButtonProps {};
 
-const CtaButton = ({
+export const CtaButton = ({
   link,
   textContent,
   icon,
@@ -43,7 +43,7 @@ const CtaButton = ({
   isActive = false,
   activeClass,
   onClick,
-}: CtaButtonProps) => {
+}: CtaButtonProps): JSX.Element => {
   const baseClasses =
     'inline-flex items-center gap-2 font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
 
@@ -144,5 +144,3 @@ const CtaButton = ({
     </button>
   );
 }
-
-export default CtaButton;

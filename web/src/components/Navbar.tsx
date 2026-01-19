@@ -2,28 +2,24 @@
 
 'use client';
 
-import CtaButton, { CtaButtonType } from '@/components/CtaButton';
+import { 
+  CtaButton, 
+  type CtaButtonType 
+} from '@/components/CtaButton';
 import { SvgIcon } from '@/components/SvgIcon';
-import NavbarAuthSlot from '@/modules/auth/components/NavbarAuthSlot';
+import { NavbarAuthSlot } from '@/modules/auth/components/NavbarAuthSlot';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
-import { MediaImg } from '@/types/media.types';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const NavBar = () => {
+export const NavBar = (): JSX.Element => {
   const pathname = usePathname();
   const { isAuthenticated, user } = useAuth();
   const { t } = useTranslation('navigation');
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
-
-  const logoImage: MediaImg = {
-    src: 'https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500',
-    alt: 'Your Company',
-    className: 'h-8 w-auto',
-  };
 
   const navigationItems: CtaButtonType[] = [
     {

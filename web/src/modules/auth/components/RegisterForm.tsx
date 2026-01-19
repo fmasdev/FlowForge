@@ -7,12 +7,12 @@ import { isApiErrorResponse } from '@/helpers/typeGuards';
 import { PasswordInput } from '@/modules/auth/components/PasswordInput';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent, useEffect, JSX } from 'react';
 import Link from 'next/link';
 import { authService } from '@/modules/auth/auth.service';
 import { RegisterFormErrors, RegisterFormValues } from '@/modules/auth/types/auth.types';
 
-const RegisterForm = () => {
+export const RegisterForm = (): JSX.Element => {
   const router = useRouter();
   const { t } = useTranslation('auth');
 
@@ -151,5 +151,3 @@ const RegisterForm = () => {
     </form>
   );
 };
-
-export default RegisterForm;

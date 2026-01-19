@@ -3,7 +3,10 @@
 'use client';
 
 import { SvgIcon } from '@/components/SvgIcon';
-import { useState } from 'react';
+import { 
+  JSX, 
+  useState 
+} from 'react';
 
 type PasswordInputProps = {
   name: string;
@@ -23,8 +26,8 @@ export function PasswordInput({
   error,
   autoComplete = 'current-password',
   classname,
-}: PasswordInputProps) {
-  const [visible, setVisible] = useState(false);
+}: PasswordInputProps): JSX.Element {
+  const [visible, setVisible] = useState<boolean>(false);
 
   return (
     <div className="relative">

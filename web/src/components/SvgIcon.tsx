@@ -2,7 +2,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { JSX } from 'react';
 import { InfoIcon } from '../assets/svg/InfoIcon';
 import { SuccessIcon } from '../assets/svg/SuccessIcon';
 import { ErrorIcon } from '../assets/svg/ErrorIcon';
@@ -47,12 +47,12 @@ const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
   lg: 'w-8 h-8',
 };
 
-export const SvgIcon: React.FC<SvgIconProps> = ({
+export const SvgIcon = ({
   name,
   className = '',
   color = 'default',
   size = 'md',
-}) => {
+}: SvgIconProps): JSX.Element => {
   const Svg = svgIcons[name];
   const colorClass = colorClasses[color];
   const sizeClass = sizeClasses[size];

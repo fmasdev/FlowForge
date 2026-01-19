@@ -1,9 +1,0 @@
-// src/modules/auth/components/SignupForm.tsx
-
-'use client';
-
-const SignUpForm = () => {
-
-}
-
-export default SignUpForm

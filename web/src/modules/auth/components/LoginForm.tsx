@@ -7,17 +7,17 @@ import { PasswordInput } from '@/modules/auth/components/PasswordInput';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { FormEvent, useState } from 'react';
+import { FormEvent, JSX, useState } from 'react';
 import Link from 'next/link';
 
-export default function LoginForm() {
+export const LoginForm = (): JSX.Element => {
   const router = useRouter();
   const { login } = useAuth();
   const { t } = useTranslation('auth');
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {

@@ -3,7 +3,7 @@
 'use client';
 
 import { IconName, SvgIcon } from '@/components/SvgIcon';
-import React, { useState } from 'react';
+import { JSX, useState } from 'react';
 
 export type NotificationType = 'info' | 'success' | 'danger';
 export type NotificationPosition =
@@ -47,11 +47,11 @@ const positionStyles: Record<NotificationPosition, string> = {
   'bottom-center': 'fixed bottom-4 left-1/2 -translate-x-1/2',
 };
 
-export const Notification: React.FC<NotificationProps> = ({
+export const Notification = ({
   type,
   message,
   position = 'bottom-right',
-}) => {
+}: NotificationProps): JSX.Element | null => {
   const [visible, setVisible] = useState(true);
   const { bg, icon, iconColor } = typeStyles[type];
 

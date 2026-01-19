@@ -2,15 +2,19 @@
 
 'use client';
 
-import CtaButton from '@/components/CtaButton';
-import { TextBlock } from '@/components/TextImgBloc';
+import { CtaButton } from '@/components/CtaButton';
+import { 
+  TextImgBlock, 
+  type TextImgBlocType 
+} from '@/components/TextImgBloc';
+import { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactMarkdown from 'react-markdown';
 
-const page = () => {
+export default function Page(): JSX.Element {
   const { t } = useTranslation('home');
 
-  const homeContent = [
+  const homeContent: TextImgBlocType[] = [
     {
       title: t('objectives.title'),
       description: t('objectives.text'),
@@ -65,7 +69,7 @@ const page = () => {
       {homeContent &&
         homeContent.map((contentItem, index) => (
           <section className="container mx-auto px-6" key={index}>
-            <TextBlock
+            <TextImgBlock
               title={contentItem.title}
               description={contentItem.description}
               imageSrc={contentItem.imageSrc}
@@ -77,5 +81,3 @@ const page = () => {
     </>
   );
 };
-
-export default page;

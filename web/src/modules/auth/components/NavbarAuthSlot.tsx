@@ -2,13 +2,17 @@
 
 'use client';
 
-import CtaButton, { type CtaButtonType } from '@/components/CtaButton';
+import { 
+  CtaButton, 
+  type CtaButtonType 
+} from '@/components/CtaButton';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import { JSX } from 'react';
 
-const NavbarAuthSlot = () => {
+export const NavbarAuthSlot = (): JSX.Element => {
   const { isAuthenticated, logout } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -61,5 +65,3 @@ const NavbarAuthSlot = () => {
     </>
   );
 };
-
-export default NavbarAuthSlot;

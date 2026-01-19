@@ -2,12 +2,12 @@
 
 'use client';
 
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Notification } from '@/components/Notification';
 import { authService } from '@/modules/auth/auth.service';
 
-export const ForgotPasswordForm: React.FC = () => {
+export const ForgotPasswordForm = (): JSX.Element => {
   const { t } = useTranslation('auth');
 
   const [email, setEmail] = useState('');

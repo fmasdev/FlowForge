@@ -1,8 +1,11 @@
 // src/proxy.ts
 
-import { NextRequest, NextResponse } from "next/server"
+import { 
+  NextRequest, 
+  NextResponse 
+} from "next/server"
 
-const PRIVATE_ROUTE_PREFIXES = [
+const PRIVATE_ROUTE_PREFIXES = <string[]>[
   '/dashboard',
   '/profile',
   '/teams',
@@ -10,12 +13,12 @@ const PRIVATE_ROUTE_PREFIXES = [
   '/logout',
 ];
 
-export default function proxy(request: NextRequest) {
+export default function proxy(request: NextRequest): NextResponse {
   const { pathname } = request.nextUrl;
 
-  const token = request.cookies.get('access_token')?.value;
+  const token: string | undefined = request.cookies.get('access_token')?.value;
 
-    const isPrivateRoute = PRIVATE_ROUTE_PREFIXES.some((route) =>
+    const isPrivateRoute: boolean = PRIVATE_ROUTE_PREFIXES.some((route) =>
       pathname.startsWith(route)
     );
 

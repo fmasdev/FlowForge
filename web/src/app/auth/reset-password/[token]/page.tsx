@@ -1,8 +1,9 @@
 // src/app/auth/reset-password/[token]/page.tsx
 
 import { useParams } from "next/navigation";
+import { JSX } from "react";
 
-const Page = () => {
+export default function Page(): JSX.Element {
   const params = useParams()
   console.log(params)
 
@@ -10,5 +11,3 @@ const Page = () => {
     <div>reset password</div>
   )
 }
-
-export default Page;
