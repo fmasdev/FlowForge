@@ -9,7 +9,7 @@ import { MediaImg } from '@/types/media.types';
 
 interface CtaButtonProps {
   link?: string;
-  textContent?: string;
+  label?: string;
   icon?: ReactNode;
   img?: MediaImg;
   color?: 'primary' | 'secondary' | 'ternary' | 'success' | 'danger' | 'ghost';
@@ -29,7 +29,7 @@ export interface CtaButtonType extends CtaButtonProps {};
 
 export const CtaButton = ({
   link,
-  textContent,
+  label,
   icon,
   img,
   color = 'primary',
@@ -119,7 +119,7 @@ export const CtaButton = ({
   const content = (
     <>
       {icon && <span className="flex items-center">{icon}</span>}
-      {textContent && <span>{textContent}</span>}
+      {label && <span>{label}</span>}
       {img && (
         <img
           src={img.src}

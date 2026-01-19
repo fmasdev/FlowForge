@@ -23,26 +23,26 @@ export const NavBar = (): JSX.Element => {
 
   const navigationItems: CtaButtonType[] = [
     {
-      textContent: t('navbar.dashboard'),
+      label: t('navbar.dashboard'),
       link: '/dashboard',
       isActive: pathname === '/dashboard',
     },
     {
-      textContent: t('navbar.projects'),
+      label: t('navbar.projects'),
       link: '/projects',
       isActive: pathname === '/projects'
     },
     {
-      textContent: t('navbar.teams'),
+      label: t('navbar.teams'),
       link: '/teams',
       isActive: pathname === '/teams'
     },{
-      textContent: t('navbar.notifications'),
+      label: t('navbar.notifications'),
       link: '/notifications',
       isActive: pathname === '/notifications'
     },
     {
-      textContent: 'settings',
+      label: 'settings',
       link: '/settings',
       isActive: pathname === '/settings'
     },
@@ -111,7 +111,7 @@ export const NavBar = (): JSX.Element => {
               {isAuthenticated && navigationItems.map((navItem, index) => (
                 <CtaButton
                   key={index}
-                  textContent={navItem.textContent}
+                  label={navItem.label}
                   isActive={navItem.isActive}
                   link={navItem.link}
                   isBtn={false}

@@ -61,8 +61,8 @@ export default function Page(): JSX.Element {
         </div>
 
         <div className="flex justify-center gap-4">
-          <CtaButton textContent={t('hero.cta1')} />
-          <CtaButton textContent={t('hero.cta2')} />
+          <CtaButton label={t('hero.cta1')} />
+          <CtaButton label={t('hero.cta2')} />
         </div>
       </section>
 

@@ -54,7 +54,7 @@ export const TextImgBlock = ({
             {ctas.map((cta, idx) => (
               <CtaButton
                 key={idx}
-                textContent={cta.text}
+                label={cta.text}
                 link={cta.link}
                 onClick={cta.onClick}
                 color={cta.variant === 'secondary' ? 'secondary' : 'primary'}

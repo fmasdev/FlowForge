@@ -1,10 +1,10 @@
 // src/app/terms/page.tsx
 
-const page = () => {
+import { JSX } from "react";
+
+export default function Page(): JSX.Element {
   console.log('static page')
   console.log('Info légale')
 
   return (<>terms</>)
 }
-
-export default page;
