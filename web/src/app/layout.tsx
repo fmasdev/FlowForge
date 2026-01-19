@@ -5,23 +5,24 @@ import './globals.css';
 import NavBar from '@/components/Navbar';
 import { I18nProvider } from '@/i18n/I18nProvider';
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head></head>
       <body>
-        <I18nProvider>
-          <AuthProvider>
-            <main>
-              <header>
-                <NavBar />
-              </header>
+        <main>
+          <I18nProvider>
+            <AuthProvider>
+              <main className='flex flex-col gap-24'>
+                <header>
+                  <NavBar />
+                </header>
 
-              {children}
-            </main>
-          </AuthProvider>
-        </I18nProvider>
+                {children}
+              </main>
+            </AuthProvider>
+          </I18nProvider>
+        </main>
       </body>
     </html>
   );
