@@ -81,9 +81,8 @@ const RegisterForm = () => {
     setIsSubmitting(true);
 
     try {
-      const res = await authService.register(formValues);
-      console.log(res)
-      router.replace('/login')
+      await authService.register(formValues);
+      await router.replace('/login')
     } catch (error) {
 
       if (isApiErrorResponse(error)) {
