@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { JSX } from 'react';
-import { DropdownMenu } from '@/components/DropdownMenu';
+import { DropdownMenu, MenuItem } from '@/components/dropdown/DropdownMenu';
 
 export const NavbarAuthSlot = (): JSX.Element => {
   const { isAuthenticated, logout } = useAuth();
@@ -32,7 +32,7 @@ export const NavbarAuthSlot = (): JSX.Element => {
     },
   ];
 
-  const userCtas: CtaButtonType[] = [
+  const userMenu: MenuItem[] = [
     {
       label: t('navbar.profile'),
       link: '/profile',
@@ -40,6 +40,7 @@ export const NavbarAuthSlot = (): JSX.Element => {
     },
     {
       label: t('navbar.logout'),
+      isActive: false,
       onClick: () => {
         logout()
         router.replace('/')
@@ -66,7 +67,10 @@ export const NavbarAuthSlot = (): JSX.Element => {
     );
   }
 
-  return (<></>
-    // <DropdownMenu  />
+  return (
+    <DropdownMenu
+      iconName="user"
+      menuItems={userMenu}
+    />
   )
 };

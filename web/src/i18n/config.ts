@@ -18,6 +18,9 @@ type TranslationNamespaces = {
   navigation: typeof enNavigation | typeof frNavigation;
 };
 
+export type Locale = 'en' | 'fr';
+export const LANGUAGES: readonly Locale[] = ['en', 'fr'] as const;
+
 export const resources: Record<'en' | 'fr', TranslationNamespaces> = {
   en: {
     auth: enAuth,

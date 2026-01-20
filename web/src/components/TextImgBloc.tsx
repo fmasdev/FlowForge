@@ -11,7 +11,7 @@ export type TextBlockCta = {
   text: string;
   link?: string;
   onClick?: () => void;
-  variant?: 'primary' | 'secondary'; // personnalisation possible
+  variant?: 'primary' | 'secondary';
 };
 
 export interface TextImgBlockProps {

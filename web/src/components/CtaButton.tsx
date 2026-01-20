@@ -2,15 +2,19 @@
 
 'use client';
 
-import { JSX, ReactNode } from 'react';
+import { JSX } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { MediaImg } from '@/types/media.types';
+import { 
+  IconName, 
+  SvgIcon 
+} from '@/components/SvgIcon';
 
 interface CtaButtonProps {
   link?: string;
   label?: string;
-  icon?: ReactNode;
+  icon?: IconName;
   img?: MediaImg;
   color?: 'primary' | 'secondary' | 'ternary' | 'success' | 'danger' | 'ghost';
   bgColor?: string;                           // tailwind classe or HEX code
@@ -118,7 +122,7 @@ export const CtaButton = ({
 
   const content = (
     <>
-      {icon && <span className="flex items-center">{icon}</span>}
+      {icon && <SvgIcon name={icon} classname="flex items-center" />}
       {label && <span>{label}</span>}
       {img && (
         <img

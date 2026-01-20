@@ -9,15 +9,16 @@ import { ErrorIcon } from '../assets/svg/ErrorIcon';
 import { OpenEyeIcon } from '../assets/svg/OpenEyeIcon';
 import { ClosedEyeIcon } from '../assets/svg/ClosedEyeIcon';
 import { UserIcon } from '../assets/svg/UserIcon';
-import { FlowForgeIcon } from '@/assets/svg/FlowForgeIcon';
+import { FlowForgeIcon } from '../assets/svg/FlowForgeIcon';
+import { EnIcon } from '../assets/svg/EnIcon';
+import { FrIcon } from '@/assets/svg/FrIcon';
 
-export type IconName = 'info' | 'success' | 'error' | 'openEye' | 'closedEye' | 'user' | 'flowforge';
-
+export type IconName = 'info' | 'success' | 'error' | 'openEye' | 'closedEye' | 'user' | 'flowforge'  | 'en' | 'fr';
 type IconColor = 'info' | 'success' | 'danger' | 'default';
 
 interface SvgIconProps {
   name: IconName;
-  className?: string;
+  classname?: string;
   color?: IconColor;
   size?: 'sm' | 'md' | 'lg';
 }
@@ -30,6 +31,8 @@ const svgIcons: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   closedEye: ClosedEyeIcon,
   user: UserIcon,
   flowforge: FlowForgeIcon,
+  en: EnIcon,
+  fr: FrIcon
 };
 
 // mapping de couleur Tailwind
@@ -49,7 +52,7 @@ const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
 
 export const SvgIcon = ({
   name,
-  className = '',
+  classname = '',
   color = 'default',
   size = 'md',
 }: SvgIconProps): JSX.Element => {
@@ -57,5 +60,5 @@ export const SvgIcon = ({
   const colorClass = colorClasses[color];
   const sizeClass = sizeClasses[size];
 
-  return <Svg className={`${sizeClass} ${colorClass} ${className}`} />;
+  return <Svg className={`${sizeClass} ${colorClass} ${classname}`} />;
 };

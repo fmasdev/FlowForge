@@ -2,10 +2,8 @@
 
 'use client';
 
-import { 
-  CtaButton, 
-  type CtaButtonType 
-} from '@/components/CtaButton';
+import { CtaButton, type CtaButtonType } from '@/components/CtaButton';
+import { LanguageDropdown } from '@/components/dropdown/LanguageDropdown';
 import { SvgIcon } from '@/components/SvgIcon';
 import { NavbarAuthSlot } from '@/modules/auth/components/NavbarAuthSlot';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
@@ -14,14 +12,20 @@ import { usePathname } from 'next/navigation';
 import { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+interface NavItem extends CtaButtonType {
+  link: string;
+  label: string;
+  isActive: boolean;
+}
+
 export const NavBar = (): JSX.Element => {
   const pathname = usePathname();
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { t } = useTranslation('navigation');
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 
-  const navigationItems: CtaButtonType[] = [
+  const navigationItems: NavItem[] = [
     {
       label: t('navbar.dashboard'),
       link: '/dashboard',
@@ -30,21 +34,22 @@ export const NavBar = (): JSX.Element => {
     {
       label: t('navbar.projects'),
       link: '/projects',
-      isActive: pathname === '/projects'
+      isActive: pathname === '/projects',
     },
     {
       label: t('navbar.teams'),
       link: '/teams',
-      isActive: pathname === '/teams'
-    },{
+      isActive: pathname === '/teams',
+    },
+    {
       label: t('navbar.notifications'),
       link: '/notifications',
-      isActive: pathname === '/notifications'
+      isActive: pathname === '/notifications',
     },
     {
       label: 'settings',
       link: '/settings',
-      isActive: pathname === '/settings'
+      isActive: pathname === '/settings',
     },
   ];
 
@@ -53,7 +58,6 @@ export const NavBar = (): JSX.Element => {
   return (
     <nav className="bg-gray-900 text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        
         {/* Mobile button */}
         {isAuthenticated && (
           <div className="flex md:hidden">
@@ -101,29 +105,29 @@ export const NavBar = (): JSX.Element => {
         <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex shrink-0 items-center">
             <Link href="/">
-              <SvgIcon
-                name='flowforge'
-              />
+              <SvgIcon name="flowforge" />
             </Link>
           </div>
           <div className="hidden sm:block sm:ml-6">
             <div className="flex h-10 space-x-4">
-              {isAuthenticated && navigationItems.map((navItem, index) => (
-                <CtaButton
-                  key={index}
-                  label={navItem.label}
-                  isActive={navItem.isActive}
-                  link={navItem.link}
-                  isBtn={false}
-                  color="ternary"
-                  hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
-                />
-              ))}
+              {isAuthenticated &&
+                navigationItems.map((navItem, index) => (
+                  <CtaButton
+                    key={index}
+                    label={navItem.label}
+                    isActive={navItem.isActive}
+                    link={navItem.link}
+                    isBtn={false}
+                    color="ternary"
+                    hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
+                  />
+                ))}
             </div>
           </div>
         </div>
 
         <NavbarAuthSlot />
+        <LanguageDropdown />
 
         {/* todo lang dropdown */}
         {/* <button onClick={() => i18n.changeLanguage('fr')}>FR</button>
@@ -133,6 +137,16 @@ export const NavBar = (): JSX.Element => {
       {/* Mobile menu */}
       {isAuthenticated && isNavOpen && (
         <div id="mobile-menu" className="md:hidden px-2 pt-2 pb-3 space-y-1">
+          {navigationItems.map((navItem, index) => (
+            <Link
+              key={index}
+              href={navItem?.link}
+              className="block rounded-md px-3 py-2 text-base font-medium text-white bg-gray-950/50"
+            >
+              {navItem.label}
+            </Link>
+          ))}
+
           <a
             href="#"
             className="block rounded-md px-3 py-2 text-base font-medium text-white bg-gray-950/50"
