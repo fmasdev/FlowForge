@@ -1,6 +1,8 @@
 // src/assets/svg/SuccessIcon.tsx
 
-export const SuccessIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const SuccessIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"

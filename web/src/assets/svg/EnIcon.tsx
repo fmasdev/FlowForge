@@ -1,7 +1,11 @@
-import type { SVGProps } from 'react';
+// src/assets/svg/ClosedEyeIcon.tsx
 
-export const EnIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg 
+import React, { type SVGProps } from 'react';
+
+export const EnIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
+  <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"

@@ -1,6 +1,8 @@
 // src/assets/svg/FlowForgeIcon.tsx
 
-export const FlowForgeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+export const FlowForgeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +12,15 @@ export const FlowForgeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) =>
     className={`w-15 h-10 ${props.className ?? ''}`}
   >
     {/* Lines (workflow paths) */}
-    <line x1="30" y1="60" x2="80" y2="30" stroke="#6366F1" strokeWidth="10" strokeLinecap="round" />
+    <line
+      x1="30"
+      y1="60"
+      x2="80"
+      y2="30"
+      stroke="#6366F1"
+      strokeWidth="10"
+      strokeLinecap="round"
+    />
     <line
       x1="80"
       y1="30"

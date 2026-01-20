@@ -1,10 +1,12 @@
 // src/assets/svg/flags/FrIcon.tsx
 
-export const FrIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg 
+export const FrIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
+  <svg
     {...props}
-    xmlns="http://www.w3.org/2000/svg" 
-    id="flag-icons-fr" 
+    xmlns="http://www.w3.org/2000/svg"
+    id="flag-icons-fr"
     viewBox="0 0 512 512"
     strokeWidth={1.5}
     stroke="currentColor"

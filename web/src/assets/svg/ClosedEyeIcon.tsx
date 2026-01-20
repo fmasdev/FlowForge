@@ -1,7 +1,10 @@
 // src/assets/svg/ClosedEyeIcon.tsx
 
-export const ClosedEyeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg {...props} 
+export const ClosedEyeIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
+  <svg
+    {...props}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
