@@ -10,7 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { useState, FormEvent, useEffect, JSX } from 'react';
 import Link from 'next/link';
 import { authService } from '@/modules/auth/auth.service';
-import { RegisterFormErrors, RegisterFormValues } from '@/modules/auth/types/auth.types';
+import {
+  RegisterFormErrors,
+  RegisterFormValues,
+} from '@/modules/auth/types/auth.types';
 
 export const RegisterForm = (): JSX.Element => {
   const router = useRouter();
@@ -60,7 +63,9 @@ export const RegisterForm = (): JSX.Element => {
 
     if (!formValues.password) {
       newErrors.password = t('register.form.error.password.required');
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(formValues.password)) {
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(formValues.password)
+    ) {
       newErrors.password = t('register.form.error.password.format');
     }
 
@@ -82,9 +87,8 @@ export const RegisterForm = (): JSX.Element => {
 
     try {
       await authService.register(formValues);
-      await router.replace('/login')
+      await router.replace('/login');
     } catch (error) {
-
       if (isApiErrorResponse(error)) {
         setRequestErrors(error.message);
       } else {
@@ -97,14 +101,10 @@ export const RegisterForm = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-      <h1 className="text-xl font-semibold">
-        {t('register.title')}
-      </h1>
+      <h1 className="text-xl font-semibold">{t('register.title')}</h1>
 
       <div>
-        <Link href="/auth/login">
-          { t('register.loginLink') }
-        </Link>
+        <Link href="/auth/login">{t('register.loginLink')}</Link>
       </div>
 
       {(['firstname', 'lastname', 'email'] as const).map((field) => (
@@ -117,7 +117,9 @@ export const RegisterForm = (): JSX.Element => {
             onChange={handleChange}
             className="w-full rounded border px-3 py-2"
           />
-          {errors[field] && <p className="text-sm text-red-500">{errors[field]}</p>}
+          {errors[field] && (
+            <p className="text-sm text-red-500">{errors[field]}</p>
+          )}
         </div>
       ))}
 
@@ -142,11 +144,17 @@ export const RegisterForm = (): JSX.Element => {
         disabled={isSubmitting}
         className="w-full rounded bg-blue-600 py-2 text-white disabled:opacity-50"
       >
-        {isSubmitting ? t('register.form.field.loading') : t('register.form.field.submit')}
+        {isSubmitting
+          ? t('register.form.field.loading')
+          : t('register.form.field.submit')}
       </button>
 
-      {!!requestErrors && (
-        <Notification type="danger" message={requestErrors} position="bottom-right" />
+      {requestErrors && (
+        <Notification
+          type="danger"
+          message={requestErrors}
+          position="bottom-right"
+        />
       )}
     </form>
   );

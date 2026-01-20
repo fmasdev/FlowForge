@@ -13,7 +13,16 @@ import { FlowForgeIcon } from '../assets/svg/FlowForgeIcon';
 import { EnIcon } from '../assets/svg/EnIcon';
 import { FrIcon } from '@/assets/svg/FrIcon';
 
-export type IconName = 'info' | 'success' | 'error' | 'openEye' | 'closedEye' | 'user' | 'flowforge'  | 'en' | 'fr';
+export type IconName =
+  | 'info'
+  | 'success'
+  | 'error'
+  | 'openEye'
+  | 'closedEye'
+  | 'user'
+  | 'flowforge'
+  | 'en'
+  | 'fr';
 type IconColor = 'info' | 'success' | 'danger' | 'default';
 
 interface SvgIconProps {
@@ -32,7 +41,7 @@ const svgIcons: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
   user: UserIcon,
   flowforge: FlowForgeIcon,
   en: EnIcon,
-  fr: FrIcon
+  fr: FrIcon,
 };
 
 // mapping de couleur Tailwind

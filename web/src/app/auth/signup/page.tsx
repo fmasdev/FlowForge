@@ -1,7 +1,7 @@
 // src/app/auth/signup/page.tsx
 
-import { RegisterForm } from '@/modules/auth/components/RegisterForm';
 import { JSX } from 'react';
+import { RegisterForm } from '@/modules/auth/components/RegisterForm';
 
 export default function Page(): JSX.Element {
   return (
@@ -9,4 +9,4 @@ export default function Page(): JSX.Element {
       <RegisterForm />
     </div>
   );
-};
+}

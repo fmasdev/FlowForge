@@ -6,7 +6,6 @@ import React, { JSX } from 'react';
 import clsx from 'clsx';
 import { CtaButton } from '@/components/CtaButton';
 
-
 export type TextBlockCta = {
   text: string;
   link?: string;
@@ -24,7 +23,7 @@ export interface TextImgBlockProps {
   className?: string;
 }
 
-export interface TextImgBlocType extends TextImgBlockProps {};
+export interface TextImgBlocType extends TextImgBlockProps {}
 
 export const TextImgBlock = ({
   title,
@@ -35,13 +34,22 @@ export const TextImgBlock = ({
   ctas = [],
   className,
 }: TextImgBlockProps): JSX.Element => {
-  const hasImage = !!imageSrc;
+  const hasImage: boolean = !!imageSrc;
 
   return (
-    <section className={clsx('flex flex-col md:flex-row items-center gap-8 py-12', className)}>
+    <section
+      className={clsx(
+        'flex flex-col md:flex-row items-center gap-8 py-12',
+        className,
+      )}
+    >
       {hasImage && imagePosition === 'left' && (
         <div className="md:w-1/2">
-          <img src={imageSrc} alt={imageAlt} className="w-full h-auto rounded-lg shadow-md" />
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="w-full h-auto rounded-lg shadow-md"
+          />
         </div>
       )}
 
@@ -67,7 +75,11 @@ export const TextImgBlock = ({
 
       {hasImage && imagePosition === 'right' && (
         <div className="md:w-1/2">
-          <img src={imageSrc} alt={imageAlt} className="w-full h-auto rounded-lg shadow-md" />
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="w-full h-auto rounded-lg shadow-md"
+          />
         </div>
       )}
     </section>

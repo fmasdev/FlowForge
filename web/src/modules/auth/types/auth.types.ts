@@ -1,6 +1,6 @@
 // src/modules/auth/types/auth.types.ts
 
-import { UserType } from "@/modules/auth/types/user.types";
+import { UserType } from '@/modules/auth/types/user.types';
 
 export interface LoginType {
   email: string;
@@ -17,9 +17,11 @@ export interface RegisterFormValues {
   email: string;
   password: string;
   confirmPassword: string;
-};
+}
 
-export type RegisterFormErrors = Partial<Record<keyof RegisterFormValues, string>>;
+export type RegisterFormErrors = Partial<
+  Record<keyof RegisterFormValues, string>
+>;
 
 export interface AuthContextType {
   user: UserType | null;

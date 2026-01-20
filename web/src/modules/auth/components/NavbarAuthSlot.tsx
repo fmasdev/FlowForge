@@ -2,10 +2,7 @@
 
 'use client';
 
-import { 
-  CtaButton, 
-  type CtaButtonType 
-} from '@/components/CtaButton';
+import { CtaButton, type CtaButtonType } from '@/components/CtaButton';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +14,7 @@ export const NavbarAuthSlot = (): JSX.Element => {
   const { isAuthenticated, logout } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-  const { t } = useTranslation('auth')
+  const { t } = useTranslation('auth');
 
   const notAtuthCtas: CtaButtonType[] = [
     {
@@ -42,35 +39,30 @@ export const NavbarAuthSlot = (): JSX.Element => {
       label: t('navbar.logout'),
       isActive: false,
       onClick: () => {
-        logout()
-        router.replace('/')
-      }
+        logout();
+        router.replace('/');
+      },
     },
   ];
 
   if (!isAuthenticated) {
     return (
       <>
-        {!!notAtuthCtas && notAtuthCtas.map((cta: CtaButtonType, index: number) => (
-          <CtaButton
-            key={index}
-            label={cta.label}
-            isActive={cta?.isActive}
-            link={cta?.link}
-            isBtn={false}
-            color="ternary"
-            hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
-            onClick={cta?.onClick}
-          />
-        ))}
+        {notAtuthCtas.map((cta: CtaButtonType, index: number) => (
+            <CtaButton
+              key={index}
+              label={cta.label}
+              isActive={cta?.isActive}
+              link={cta?.link}
+              isBtn={false}
+              color="ternary"
+              hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
+              onClick={cta?.onClick}
+            />
+          ))}
       </>
     );
   }
 
-  return (
-    <DropdownMenu
-      iconName="user"
-      menuItems={userMenu}
-    />
-  )
+  return <DropdownMenu iconName="user" menuItems={userMenu} />;
 };

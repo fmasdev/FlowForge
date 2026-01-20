@@ -27,13 +27,17 @@ export const LoginForm = (): JSX.Element => {
 
     try {
       const { success } = await authService.login(email, password);
+
       if (success) {
         await login();
         await router.replace('/dashboard');
       }
-    } catch (err: any) {
-      console.error(err);
-      // TODO: finalyse with
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err?.message);
+      } else {
+        console.error('Unknown error', err);
+      }
     } finally {
       setLoading(false);
     }
@@ -41,10 +45,11 @@ export const LoginForm = (): JSX.Element => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-sm mx-auto">
-        <h1 className="text-xl font-semibold">
-          {t('login.title')}
-        </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-sm mx-auto"
+      >
+        <h1 className="text-xl font-semibold">{t('login.title')}</h1>
 
         <input
           type="email"
@@ -81,4 +86,4 @@ export const LoginForm = (): JSX.Element => {
       </form>
     </div>
   );
-}
+};

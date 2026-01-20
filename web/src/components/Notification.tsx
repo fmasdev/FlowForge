@@ -61,13 +61,10 @@ export const Notification = ({
     <div
       className={`${positionStyles[position]} ${bg} flex items-center gap-2 rounded-md px-4 py-2 shadow-lg max-w-xs`}
     >
-      <SvgIcon 
-        name={icon} 
-        className={`w-5 h-5 ${iconColor}`} 
+      <SvgIcon name={icon}
+className={`w-5 h-5 ${iconColor}`}
       />
-      <span className="text-gray-800 text-sm">
-        {message}
-      </span>
+      <span className="text-gray-800 text-sm">{message}</span>
       <button
         type="button"
         onClick={() => setVisible(false)}

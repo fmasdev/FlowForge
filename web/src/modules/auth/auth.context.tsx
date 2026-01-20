@@ -9,7 +9,11 @@ import { createContext, useState, ReactNode, useEffect, JSX } from 'react';
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }): JSX.Element => {
+export const AuthProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element => {
   const [user, setUser] = useState<UserType | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -44,7 +48,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }): JSX.Element
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, isLoading, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

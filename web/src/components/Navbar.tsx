@@ -79,7 +79,11 @@ export const NavBar = (): JSX.Element => {
                   aria-hidden="true"
                   className="w-6 h-6"
                 >
-                  <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+                  <path
+                    d="M6 18L18 6M6 6l12 12"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               ) : (
                 <svg
@@ -136,7 +140,9 @@ export const NavBar = (): JSX.Element => {
 
       {/* Mobile menu */}
       {isAuthenticated && isNavOpen && (
-        <div id="mobile-menu" className="md:hidden px-2 pt-2 pb-3 space-y-1">
+        <div id="mobile-menu"
+className="md:hidden px-2 pt-2 pb-3 space-y-1"
+        >
           {navigationItems.map((navItem, index) => (
             <Link
               key={index}

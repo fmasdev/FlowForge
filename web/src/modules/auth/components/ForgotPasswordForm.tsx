@@ -34,10 +34,15 @@ export const ForgotPasswordForm = (): JSX.Element => {
 
       setSuccessMessage(t('forgotPassword.form.success'));
       setEmail('');
-    } catch (error: any) {
-      setErrorMessage(
-        error?.message || t('forgotPassword.form.error.generic')
-      );
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error?.message);
+        setErrorMessage(
+          error?.message || t('forgotPassword.form.error.generic'),
+        );
+      } else {
+        console.error('Unknown error', error);
+      }
     } finally {
       setLoading(false);
     }
@@ -49,9 +54,7 @@ export const ForgotPasswordForm = (): JSX.Element => {
         {t('forgotPassword.title')}
       </h1>
 
-      <p className='my-10'>
-        {t('forgotPassword.description')}
-      </p>
+      <p className="my-10">{t('forgotPassword.description')}</p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

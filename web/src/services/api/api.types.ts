@@ -1,12 +1,12 @@
 // src/services/api/api.types.ts
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   message: string;
   data: T | null;
 }
 
-export interface ApiErrorResponse<T = any> {
+export interface ApiErrorResponse<T = unknown> {
   success: boolean;
   message: string;
   data: T | null;

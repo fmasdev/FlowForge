@@ -2,8 +2,8 @@
 
 'use client';
 
-import { JSX } from "react";
+import { JSX } from 'react';
 
 export const ResetPasswordForm = (): JSX.Element => {
-  return (<div>reset password</div>)
-}
+  return <div>reset password</div>;
+};

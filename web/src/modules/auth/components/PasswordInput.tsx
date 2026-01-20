@@ -3,10 +3,7 @@
 'use client';
 
 import { SvgIcon } from '@/components/SvgIcon';
-import { 
-  JSX, 
-  useState 
-} from 'react';
+import { JSX, useState } from 'react';
 
 type PasswordInputProps = {
   name: string;
@@ -15,7 +12,7 @@ type PasswordInputProps = {
   placeholder?: string;
   error?: string;
   autoComplete?: string;
-  classname?: string
+  classname?: string;
 };
 
 export function PasswordInput({
@@ -51,11 +48,7 @@ export function PasswordInput({
         className="absolute right-2 top-1/2 -translate-y-1/2 text-sm text-gray-500"
         aria-label={visible ? 'Hide password' : 'Show password'}
       >
-        {visible ? (
-          <SvgIcon name="closedEye" />
-        ) : (
-          <SvgIcon name="openEye" />
-        )}
+        {visible ? <SvgIcon name="closedEye" /> : <SvgIcon name="openEye" />}
       </button>
 
       {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
