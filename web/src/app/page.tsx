@@ -2,7 +2,7 @@
 
 'use client';
 
-import { CtaButton } from '@/components/CtaButton';
+import { Cta } from '@/components/Cta/Cta';
 import { TextImgBlock, type TextImgBlocType } from '@/components/TextImgBloc';
 import { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -54,8 +54,8 @@ export default function Page(): JSX.Element {
         </div>
 
         <div className="flex justify-center gap-4">
-          <CtaButton label={t('hero.cta1')} />
-          <CtaButton label={t('hero.cta2')} />
+          <Cta label={t('hero.cta1')} />
+          <Cta label={t('hero.cta2')} />
         </div>
       </section>
 

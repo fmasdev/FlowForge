@@ -2,7 +2,7 @@
 
 'use client';
 
-import { CtaButton, type CtaButtonType } from '@/components/CtaButton';
+import { Cta } from '@/components/Cta/Cta';
 import { LanguageDropdown } from '@/components/dropdown/LanguageDropdown';
 import { SvgIcon } from '@/components/SvgIcon';
 import { NavbarAuthSlot } from '@/modules/auth/components/NavbarAuthSlot';
@@ -11,12 +11,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-interface NavItem extends CtaButtonType {
-  link: string;
-  label: string;
-  isActive: boolean;
-}
+import { NavItem } from '@/components/navbar/Navbar.type';
+import styles from './Navbar.module.css';
 
 export const NavBar = (): JSX.Element => {
   const pathname = usePathname();
@@ -37,17 +33,12 @@ export const NavBar = (): JSX.Element => {
       isActive: pathname === '/projects',
     },
     {
-      label: t('navbar.teams'),
-      link: '/teams',
-      isActive: pathname === '/teams',
-    },
-    {
       label: t('navbar.notifications'),
       link: '/notifications',
       isActive: pathname === '/notifications',
     },
     {
-      label: 'settings',
+      label: 'Settings',
       link: '/settings',
       isActive: pathname === '/settings',
     },
@@ -56,14 +47,14 @@ export const NavBar = (): JSX.Element => {
   const toggleNav = () => setIsNavOpen((p) => !p);
 
   return (
-    <nav className="bg-gray-900 text-white">
+    <nav className="bg-gray-900 text-white fixed w-full z-10 top-0 shadow-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
         {/* Mobile button */}
         {isAuthenticated && (
           <div className="flex md:hidden">
             <button
               type="button"
-              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-1 focus:outline-indigo-500"
+              className="navbar-cta"
               onClick={toggleNav}
               aria-expanded={isNavOpen}
               aria-controls="mobile-menu"
@@ -116,14 +107,12 @@ export const NavBar = (): JSX.Element => {
             <div className="flex h-10 space-x-4">
               {isAuthenticated &&
                 navigationItems.map((navItem, index) => (
-                  <CtaButton
+                  <Cta
                     key={index}
                     label={navItem.label}
+                    variant="navbar"
                     isActive={navItem.isActive}
                     link={navItem.link}
-                    isBtn={false}
-                    color="ternary"
-                    hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
                   />
                 ))}
             </div>

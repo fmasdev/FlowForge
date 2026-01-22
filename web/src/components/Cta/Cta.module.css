@@ -1,0 +1,28 @@
+/* src/component/Cta/Cta.module.css */
+
+@reference "tailwindcss";
+
+
+/* Base styles for all variants */
+.ctaBase {
+  @apply inline-flex items-center font-medium transition;
+}
+
+/* Default variant styles */
+.defaultCta {
+  @apply gap-4 px-4 py-2 text-xl rounded-md
+         bg-indigo-600 text-white;
+}
+
+.defaultCta:hover {
+  @apply bg-indigo-900 outline-1 outline-sky-400;
+}
+
+
+/* Navbar variant styles */
+.navbarCta {
+  @apply gap-2 px-3 py-2 text-sm rounded-md
+         text-gray-300 hover:bg-white/5 hover:text-white
+         data-[active=true]:bg-white/5
+         data-[active=true]:text-white;
+}

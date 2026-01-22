@@ -2,13 +2,14 @@
 
 'use client';
 
-import { CtaButton, type CtaButtonType } from '@/components/CtaButton';
+import { Cta } from '@/components/Cta/Cta';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { JSX } from 'react';
 import { DropdownMenu, MenuItem } from '@/components/dropdown/DropdownMenu';
+import type { CtaType } from '@/components/Cta/Cta.type';
 
 export const NavbarAuthSlot = (): JSX.Element => {
   const { isAuthenticated, logout } = useAuth();
@@ -16,7 +17,7 @@ export const NavbarAuthSlot = (): JSX.Element => {
   const router = useRouter();
   const { t } = useTranslation('auth');
 
-  const notAtuthCtas: CtaButtonType[] = [
+  const notAtuthCtas: CtaType[] = [
     {
       label: t('navbar.login'),
       link: '/auth/login',
@@ -48,21 +49,25 @@ export const NavbarAuthSlot = (): JSX.Element => {
   if (!isAuthenticated) {
     return (
       <>
-        {notAtuthCtas.map((cta: CtaButtonType, index: number) => (
-            <CtaButton
-              key={index}
-              label={cta.label}
-              isActive={cta?.isActive}
-              link={cta?.link}
-              isBtn={false}
-              color="ternary"
-              hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
-              onClick={cta?.onClick}
-            />
-          ))}
+        {notAtuthCtas.map((cta: CtaType, index: number) => (
+          <Cta
+            key={index}
+            label={cta.label}
+            isActive={cta?.isActive}
+            link={cta?.link}
+            variant='navbar'
+            onClick={cta?.onClick}
+          />
+        ))}
       </>
     );
   }
 
-  return <DropdownMenu iconName="user" menuItems={userMenu} />;
+  return (
+    <DropdownMenu
+      iconName="user"
+      variant='navbar'
+      menuItems={userMenu}
+    />
+  );
 };

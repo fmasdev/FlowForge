@@ -2,7 +2,7 @@
 
 'use client';
 
-import { CtaButton } from '@/components/CtaButton';
+import { Cta } from '@/components/Cta/Cta';
 import { IconName } from '@/components/SvgIcon';
 import { JSX, useEffect, useRef, useState } from 'react';
 
@@ -11,6 +11,7 @@ export interface MenuItem {
   link?: string;
   iconName?: IconName;
   isActive: boolean;
+  variant?: 'default' | 'navbar';
   onClick?: () => void;
 }
 
@@ -18,6 +19,7 @@ export interface DropdownMenuProps {
   menuItems: MenuItem[];
   label?: string;
   iconName?: IconName;
+  variant?: 'default' | 'navbar';
 }
 
 export interface DropDownMenuType extends DropdownMenuProps {}
@@ -53,12 +55,10 @@ export const DropdownMenu = (props: DropdownMenuProps): JSX.Element => {
   return (
     <div ref={ref} className="relative inline-block">
       {/* cta */}
-      <CtaButton
+      <Cta
         icon={props.iconName}
-        isBtn={false}
         onClick={() => setOpen((v) => !v)}
-        color="ternary"
-        hoverClass="hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300"
+        variant={props.variant || 'default'}
       />
       {open && (
         <div

@@ -4,7 +4,7 @@
 
 import React, { JSX } from 'react';
 import clsx from 'clsx';
-import { CtaButton } from '@/components/CtaButton';
+import { Cta } from '@/components/Cta/Cta';
 
 export type TextBlockCta = {
   text: string;
@@ -60,13 +60,11 @@ export const TextImgBlock = ({
         {ctas.length > 0 && (
           <div className="flex flex-wrap gap-4">
             {ctas.map((cta, idx) => (
-              <CtaButton
+              <Cta
                 key={idx}
                 label={cta.text}
                 link={cta.link}
                 onClick={cta.onClick}
-                color={cta.variant === 'secondary' ? 'secondary' : 'primary'}
-                isBtn
               />
             ))}
           </div>
