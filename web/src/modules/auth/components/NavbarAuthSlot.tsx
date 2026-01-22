@@ -2,14 +2,15 @@
 
 'use client';
 
-import { Cta } from '@/components/Cta/Cta';
-import { useAuth } from '@/modules/auth/hooks/useAuth';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { JSX } from 'react';
-import { DropdownMenu, MenuItem } from '@/components/dropdown/DropdownMenu';
-import type { CtaType } from '@/components/Cta/Cta.type';
+import { useAuth } from '@/modules/auth/hooks/useAuth';
+import { CtaType } from '@/components/cta/Cta.types';
+import { MenuItem } from '@/components/dropdown/menu/DropdownMenu.types';
+import { Cta } from '@/components/cta/Cta';
+import { DropdownMenu } from '@/components/dropdown/menu/DropdownMenu';
 
 export const NavbarAuthSlot = (): JSX.Element => {
   const { isAuthenticated, logout } = useAuth();

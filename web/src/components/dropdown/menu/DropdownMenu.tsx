@@ -1,28 +1,10 @@
-// src/components/dropdown/DropdownMenu.tsx
+// src/components/dropdown/menu/DropdownMenu.tsx
 
 'use client';
 
-import { Cta } from '@/components/Cta/Cta';
-import { IconName } from '@/components/SvgIcon';
+import { Cta } from '@/components/cta/Cta';
+import { DropdownMenuProps } from '@/components/dropdown/menu/DropdownMenu.types';
 import { JSX, useEffect, useRef, useState } from 'react';
-
-export interface MenuItem {
-  label: string;
-  link?: string;
-  iconName?: IconName;
-  isActive: boolean;
-  variant?: 'default' | 'navbar';
-  onClick?: () => void;
-}
-
-export interface DropdownMenuProps {
-  menuItems: MenuItem[];
-  label?: string;
-  iconName?: IconName;
-  variant?: 'default' | 'navbar';
-}
-
-export interface DropDownMenuType extends DropdownMenuProps {}
 
 export const DropdownMenu = (props: DropdownMenuProps): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);

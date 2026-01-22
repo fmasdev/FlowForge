@@ -6,8 +6,8 @@ import { JSX } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import styles from './Cta.module.css';
-import { CtaProps } from '@/components/Cta/Cta.type';
 import { SvgIcon } from '@/components/SvgIcon';
+import { CtaProps } from '@/components/cta/Cta.types';
 
 export const Cta = ({
   link,

@@ -1,4 +1,4 @@
-// src/components/dropdown/LanguageDropdown.tsx
+// src/components/dropdown/language/LanguageDropdown.tsx
 
 'use client';
 

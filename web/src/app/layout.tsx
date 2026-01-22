@@ -2,7 +2,7 @@
 
 import { AuthProvider } from '@/modules/auth/auth.context';
 import './globals.css';
-import NavBar from '@/components/Navbar';
+import NavBar from '@/components/navbar/Navbar';
 import { I18nProvider } from '@/i18n/I18nProvider';
 
 export default function RootLayout({

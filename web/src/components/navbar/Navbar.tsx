@@ -2,8 +2,6 @@
 
 'use client';
 
-import { Cta } from '@/components/Cta/Cta';
-import { LanguageDropdown } from '@/components/dropdown/LanguageDropdown';
 import { SvgIcon } from '@/components/SvgIcon';
 import { NavbarAuthSlot } from '@/modules/auth/components/NavbarAuthSlot';
 import { useAuth } from '@/modules/auth/hooks/useAuth';
@@ -11,8 +9,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavItem } from '@/components/navbar/Navbar.type';
-import styles from './Navbar.module.css';
+import { NavItem } from '@/components/navbar/Navbar.types';
+import { LanguageDropdown } from '@/components/dropdown/language/LanguageDropdown';
+import { Cta } from '@/components/cta/Cta';
 
 export const NavBar = (): JSX.Element => {
   const pathname = usePathname();
