@@ -33,7 +33,6 @@ export const createUserCommand = (userService: UserService): Command => {
         lastname: options.lastname,
         role: options.role,
       });
-      console.log(user);
       console.log(`User ${options.email} created`);
       process.exit(0);
     });

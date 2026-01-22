@@ -25,7 +25,6 @@ export class AuthController {
 
   @Post('register')
   async create(@Body() registerDto: RegisterDto): Promise<{message: string}> {
-    console.log(registerDto)
     await this.userService.create(registerDto)
     return { message: 'User created successfully' };
   }
@@ -56,7 +55,6 @@ export class AuthController {
 
   @Post('logout')
   async logout(@Res({ passthrough: true }) res: Response) {
-    console.log('logout route')
     res.clearCookie('access_token', {
       path: '/',
     });
