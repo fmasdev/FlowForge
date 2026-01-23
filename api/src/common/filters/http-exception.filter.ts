@@ -43,7 +43,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     } else if (hasMessage(exception)) {
       // Other errors
       message = exception.message;
-      console.error(exception)
+      console.error(exception.message)
     }
 
     response.status(status).json({

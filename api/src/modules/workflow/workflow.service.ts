@@ -31,19 +31,19 @@ export class WorkflowService {
   ): Promise<Workflow> {
     const user: User | null = await this.userService.findOneById(jwtUser.sub);
 
-    // if (!user) {
+    if (!user) {
       throw new NotFoundException(
         `Cannot find user where id is #${jwtUser.sub}`,
       );
-    // }
+    }
 
-    // const workflow = this.workflowRepository.create({
-    //   name: workflowInput.name,
-    //   description: workflowInput.description,
-    //   createdBy: user,
-    // });
+    const workflow = this.workflowRepository.create({
+      name: workflowInput.name,
+      description: workflowInput.description,
+      createdBy: user,
+    });
 
-    // return this.workflowRepository.save(workflow);
+    return this.workflowRepository.save(workflow);
   }
 
   async findOne(id: string) {
@@ -100,7 +100,7 @@ export class WorkflowService {
     qb.take(limit).skip((page - 1) * limit);
 
     const [data, total] = await qb.getManyAndCount();
-
+    
     return {
       data,
       meta: {
