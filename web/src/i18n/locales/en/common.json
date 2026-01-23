@@ -1,3 +1,11 @@
 {
-  "navbar": {}
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "display": "Showing {{start}} to {{end}} of {{total}} results"
+  },
+  "searchBar": {
+    "placeholder": "Search…",
+    "clearLabel": "Clear"
+  }
 }

@@ -1,3 +1,11 @@
 {
-  "navbar": {}
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "display": "Affichage de {{start}} à {{end}} sur {{total}} résultats"
+  },
+  "searchBar": {
+    "placeholder": "Rechercher…",
+    "clearLabel": "Effacer"
+  }
 }

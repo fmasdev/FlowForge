@@ -1,0 +1,29 @@
+/* src/components/searchBar/SearchBar.module.css */
+
+@reference "tailwindcss";
+
+
+.form {
+  @apply w-full max-w-lg ;
+}
+
+.container {
+  @apply relative flex items-center;
+}
+
+.iconContainer {
+  @apply pointer-events-none absolute inset-y-0 left-3 
+      flex items-center text-gray-400;
+}
+
+.input {
+  @apply w-full rounded-full border border-gray-300 bg-gray-700
+         px-4 py-2 pr-10 pl-10
+         text-sm text-gray-900 placeholder-gray-400 
+         focus:border-indigo-500 focus:outline-none 
+         focus:ring-1 focus:ring-indigo-500;
+}
+
+.resetBtn {
+  @apply absolute right-2 text-gray-400 hover:text-gray-600;
+}
