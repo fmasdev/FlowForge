@@ -53,7 +53,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             aria-label="Clear"
           >
             <SvgIcon 
-              name="XCircle"
+              name="closeCircle"
             />
           </button>
         )}
