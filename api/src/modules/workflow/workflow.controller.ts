@@ -14,8 +14,8 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -35,7 +35,7 @@ export class WorkflowController {
     return await this.workflowService.create(createWorkflowDto, jwtUser);
   }
 
-  @Patch()
+  @Put()
   async update(
     @User() user: JwtUserPayload,
     @Body() updateWorkflowDto: UpdateWorkflowDto,

@@ -15,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Pagination, ServiceResponse } from '@/common/types/response.types';
 
 @Injectable()
 export class WorkflowService {
@@ -30,19 +31,19 @@ export class WorkflowService {
   ): Promise<Workflow> {
     const user: User | null = await this.userService.findOneById(jwtUser.sub);
 
-    if (!user) {
+    // if (!user) {
       throw new NotFoundException(
         `Cannot find user where id is #${jwtUser.sub}`,
       );
-    }
+    // }
 
-    const workflow = this.workflowRepository.create({
-      name: workflowInput.name,
-      description: workflowInput.description,
-      createdBy: user,
-    });
+    // const workflow = this.workflowRepository.create({
+    //   name: workflowInput.name,
+    //   description: workflowInput.description,
+    //   createdBy: user,
+    // });
 
-    return this.workflowRepository.save(workflow);
+    // return this.workflowRepository.save(workflow);
   }
 
   async findOne(id: string) {
@@ -70,26 +71,38 @@ export class WorkflowService {
     } as WorkflowResponseDto;
   }
 
-  async findAll({page, limit, sortBy, sortDirection, search}: PaginationDto) {
+  async findAll({
+    page,
+    limit,
+    sortBy,
+    sortDirection,
+    search,
+  }: PaginationDto): Promise<ServiceResponse<Workflow[], Pagination>> {
     const qb = this.workflowRepository.createQueryBuilder('workflow');
-    qb.leftJoin('workflow.createdBy', 'user')
-      .addSelect(['user.id', 'user.email', 'user.firstname', 'user.lastname']);
-    
+    qb.leftJoin('workflow.createdBy', 'user').addSelect([
+      'user.id',
+      'user.email',
+      'user.firstname',
+      'user.lastname',
+    ]);
+
     if (search) {
-      qb.where('workflow.name ILIKE :search OR workflow.description ILIKE :search', { search: `%${search}%` });
+      qb.where(
+        'workflow.name ILIKE :search OR workflow.description ILIKE :search',
+        { search: `%${search}%` },
+      );
     }
-    
+
     if (sortBy && sortDirection) {
       qb.orderBy(`workflow.${sortBy}`, sortDirection);
     }
 
-    qb.take(limit)
-      .skip((page - 1) * limit);
-    
-    const [items, total] = await qb.getManyAndCount();
-    
+    qb.take(limit).skip((page - 1) * limit);
+
+    const [data, total] = await qb.getManyAndCount();
+
     return {
-      items,
+      data,
       meta: {
         total,
         page,

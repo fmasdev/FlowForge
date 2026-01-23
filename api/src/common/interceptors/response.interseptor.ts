@@ -1,3 +1,4 @@
+import { ResponseType, ServiceResponse } from '@/common/types/response.types';
 import {
   CallHandler,
   ExecutionContext,
@@ -9,16 +10,19 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
-  intercept<T>(
+  intercept(
     context: ExecutionContext,
-    next: CallHandler<T>,
-  ): Observable<{ success: boolean; message: string; data: T | object }> {
+    next: CallHandler,
+  ): Observable<ResponseType<unknown, unknown>> {
     return next.handle().pipe(
-      map((data: T) => ({
-        success: true,
-        message: '',
-        data: data ?? {},
-      })),
+      map((data: ServiceResponse<unknown, unknown>) => {
+        return {
+          success: true,
+          message: '',
+          data: data?.data ?? data ?? {},
+          meta: data?.meta,
+        };
+      }),
     );
   }
 }

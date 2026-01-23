@@ -36,11 +36,14 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     if (exception instanceof QueryFailedError) {
       ({ message, status } = loadTypeOrmException(exception));
+      console.error(exception)
     } else if (exception instanceof HttpException) {
       ({ message, status } = loadHttpException(exception));
+      console.error(exception)
     } else if (hasMessage(exception)) {
       // Other errors
       message = exception.message;
+      console.error(exception)
     }
 
     response.status(status).json({
@@ -98,7 +101,7 @@ const loadHttpException = (exception: HttpException): MessageStatusType => {
       status: status,
       message: res,
     };
-  } else if (typeof res === 'object' && res !== null) {
+  } else if (typeof res === 'object' && !res) {
     const response = res as HttpExceptionResponse;
 
     if (Array.isArray(response.message)) {
