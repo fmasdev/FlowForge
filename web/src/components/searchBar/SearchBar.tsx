@@ -3,22 +3,14 @@
 import React, { useState } from "react";
 import styles from './SearchBar.module.css'
 import { SvgIcon } from "@/components/SvgIcon";
-import { useTranslation } from "react-i18next";
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   placeholder,
   initialValue = "",
+  clearLabel,
   onSearch,
-}) => {
-  const { t } = useTranslation('common')
-
+}: SearchBarProps) => {
   const [value, setValue] = useState(initialValue);
-  
-  const searchPlaceholder = placeholder ? placeholder : t('searchBar.placeholder')
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch(value.trim());
-  };
 
   const handleClear = () => {
     setValue("");
@@ -26,10 +18,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={styles.form}
-    >
+    <form className={styles.form}>
       <div className={styles.container}>
         <span className={styles.iconContainer}>
           <SvgIcon
@@ -40,8 +29,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         <input
           type="text"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={searchPlaceholder}
+          onChange={(e) => onSearch(e.target.value)}
+          placeholder={placeholder ? placeholder : undefined}
           className={styles.input}
         />
 
@@ -50,7 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             type="button"
             onClick={handleClear}
             className={styles.resetBtn}
-            aria-label="Clear"
+            aria-label={clearLabel ? clearLabel : undefined}
           >
             <SvgIcon 
               name="closeCircle"

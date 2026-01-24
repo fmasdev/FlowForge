@@ -3,5 +3,6 @@
 interface SearchBarProps {
   placeholder?: string;
   initialValue?: string;
+  clearLabel: string;
   onSearch: (value: string) => void;
 }
