@@ -28,14 +28,14 @@ export interface CardFooterProps {
   children: React.ReactNode;
 }
 
-export type Header = ReactElement<typeof CardHeader>;
-export type Body = ReactElement<typeof CardBody>;
-export type Footer = ReactElement<typeof CardFooter>;
+export type CardHeader = ReactElement<typeof CardHeader>;
+export type CardBody = ReactElement<typeof CardBody>;
+export type CardFooter = ReactElement<typeof CardFooter>;
 
 export type CardChildren =
   | []
   | [Body]
-  | [Header, Body]
-  | [Header, Footer]
-  | [Body, Footer]
-  | [Header, Body, Footer]
+  | [CardHeader, CardBody]
+  | [CardHeader, CardFooter]
+  | [CardBody, CardFooter]
+  | [CardHeader, CardBody, CardFooter]
