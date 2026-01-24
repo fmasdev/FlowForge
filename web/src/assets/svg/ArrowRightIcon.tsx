@@ -13,8 +13,8 @@ export const ArrowRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
     className={`w-6 h-6 ${props.className ?? ''}`}
   >
     <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       d="m8.25 4.5 7.5 7.5-7.5 7.5"
     />
   </svg>

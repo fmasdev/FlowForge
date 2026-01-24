@@ -13,8 +13,8 @@ export const AddIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
     className={`w-6 h-6 ${props.className ?? ''}`}
   >
     <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       d="M12 4.5v15m7.5-7.5h-15"
     />
   </svg>
