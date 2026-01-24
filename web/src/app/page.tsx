@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Cta } from '@/components/Cta/Cta';
+import { Cta } from '@/components/cta/Cta';
 import { TextImgBlock, type TextImgBlocType } from '@/components/TextImgBloc';
 import { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
