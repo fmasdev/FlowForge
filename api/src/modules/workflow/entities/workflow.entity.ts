@@ -12,6 +12,9 @@ export class Workflow extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   description?: string;
 
+  @Column({ name: 'is_active', type: 'boolean', default: true })
+  isActive?: boolean;
+
   @ManyToOne(() => User, (user) => user.workflows, {
     nullable: false,
     onDelete: 'CASCADE'

@@ -1,8 +1,10 @@
+import { Command } from 'commander';
 import { AppModule } from '@/app.module';
 import { createUserCommand } from '@/cli/commands/create-user.command';
+import { seedCommand } from '@/cli/commands/seed.command';
 import { UserService } from '@/modules/user/user.service';
 import { NestFactory } from '@nestjs/core';
-import { Command } from 'commander';
+import { DataSource } from 'typeorm';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.createApplicationContext(AppModule, {
@@ -13,8 +15,10 @@ const bootstrap = async (): Promise<void> => {
 
   const userService = app.get(UserService);
 
+  const dataSource = app.get(DataSource);
   const program = new Command();
   program.addCommand(createUserCommand(userService));
+  program.addCommand(seedCommand(dataSource));
 
   await program.parseAsync(process.argv);
 
