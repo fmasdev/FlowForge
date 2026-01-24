@@ -4,7 +4,7 @@
 
 import React, { JSX } from 'react';
 import clsx from 'clsx';
-import { Cta } from '@/components/Cta/Cta';
+import { Cta } from '@/components/cta/Cta';
 
 export type TextBlockCta = {
   text: string;
