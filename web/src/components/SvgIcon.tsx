@@ -3,46 +3,17 @@
 'use client';
 
 import React, { JSX } from 'react';
-import { InfoIcon } from '../assets/svg/InfoIcon';
-import { SuccessIcon } from '../assets/svg/SuccessIcon';
-import { ErrorIcon } from '../assets/svg/ErrorIcon';
-import { OpenEyeIcon } from '../assets/svg/OpenEyeIcon';
-import { ClosedEyeIcon } from '../assets/svg/ClosedEyeIcon';
-import { UserIcon } from '../assets/svg/UserIcon';
-import { FlowForgeIcon } from '../assets/svg/FlowForgeIcon';
-import { EnIcon } from '../assets/svg/EnIcon';
-import { FrIcon } from '@/assets/svg/FrIcon';
+import { svgIcons, IconName } from '@/assets/svg';
 
-export type IconName =
-  | 'info'
-  | 'success'
-  | 'error'
-  | 'openEye'
-  | 'closedEye'
-  | 'user'
-  | 'flowforge'
-  | 'en'
-  | 'fr';
 type IconColor = 'info' | 'success' | 'danger' | 'default';
 
 interface SvgIconProps {
   name: IconName;
-  classname?: string;
+  className?: string;
   color?: IconColor;
   size?: 'sm' | 'md' | 'lg';
+  rounded?: boolean;
 }
-
-const svgIcons: Record<IconName, React.FC<React.SVGProps<SVGSVGElement>>> = {
-  info: InfoIcon,
-  success: SuccessIcon,
-  error: ErrorIcon,
-  openEye: OpenEyeIcon,
-  closedEye: ClosedEyeIcon,
-  user: UserIcon,
-  flowforge: FlowForgeIcon,
-  en: EnIcon,
-  fr: FrIcon,
-};
 
 // mapping de couleur Tailwind
 const colorClasses: Record<IconColor, string> = {
@@ -61,13 +32,21 @@ const sizeClasses: Record<'sm' | 'md' | 'lg', string> = {
 
 export const SvgIcon = ({
   name,
-  classname = '',
+  className = '',
   color = 'default',
   size = 'md',
+  rounded = false,
 }: SvgIconProps): JSX.Element => {
   const Svg = svgIcons[name];
-  const colorClass = colorClasses[color];
-  const sizeClass = sizeClasses[size];
 
-  return <Svg className={`${sizeClass} ${colorClass} ${classname}`} />;
+  return (
+    <Svg
+      className={[
+        sizeClasses[size],
+        colorClasses[color],
+        rounded ? 'rounded-full' : '',
+        className,
+      ].join(' ')}
+    />
+  );
 };

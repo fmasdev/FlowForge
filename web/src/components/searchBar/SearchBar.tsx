@@ -8,9 +8,19 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   placeholder,
   initialValue = "",
   clearLabel,
+  searchCharMin = 2,
   onSearch,
 }: SearchBarProps) => {
   const [value, setValue] = useState(initialValue);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const val = e.target.value
+    setValue(val)
+    if (searchCharMin < val.length) {
+      onSearch(val.trim());
+    }
+  };
 
   const handleClear = () => {
     setValue("");
@@ -29,7 +39,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         <input
           type="text"
           value={value}
-          onChange={(e) => onSearch(e.target.value)}
+          onChange={handleSearch}
           placeholder={placeholder ? placeholder : undefined}
           className={styles.input}
         />
