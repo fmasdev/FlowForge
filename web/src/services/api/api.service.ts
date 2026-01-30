@@ -31,42 +31,77 @@ class ApiService {
     );
   }
 
-  async get<T>(
-    url: string,
+  async get<T, M>(
+    path: string,
+    params: Record<string, unknown> = {},
     config?: AxiosRequestConfig,
-  ): Promise<ApiResponse<T>> {
+  ): Promise<ApiResponse<T, M>> {
+    const uri = this.uriBuilder(path, params);
     return await this.instance
-      .get<ApiResponse<T>>(url, config)
+      .get<ApiResponse<T, M>>(uri, config)
       .then((res) => res.data);
   }
 
   async post<T>(
-    url: string,
+    path: string,
     data?: unknown,
     config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
+    console.log(data)
     return await this.instance
-      .post<ApiResponse<T>>(url, data, config)
+      .post<ApiResponse<T>>(path, data, config)
       .then((res) => res.data);
   }
 
   async put<T>(
-    url: string,
+    path: string,
     data?: unknown,
+    params: Record<string, unknown> = {},
     config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
+    const uri = this.uriBuilder(path, params);
     return await this.instance
-      .put<ApiResponse<T>>(url, data, config)
+      .put<ApiResponse<T>>(uri, data, config)
+      .then((res) => res.data);
+  }
+
+  async patch<T>(
+    path: string,
+    data?: unknown,
+    params: Record<string, unknown> = {},
+    config?: AxiosRequestConfig,
+  ): Promise<ApiResponse<T>> {
+    const uri = this.uriBuilder(path, params);
+    return await this.instance
+      .patch<ApiResponse<T>>(uri, data, config)
       .then((res) => res.data);
   }
 
   async delete<T>(
-    url: string,
+    path: string,
+    params: Record<string, unknown> = {},
     config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
+    const uri = this.uriBuilder(path, params);
     return await this.instance
-      .delete<ApiResponse<T>>(url, config)
+      .delete<ApiResponse<T>>(uri, config)
       .then((res) => res.data);
+  }
+
+  private uriBuilder(
+    path: string,
+    params: Record<string, unknown>
+  ): string {
+    if (Object.keys(params).length === 0) {
+      return path;
+    }
+
+    const query = Object.entries(params)
+      .filter(([_, value]) => value !== undefined && value !== null)
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`)
+      .join('&');
+    
+    return path + `?${query}`;
   }
 }
 
