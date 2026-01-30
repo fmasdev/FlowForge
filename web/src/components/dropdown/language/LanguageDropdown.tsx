@@ -25,7 +25,7 @@ export const LanguageDropdown = (): JSX.Element => {
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-2 font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-transparent text-gray-50 hover:bg-white/5 hover:text-white rounded-md px-3 py-2 text-sm font-medium text-gray-300 px-4 py-2 text-sm rounded-md"
       >
-        <SvgIcon name={currentLocale} classname="h-5 w-5" />
+        <SvgIcon name={currentLocale} className="h-5 w-5" />
       </button>
 
       {open && (
@@ -39,7 +39,7 @@ export const LanguageDropdown = (): JSX.Element => {
               onClick={() => changeLanguage(locale)}
               className="flex items-center gap-2 px-4 py-2"
             >
-              <SvgIcon name={locale} classname="h-6 w-6" />
+              <SvgIcon name={locale} className="h-6 w-6" />
             </button>
           ))}
         </div>

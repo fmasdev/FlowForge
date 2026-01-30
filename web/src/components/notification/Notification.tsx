@@ -2,7 +2,8 @@
 
 'use client';
 
-import { IconName, SvgIcon } from '@/components/SvgIcon';
+import { IconName } from '@/assets/svg';
+import { SvgIcon } from '@/components/SvgIcon';
 import { JSX, useState } from 'react';
 
 export type NotificationType = 'info' | 'success' | 'danger';
