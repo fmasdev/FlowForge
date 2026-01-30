@@ -7,36 +7,49 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import styles from './Cta.module.css';
 import { SvgIcon } from '@/components/SvgIcon';
-import { CtaProps } from '@/components/cta/Cta.types';
+import { BackgroundVariant, CtaProps } from '@/components/cta/Cta.types';
 
 export const Cta = ({
   link,
   label,
+  type = 'button',
   icon,
   img,
   variant = 'default',
   isActive = false,
+  backgroundVariant,
   onClick,
 }: CtaProps): JSX.Element => {
+  
+  const bgClasses: Record<BackgroundVariant, string> = {
+    default: 'bg-gray-700',
+    info: 'bg-indigo-600',
+    success: 'bg-green-600',
+    warning: 'bg-yellow-500',
+    danger: 'bg-red-600',
+  };
 
-  const baseClasses =
-    'inline-flex items-center gap-2 font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+  const bgClass = backgroundVariant
+    ? bgClasses[backgroundVariant]
+    : undefined;
 
   const buttonClassName = clsx(
     styles.ctaBase,
     {
       [styles.defaultCta]: variant === 'default',
       [styles.navbarCta]: variant === 'navbar',
-    }
+      [styles.formCta]: variant === 'form',
+    },
+    bgClass,
   );
-  
-
+  console.log(variant)
+  console.log(buttonClassName)
   const content = (
     <>
       {icon &&
         <SvgIcon
           name={icon}
-          classname="flex items-center"
+          className="flex items-center"
         />
       }
       {label &&
@@ -66,7 +79,7 @@ export const Cta = ({
 
   return (
     <button
-      type="button"
+      type={type}
       data-active={isActive}
       className={buttonClassName}
       onClick={onClick}

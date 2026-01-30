@@ -26,3 +26,9 @@
          data-[active=true]:bg-white/5
          data-[active=true]:text-white;
 }
+
+.formCta {
+  @apply rounded-md px-4 py-2 
+         text-sm text-white 
+         hover:bg-gray-600
+}
