@@ -1,14 +1,17 @@
 // src/components/searchBar/SearchBar.tsx
 
+'use client';
+
 import React, { useState } from "react";
 import styles from './SearchBar.module.css'
 import { SvgIcon } from "@/components/SvgIcon";
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   placeholder,
-  initialValue = "",
+  initialValue = '',
   clearLabel,
   searchCharMin = 2,
+  onClearSearch,
   onSearch,
 }: SearchBarProps) => {
   const [value, setValue] = useState(initialValue);
@@ -17,14 +20,20 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     e.preventDefault();
     const val = e.target.value
     setValue(val)
+
     if (searchCharMin < val.length) {
       onSearch(val.trim());
     }
+
+    if (val.length === 0) {
+      onClearSearch();
+    }
   };
 
-  const handleClear = () => {
-    setValue("");
-    onSearch("");
+  const handleClear = (): void => {
+    setValue('');
+    onSearch('');
+    onClearSearch();
   };
 
   return (

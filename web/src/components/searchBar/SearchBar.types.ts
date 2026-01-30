@@ -6,4 +6,5 @@ interface SearchBarProps {
   clearLabel: string;
   searchCharMin?: number;
   onSearch: (value: string) => void;
+  onClearSearch: () => void;
 }
