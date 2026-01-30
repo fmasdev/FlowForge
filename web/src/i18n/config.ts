@@ -10,12 +10,15 @@ import frAuth from './locales/fr/auth.json';
 import frCommon from './locales/fr/common.json';
 import frHome from './locales/fr/home.json';
 import frNavigation from './locales/fr/navigation.json';
+import enWorkflow from './locales/en/workflow.json';
+import frWorkflow from './locales/fr/workflow.json';
 
 type TranslationNamespaces = {
   auth: typeof enAuth | typeof frAuth;
   common: typeof enCommon | typeof frCommon;
   home: typeof enHome | typeof frHome;
   navigation: typeof enNavigation | typeof frNavigation;
+  workflow: typeof enWorkflow | typeof frWorkflow;
 };
 
 export type Locale = 'en' | 'fr';
@@ -27,12 +30,14 @@ export const resources: Record<'en' | 'fr', TranslationNamespaces> = {
     common: enCommon,
     home: enHome,
     navigation: enNavigation,
+    workflow: enWorkflow
   },
   fr: {
     auth: frAuth,
     common: frCommon,
     home: frHome,
     navigation: frNavigation,
+    workflow: frWorkflow
   },
 };
 
