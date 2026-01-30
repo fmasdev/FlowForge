@@ -5,9 +5,9 @@
 import React, { JSX } from 'react';
 import { svgIcons, IconName } from '@/assets/svg';
 
-type IconColor = 'info' | 'success' | 'danger' | 'default';
+export type IconColor = 'info' | 'success' | 'danger' | 'default';
 
-interface SvgIconProps {
+export interface SvgIconProps {
   name: IconName;
   className?: string;
   color?: IconColor;
