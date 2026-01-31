@@ -110,8 +110,9 @@ Future improvements:
 - Visual editor drag & drop
 - Multi-environnements (dev / prod)
 
----
----
+
+<hr style="border: 3px solid #f7f8fa" />
+
 ## Start dev projects
 
 ### Start stack
@@ -153,7 +154,45 @@ npm run cli seed --workflow=100
 npm run cli seed --workflows
 `````
 
+<hr style="border: 3px solid #f7f8fa" />
+## Git
 
+### Branches
+
+| Prefix   | Use                      | Example              |
+|:---------|--------------------------|----------------------|
+| feature/ | New feature              | `feature/login-page` |
+| bugfix/  | Bug fix                  | `bugfix/fix-login-error` |
+| hotfix/  | Urgent fix in production | `hotfix/token-expiration` |
+| chore/   | Infrastructure or maintenance tasks | `chore/update-dependencies` |
+| test/    | Experiments or tests | `test/new-ui-experiment` |
+
+### Commits
+
+#### Structure 
+
+commit :
+
+````CSS
+[prefix]-[epicname]-[back|front|stack]: clear and concise message
+````
+
+- `[feat]` → commit type (`feat`, `fix`, …)
+- `[epicname]` → epic title or main feature
+- `[ back | front | stack ]` → composant impacté : backend, frontend, fullstack
+- `: message` → concise message describing the change
+
+
+#### Prefixes 
+
+| Prefix | Use |
+| ------ | --- |
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `chore` | Maintenance or non-functional tasks |
+| `docs` | Documentation |
+| `refactor` | Refactoring code without changing functionality |
+| `test` | Tests or unit tests |
 
 
 
