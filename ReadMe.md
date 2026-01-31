@@ -9,8 +9,8 @@ The project aims to demonstrate a modern backend architecture, a clear execution
 
 Project developed under WSL2 (Ubuntu) for a near-production environment.
 
-
-## Objective
+## Presentation
+### Objective
 The goal of FlowForge is to allow a user to:
 - Create workflows composed of nodes (triggers and actions)
 - Define the execution order via connections
@@ -18,7 +18,7 @@ The goal of FlowForge is to allow a user to:
 - Monitor its execution, status, and logs
 - The project is designed as a functional MVP, intentionally limited but technically robust, highlighting best practices in both backend and frontend development.
 
-## Key Concepts
+### Key Concepts
 
 - Workflow: a static definition of a sequence of actions
 - Node: a step in the workflow (e.g., manual trigger, HTTP action, log)
@@ -29,7 +29,7 @@ This separation clearly distinguishes between:
 
 | design time and execution time
 
-## Technical Architecture
+### Technical Architecture
 
 Backend
 - NestJS (Node.js, TypeScript)
@@ -50,7 +50,7 @@ Frontend
 - Configuration via Environment Variables
 
 
-## MVP Features:
+### MVP Features:
 - User Authentication
 - CRUD Workflows
 - Adding Nodes and Connections
@@ -60,7 +60,7 @@ Frontend
 - Execution History
 - Detailed Logs per Execution
 
-## Why FlowForge?
+### Why FlowForge?
 
 FlowForge is not just a simple CRUD application:
 - It includes an execution engine
@@ -69,47 +69,19 @@ FlowForge is not just a simple CRUD application:
 
 It's a project designed as a showcase of full-stack skills, closely aligned with real-world business challenges.
 
-
-## Évolutions possibles (hors MVP)
-- Triggers webhook
-- Exécution asynchrone / jobs
-- Retry & gestion des erreurs avancée
-- Versioning des workflows
-- Visual editor drag & drop
-- Multi-environnements (dev / prod)
-
-## Project Management
+### Project Management
 
 The project is managed via **Taiga** in order to reflect an organization close to a professional environment.
 
 👉 Public backlog & roadmap:
 https://tree.taiga.io/project/fred_dev-flow-forge
 
-
 Tickets are organized into:
 - Epics (major features)
 - User stories (MVP)
 - Technical tasks
 
-
-
-
-
-
-
-## Launch the project (dev)
-
-````bash
-corepack enable
-pnpm install
-docker compose up --build
-````
-
-URL: 
-- API: http://localhost:3000
-- UI: http://localhost:5173
-
-
+### Launch the project (dev)
 MVP Features:
 - Visual Workflow Builder
 - Sequential Execution
@@ -119,16 +91,70 @@ MVP Features:
 
 
 Architecture: 
-- Monorepo pnpm
+- Monorepo npm
 - Modular backend
 - ReactFlow frontend
 - Relational database + JSONB
 
-
+### Possible evolutions (excluding MVP)
 Future improvements: 
 - retryCount
 - parentExecutionId
 - environment
 - version
 - initiatedBy (user / system)
+- Triggers webhook
+- Exécution asynchrone / jobs
+- Retry & gestion des erreurs avancée
+- Versioning des workflows
+- Visual editor drag & drop
+- Multi-environnements (dev / prod)
+
+---
+---
+## Start dev projects
+
+### Start stack
+````bash
+docker compose up --build
+````
+
+URL: 
+- UI: http://localhost:8081
+- StoryBook: http://localhost:6006
+
+### Create first admin
+````bash
+npm run cli:create-user -- \
+  --email admin@flowforge.io \
+  --password admin123 \
+  --firstname adminFirstname\
+  --lastname adminLastname \
+  --role admin
+````
+
+### Run seeders or seeder by module
+
+#### seeders
+`````bash
+npm run cli seed
+`````
+
+#### seeder list: 
+1. user seeder 
+`````bash
+npm run cli seed --user=20
+npm run cli seed --users
+`````
+
+2. workflow seeders
+`````bash
+npm run cli seed --workflow=100
+npm run cli seed --workflows
+`````
+
+
+
+
+
 
