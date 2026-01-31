@@ -42,8 +42,7 @@ export const Cta = ({
     },
     bgClass,
   );
-  console.log(variant)
-  console.log(buttonClassName)
+
   const content = (
     <>
       {icon &&

@@ -2,15 +2,7 @@
 
 import { JSX } from "react";
 import { SvgIcon } from "@/components/SvgIcon";
-import { IconName } from "@/assets/svg";
-
-export interface ModalBtnProps {
-  className: string;
-  title?: string;
-  label?: string;
-  iconName?: IconName
-  onClick: () => void
-}
+import { ModalBtnProps } from "@/components/modal/Modal.types";
 
 export const ModalBtn: React.FC<ModalBtnProps> = ({
   className,

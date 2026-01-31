@@ -67,8 +67,7 @@ export const Pagination = ({
 
   return (
     <div
-      className={styles.paginationContainer}
-    >
+      className="flex items-center justify-between border-t border-white/10 px-4 py-3 sm:px-6">
       {/* mobile */}
       <div className="flex flex-1 justify-between sm:hidden">
         <a href="#" className={styles.mobileBtn}>
@@ -124,7 +123,7 @@ export const Pagination = ({
             })}
 
             <PaginationArrow
-              disabled={currentPage === 1}
+              disabled={currentPage === totalPages}
               onClick={() => onPageChange(currentPage + 1)}
               icon="arrowRight"
               label={t("pagination.next")}

@@ -37,9 +37,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <form className={styles.form}>
-      <div className={styles.container}>
-        <span className={styles.iconContainer}>
+    <form className="w-full max-w-lg">
+      <div className="relative flex items-center">
+        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400">
           <SvgIcon
             name="search"
             size="md"

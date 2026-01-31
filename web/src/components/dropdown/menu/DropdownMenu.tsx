@@ -6,6 +6,7 @@ import { Cta } from '@/components/cta/Cta';
 import { DropdownMenuProps } from '@/components/dropdown/menu/DropdownMenu.types';
 import { JSX, useEffect, useRef, useState } from 'react';
 
+// Todo: review comonent accecibility
 export const DropdownMenu = (props: DropdownMenuProps): JSX.Element => {
   const [open, setOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -36,7 +37,6 @@ export const DropdownMenu = (props: DropdownMenuProps): JSX.Element => {
 
   return (
     <div ref={ref} className="relative inline-block">
-      {/* cta */}
       <Cta
         icon={props.iconName}
         onClick={() => setOpen((v) => !v)}

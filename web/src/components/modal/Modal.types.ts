@@ -4,6 +4,15 @@ import { ReactElement } from "react";
 import { ModalBody } from "@/components/modal/ModalBody";
 import { ModalFooter } from "@/components/modal/ModalFooter";
 import { ModalHeader } from "@/components/modal/ModalHeader";
+import { IconName } from "@/assets/svg";
+
+export interface ModalBtnProps {
+  className: string;
+  title?: string;
+  label?: string;
+  iconName?: IconName
+  onClick: () => void
+}
 
 export interface ModalProps {
   open: boolean;

@@ -1,6 +1,5 @@
 // src/components/card/Card.types.ts
 
-
 export interface CardProps {
   children: React.ReactNode;
   className?: string;

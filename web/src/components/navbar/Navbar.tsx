@@ -120,16 +120,12 @@ export const NavBar = (): JSX.Element => {
 
         <NavbarAuthSlot />
         <LanguageDropdown />
-
-        {/* todo lang dropdown */}
-        {/* <button onClick={() => i18n.changeLanguage('fr')}>FR</button>
-        <button onClick={() => i18n.changeLanguage('en')}>EN</button>  */}
       </div>
 
       {/* Mobile menu */}
       {isAuthenticated && isNavOpen && (
         <div id="mobile-menu"
-className="md:hidden px-2 pt-2 pb-3 space-y-1"
+          className="md:hidden px-2 pt-2 pb-3 space-y-1"
         >
           {navigationItems.map((navItem, index) => (
             <Link

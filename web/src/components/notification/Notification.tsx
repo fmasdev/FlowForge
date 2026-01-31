@@ -2,27 +2,9 @@
 
 'use client';
 
-import { IconName } from '@/assets/svg';
-import { SvgIcon } from '@/components/SvgIcon';
 import { JSX, useState } from 'react';
-
-export type NotificationType = 'info' | 'success' | 'danger';
-export type NotificationPosition =
-  | 'bottom-right'
-  | 'bottom-left'
-  | 'bottom-center';
-
-export interface NotificationStyle {
-  bg: string;
-  icon: IconName;
-  iconColor: string;
-}
-
-type NotificationProps = {
-  type: NotificationType;
-  message: string;
-  position?: NotificationPosition;
-};
+import { SvgIcon } from '@/components/SvgIcon';
+import { NotificationPosition, NotificationProps, NotificationStyle, NotificationType } from '@/components/notification/Notification.type';
 
 const typeStyles = {
   info: {
@@ -63,7 +45,7 @@ export const Notification = ({
       className={`${positionStyles[position]} ${bg} flex items-center gap-2 rounded-md px-4 py-2 shadow-lg max-w-xs`}
     >
       <SvgIcon name={icon}
-className={`w-5 h-5 ${iconColor}`}
+        className={`w-5 h-5 ${iconColor}`}
       />
       <span className="text-gray-800 text-sm">{message}</span>
       <button
