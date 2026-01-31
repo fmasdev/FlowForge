@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from '@/common/interceptors/response.interseptor';
 import { AllExceptionsFilter } from '@/common/filters/http-exception.filter';
 import cookieParser from 'cookie-parser';
+import { NextFunction, Request, Response } from 'express';
+import { RequestLoggerMiddleware } from '@/common/middlewares/RequestLoggerMiddleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +17,14 @@ async function bootstrap() {
     origin: 'http://127.0.0.1',
     credentials: true,
   });
+  
+  if (process.env.NODE_ENV === 'development') {
+    // Logger middleware
+    const requestLogger = new RequestLoggerMiddleware()
+    // app.use(requestLoggerMiddleware(req, resizeBy, next));
+    app.use((req: Request, res: Response, next: NextFunction) =>
+      requestLogger.use(req, res, next));
+  }
 
   // request validation
   app.useGlobalPipes(

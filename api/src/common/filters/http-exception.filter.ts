@@ -36,15 +36,21 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     if (exception instanceof QueryFailedError) {
       ({ message, status } = loadTypeOrmException(exception));
-      console.error(exception)
+      console.error(exception);
     } else if (exception instanceof HttpException) {
       ({ message, status } = loadHttpException(exception));
-      console.error(exception)
+      console.error(exception);
     } else if (hasMessage(exception)) {
       // Other errors
       message = exception.message;
-      console.error(exception.message)
+      console.error(exception.message);
     }
+    // todo make correct error message when router execution context error : router-execution-context.js:37:30 {
+    // response: {
+    //   message: [ 'isActive must be a string' ],
+    //   error: 'Bad Request',
+    //   statusCode: 400
+    // },
 
     response.status(status).json({
       success: false,
