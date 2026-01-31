@@ -174,7 +174,7 @@ npm run cli seed --workflows
 commit :
 
 ````CSS
-[prefix]-[epicname]-[back|front|stack]: clear and concise message
+[prefix]([epicname]/[back|front|stack]): clear and concise message
 ````
 
 - `[feat]` → commit type (`feat`, `fix`, …)
