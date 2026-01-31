@@ -35,6 +35,22 @@ services:
     ports:
       - "80:3000"
   
+  storybook:
+    container_name: flowforge-storybook
+    build:
+      context: ./web
+      dockerfile: docker/Dockerfile.dev
+    depends_on:
+      - api
+    env_file:
+      - ./web/.env.development
+    volumes:
+      - ./web:/app
+    networks:
+      - flowforge-bf-net
+    ports:
+      - "6006:6006"
+    command: npm run storybook
 
   postgres:
     container_name: flowforge-postgres
