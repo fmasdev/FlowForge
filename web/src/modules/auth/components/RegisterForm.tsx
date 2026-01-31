@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Notification } from '@/components/Notification';
+import { Notification } from '@/components/notification/Notification';
 import { isApiErrorResponse } from '@/helpers/typeGuards';
 import { PasswordInput } from '@/modules/auth/components/PasswordInput';
 import { useRouter } from 'next/navigation';

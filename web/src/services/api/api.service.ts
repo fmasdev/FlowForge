@@ -47,7 +47,6 @@ class ApiService {
     data?: unknown,
     config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
-    console.log(data)
     return await this.instance
       .post<ApiResponse<T>>(path, data, config)
       .then((res) => res.data);

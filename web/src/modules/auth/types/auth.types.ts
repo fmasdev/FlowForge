@@ -1,14 +1,8 @@
 // src/modules/auth/types/auth.types.ts
 
-import { UserType } from '@/modules/auth/types/user.types';
-
 export interface LoginType {
   email: string;
   password: string;
-}
-
-export interface ForgotPasswordResponse {
-  message: string;
 }
 
 export interface RegisterFormValues {
@@ -24,9 +18,23 @@ export type RegisterFormErrors = Partial<
 >;
 
 export interface AuthContextType {
-  user: UserType | null;
+  user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: () => void;
   logout: () => void;
+}
+
+export interface AuthApiResponse {
+  success: boolean;
+  message: string;
+  data: {};
+}
+
+export interface User {
+  sub?: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  role: string;
 }

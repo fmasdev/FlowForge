@@ -4,7 +4,7 @@
 
 import { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Notification } from '@/components/Notification';
+import { Notification } from '@/components/notification/Notification';
 import { authService } from '@/modules/auth/auth.service';
 
 export const ForgotPasswordForm = (): JSX.Element => {

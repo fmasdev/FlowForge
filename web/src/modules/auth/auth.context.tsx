@@ -3,8 +3,7 @@
 'use client';
 
 import { authService } from '@/modules/auth/auth.service';
-import { AuthContextType } from '@/modules/auth/types/auth.types';
-import { UserType } from '@/modules/auth/types/user.types';
+import { AuthContextType, User } from '@/modules/auth/types/auth.types';
 import { createContext, useState, ReactNode, useEffect, JSX } from 'react';
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -14,7 +13,7 @@ export const AuthProvider = ({
 }: {
   children: ReactNode;
 }): JSX.Element => {
-  const [user, setUser] = useState<UserType | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

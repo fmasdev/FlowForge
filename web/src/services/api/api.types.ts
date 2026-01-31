@@ -1,17 +1,19 @@
 // src/services/api/api.types.ts
 
 export interface PaginationMeta {
-  total: number;
   page: number;
   limit: number;
   pages: number;
   sortDirection: 'ASC' | 'DESC';
 }
 
-export interface ApiResponse<T = unknown, M = unknown> {
+export type ListApiResponse<T> = ApiResponse<T[], PaginationMeta>;
+export type ItemApiResponse<T> = ApiResponse<T>;
+
+export interface ApiResponse<T, M = unknown> {
   success: boolean;
   message: string;
-  data: T | null;
+  data: T;
   meta?: M | null;
 }
 
