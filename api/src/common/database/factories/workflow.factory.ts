@@ -23,7 +23,7 @@ export class WorkflowFactory {
     const workflow = workflowRepo.create({
       name: faker.company.name(),
       description: faker.lorem.sentence(),
-      isActive: Boolean(Math.round(Math.random())),
+      lastExecution: faker.date.between({ from: '2000-01-01', to: Date.now() }),
       createdBy: user,
     });
     

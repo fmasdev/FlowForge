@@ -78,17 +78,17 @@ export class WorkflowService {
     sortBy = 'createdAt',
     sortDirection = SortDirection.DESC,
     search,
-  }: PaginationDto): Promise<ServiceResponse<Workflow[], Pagination>> {
+  }: PaginationDto,
+    jwtUser: JwtUserPayload
+  ): Promise<ServiceResponse<Workflow[], Pagination>> {
     const qb = this.workflowRepository.createQueryBuilder('workflow');
-    qb.leftJoin('workflow.createdBy', 'user').addSelect([
-      'user.id',
-      'user.email',
-      'user.firstname',
-      'user.lastname',
-    ]);
+    console.log(jwtUser.sub)
+    qb.leftJoin('workflow.createdBy', 'user')
+      .addSelect(['user.id', 'user.email', 'user.firstname', 'user.lastname'])
+      .where('workflow.createdBy.id = :userId', { userId: jwtUser.sub });
 
     if (search) {
-      qb.where(
+      qb.andWhere(
         'workflow.name ILIKE :search OR workflow.description ILIKE :search',
         { search: `%${search}%` },
       );

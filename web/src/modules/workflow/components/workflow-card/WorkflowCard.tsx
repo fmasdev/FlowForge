@@ -38,10 +38,7 @@ export const WorkflowCard = ({
         subtitle={workflow.createdBy?.firstname}
         subtitleTooltip={t('card.author')}
         displayActions={workflow.createdBy.id === user?.sub}
-        displayIsActiveIcon={true}
-        isActiveIcon={workflow.isActive}
-        isActiveTitle={t('cardHeader.active')}
-        isNotActiveTitle={t('cardHeader.notActive')}
+        displayIsActiveIcon={false}
         onEdit={onEdit}
         onDelete={onDelete}
       />
@@ -61,6 +58,11 @@ export const WorkflowCard = ({
         {workflow.updatedAt && (
           <div className="text-xs">
             {getFormatedDate(workflow.updatedAt, 'card.updatedAt')}
+          </div>
+        )}
+        {workflow.lastExecution && (
+          <div className="text-xs">
+            {getFormatedDate(workflow.lastExecution, 'card.lastExecution')}
           </div>
         )}
       </CardFooter>
