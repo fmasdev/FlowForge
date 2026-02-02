@@ -1,0 +1,37 @@
+{
+
+  "card": {
+    "createdAt": "Created on {{date}} at {{time}}",
+    "updatedAt": "Updated on {{date}} at {{time}}",
+    "author": "Author"
+  },
+  "form": {
+    "name": "Name",
+    "description": "Description",
+    "isActive": "Is active"
+  },
+  "formError": {
+    "name": {
+      "minLength": "Name must be at least 3 characters long",
+      "maxLength": "Name must be at most 30 characters long"
+    },
+    "description": {
+      "required": "Description is required",
+      "maxLength": "Description must be at most 100 characters long"
+    }
+  },
+  "modal": {
+    "delete": "Delete",
+    "deleteMessage": "Are you sure you want to delete this workflow?",
+    "deleteName": "Name",
+    "cancel": "Cancel",
+    "submit": "Submit"
+  },
+  "cardHeader": {
+    "active": "Active workflow",
+    "notActive": "Workflow is not active"
+  },
+  "notification": {
+
+  }
+}

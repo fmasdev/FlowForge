@@ -35,12 +35,13 @@ export class WorkflowController {
     return await this.workflowService.create(createWorkflowDto, jwtUser);
   }
 
-  @Put()
+  @Put(':id')
   async update(
+    @Param('id') id: string,
     @User() user: JwtUserPayload,
     @Body() updateWorkflowDto: UpdateWorkflowDto,
   ) {
-    return await this.workflowService.update(updateWorkflowDto, user);
+    return await this.workflowService.update(id,updateWorkflowDto, user);
   }
 
   @Get()
