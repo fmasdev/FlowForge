@@ -47,13 +47,13 @@ export class WorkflowService {
     return this.workflowRepository.save(workflow);
   }
 
-  async findOne(id: string) {
-    const workflow: Workflow | null = await this.workflowRepository.findOne({
-      where: {
-        id: id,
-      },
-      relations: ['createdBy'],
-    });
+  async findOne(id: string): Promise<WorkflowResponseDto> {
+    const workflow = await this.workflowRepository
+      .createQueryBuilder('workflow')
+      .leftJoinAndSelect('workflow.nodes', 'node')
+      .leftJoinAndSelect('workflow.createdBy', 'user')
+      .where('workflow.id = :id', { id })
+      .getOne();
 
     if (!workflow) {
       throw new NotFoundException(`Cannot find workflow where id is #${id}`);
@@ -63,6 +63,7 @@ export class WorkflowService {
       id: workflow.id,
       name: workflow.name,
       description: workflow.description,
+      nodes: workflow.nodes,
       createdBy: {
         id: workflow.createdBy.id,
         firstname: workflow.createdBy.firstname,
@@ -156,5 +157,12 @@ export class WorkflowService {
     const removed = await this.workflowRepository.remove(workflow);
     
     return removed ? workflow : null
+  }
+
+  async getOwnedWorkflow(workflowId: string, userId: string): Promise<Workflow | null> {
+    return await this.workflowRepository.findOne({
+      where: { id: workflowId, createdBy: { id: userId } },
+      relations: ['createdBy'],
+    });
   }
 }

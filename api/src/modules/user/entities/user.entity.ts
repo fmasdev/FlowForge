@@ -22,8 +22,6 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: Role, default: Role.USER })
   role!: string;
 
-  @OneToMany(() => Workflow, (workflow) => workflow.createdBy, {
-    cascade: ['soft-remove'],
-  })
+  @OneToMany(() => Workflow, (workflow) => workflow.createdBy)
   workflows!: Workflow[];
 }

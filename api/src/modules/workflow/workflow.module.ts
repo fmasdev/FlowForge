@@ -14,5 +14,6 @@ import { UserModule } from '@/modules/user/user.module';
   ],
   controllers: [WorkflowController],
   providers: [WorkflowService],
+  exports: [WorkflowService],
 })
 export class WorkflowModule {}

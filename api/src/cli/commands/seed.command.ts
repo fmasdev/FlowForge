@@ -2,25 +2,12 @@
 
 import { Command } from 'commander';
 import { DataSource } from 'typeorm';
-import { WorkflowSeeder } from '@/common/database/seeds';
+import { seedWorkflowCommand } from '@/cli/commands/seed-workflow.command';
+import { seedWorkflowNodeCommand } from '@/cli/commands/seed-workflow-node.command';
 
-export const seedCommand = (dataSource: DataSource): Command => {
-  const command = new Command('seed');
-
-  command
+export const seedCommand = (datasource: DataSource): Command =>
+  new Command('seed')
     .description('Seed database with fake data')
-    .option('-w, --workflows <number>', 'Number of workflows', '20')
-    .action(async (options) => {
-      if (process.env.NODE_ENV === 'production') {
-        throw new Error('Seeding is forbidden in production');
-      }
-
-      const workflowsCount = Number(options.workflows);
-
-      await new WorkflowSeeder().run(dataSource, workflowsCount);
-
-      console.log(`Seeded ${workflowsCount} workflows`);
-    });
-
-  return command;
-};
+    .addCommand(seedWorkflowCommand(datasource))
+    .addCommand(seedWorkflowNodeCommand(datasource));
+    
