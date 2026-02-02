@@ -1,0 +1,24 @@
+{
+
+  "card": {
+    "createdAt": "Créé le {{date}} à {{time}}",
+    "updatedAt": "Modifié le {{date}} à {{time}}",
+    "author": "Auteur"
+  },
+  "form": {
+    "name": "Nom",
+    "description": "Description",
+    "isActive": "Est actif"
+  },
+  "modal": {
+    "delete": "Supprimer",
+    "deleteMessage": "Etes-vous sur de vouloir supprimer ce workflow ?",
+    "deleteName": "Nom",
+    "cancel": "Annuler",
+    "submit": "Enregistrer"
+  },
+  "cardHeader": {
+    "active": "Workflow actif",
+    "notActive": "Workflow inactif"
+  }
+}

@@ -16,6 +16,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Pagination, ServiceResponse } from '@/common/types/response.types';
+import { SortDirection } from '@/common/enums/sortDirection.enum';
 
 @Injectable()
 export class WorkflowService {
@@ -75,8 +76,8 @@ export class WorkflowService {
   async findAll({
     page,
     limit,
-    sortBy,
-    sortDirection,
+    sortBy = 'createdAt',
+    sortDirection = SortDirection.DESC,
     search,
   }: PaginationDto): Promise<ServiceResponse<Workflow[], Pagination>> {
     const qb = this.workflowRepository.createQueryBuilder('workflow');
@@ -105,7 +106,6 @@ export class WorkflowService {
     return {
       data,
       meta: {
-        total,
         page,
         limit,
         pages: Math.ceil(total / limit),
@@ -116,32 +116,32 @@ export class WorkflowService {
   }
 
   async update(
+    id: string,
     workflowInput: UpdateWorkflowDto,
     jwtUser: JwtUserPayload,
   ): Promise<Workflow> {
     const workflow: Workflow | null = await this.workflowRepository.findOne({
-      where: { id: workflowInput.id },
+      where: { id: id },
       relations: ['createdBy'],
     });
 
     if (!workflow)
       throw new NotFoundException(
-        `Cannot find workflow where id is #${workflowInput.id}`,
+        `Cannot find workflow where id is #${id}`,
       );
 
-    if (workflow.createdBy.id !== jwtUser.sub)
+    if (workflow.createdBy.id !== jwtUser.sub) {
       throw new UnauthorizedException(
-        'You cannot remove this workflow because you are not author.',
+        'You cannot update this workflow because you are not author.',
       );
-
-    try {
-      return await this.workflowRepository.save(workflowInput);
-    } catch (error) {
-      throw error;
     }
+
+    Object.assign(workflow, workflowInput);
+
+    return await this.workflowRepository.save(workflow);
   }
 
-  async remove(id: string, jwtUser: JwtUserPayload): Promise<Workflow> {
+  async remove(id: string, jwtUser: JwtUserPayload): Promise<Workflow | null> {
     const workflow: Workflow | null = await this.workflowRepository.findOne({
       where: { id: id },
       relations: ['createdBy'],
@@ -154,8 +154,9 @@ export class WorkflowService {
       throw new UnauthorizedException(
         'You cannot remove this workflow because you are not author.',
       );
-
-    return await this.workflowRepository.remove(workflow);
+    const removed = await this.workflowRepository.remove(workflow);
+    
+    return removed ? workflow : null
   }
 
   async getOwnedWorkflow(workflowId: string, userId: string): Promise<Workflow | null> {

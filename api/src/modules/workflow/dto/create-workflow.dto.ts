@@ -1,6 +1,6 @@
 // src/modules/workflow/dto/create-workflow.dto.ts
 
-import { IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsOptional, IsString } from "class-validator";
 
 export class CreateWorkflowDto { 
   @IsString()
@@ -9,4 +9,7 @@ export class CreateWorkflowDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @IsBoolean()
+  isActive!: boolean;
 }

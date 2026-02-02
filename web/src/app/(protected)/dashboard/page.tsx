@@ -1,9 +1,12 @@
 // src/app/(protected)/dashboard/page.tsx
 
 import { JSX } from 'react';
+import { WorkflowDashboard } from '@/modules/workflow/components/workflow/Workflow';
 
 export default function Page(): JSX.Element {
-  console.log('dashboard page');
-  console.log('project list and static resume, rapid access to projects');
-  return <div>dashboard</div>;
+  return (
+    <div className='px-10'>
+      <WorkflowDashboard />
+    </div>
+  );
 }
