@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from '@/modules/user/user.module';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { WorkflowModule } from '@/modules/workflow/workflow.module';
+import { WorlflowNodeModule } from './modules/worlflow-node/worlflow-node.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { WorkflowModule } from '@/modules/workflow/workflow.module';
     UserModule,
     AuthModule,
     WorkflowModule,
+    WorlflowNodeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
