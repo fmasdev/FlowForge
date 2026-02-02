@@ -5,10 +5,10 @@ import { IsInt, IsOptional, Min } from "class-validator";
 export class DelayNodeConfigDto {
   @IsInt()
   @Min(1)
-  durationMs!: number; 
-  
+  durationMs!: number;
+
   @IsOptional()
   @IsInt()
   @Min(1)
-  jitterMs?: number; 
+  jitterMs?: number;
 }

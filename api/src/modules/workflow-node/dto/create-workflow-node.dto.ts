@@ -5,9 +5,13 @@ import { DelayNodeConfigDto } from "@/modules/workflow-node/dto/delay-node-confi
 import { HttpNodeConfigDto } from "@/modules/workflow-node/dto/http-node-config.dto";
 import { WorkflowNodeType } from "@/modules/workflow-node/enums/workflow-node-type.enum";
 import { Transform } from "class-transformer";
-import { IsEnum, IsNumber, ValidateNested } from "class-validator";
+import { IsEnum, IsNumber, IsString, ValidateNested } from "class-validator";
 
 export class CreateWorkflowNodeDto {
+
+  @IsString()
+  workflowId!: string;
+
   @IsEnum(WorkflowNodeType, {
     message: `type must be one of ${Object.values(WorkflowNodeType).join(', ')}`,
   })
