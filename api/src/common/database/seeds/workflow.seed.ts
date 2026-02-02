@@ -12,5 +12,7 @@ export class WorkflowSeeder {
       const workflow = await WorkflowFactory.create(dataSource)
       await workflowRepo.save(workflow)
     }
+
+    console.log(`✅ Seeded ${count} workflows`);
   }
 }
