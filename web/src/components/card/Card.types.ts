@@ -7,6 +7,7 @@ export interface CardProps {
 
 export interface CardHeaderProps {
   title?: string;
+  link?: string;
   subtitle?: string;
   subtitleTooltip?: string;
   displayActions?: boolean;
