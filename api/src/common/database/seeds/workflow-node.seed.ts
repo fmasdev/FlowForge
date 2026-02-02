@@ -2,9 +2,9 @@
 
 import { DataSource } from "typeorm";
 import { Workflow } from "@/modules/workflow/entities/workflow.entity";
-import { WorkflowNode } from "@/modules/worlflow-node/entities/workflow-node.entity";
 import { NotFoundException } from "@nestjs/common";
 import { WorkflowNodeFactory } from "@/common/database/factories/workflow-node.factory";
+import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
 
 
 export class WorkflowNodeSeeder {

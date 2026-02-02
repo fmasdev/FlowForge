@@ -1,12 +1,13 @@
 // src/common/database/factories/workflow-node.factory.ts
 
+import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
+import { WorkflowNodeType } from "@/modules/workflow-node/enums/workflow-node-type.enum";
 import { Workflow } from "@/modules/workflow/entities/workflow.entity";
-import { WorkflowNode } from "@/modules/worlflow-node/entities/workflow-node.entity";
 
 export class WorkflowNodeFactory {
   static createHttpNode(workflow: Workflow): Partial<WorkflowNode> {
     return {
-      type: 'http',
+      type: WorkflowNodeType.HTTP,
       workflow,
       positionX: Math.floor(Math.random() * 800),
       positionY: Math.floor(Math.random() * 600),
@@ -21,7 +22,7 @@ export class WorkflowNodeFactory {
 
   static createConditionNode(workflow: Workflow): Partial<WorkflowNode> {
     return {
-      type: 'condition',
+      type: WorkflowNodeType.CONDITION,
       workflow,
       positionX: Math.floor(Math.random() * 800),
       positionY: Math.floor(Math.random() * 600),
@@ -37,7 +38,7 @@ export class WorkflowNodeFactory {
     workflow: Workflow,
   ): Partial<WorkflowNode> {
     return {
-      type: 'delay',
+      type: WorkflowNodeType.DELAY,
       workflow,
       positionX: Math.floor(Math.random() * 800),
       positionY: Math.floor(Math.random() * 600),

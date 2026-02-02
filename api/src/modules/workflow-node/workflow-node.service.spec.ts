@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { WorlflowNodeService } from './worlflow-node.service';
+import { WorkflowNodeService } from './workflow-node.service';
 
-describe('WorlflowNodeService', () => {
-  let service: WorlflowNodeService;
+describe('WorkflowNodeService', () => {
+  let service: WorkflowNodeService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [WorlflowNodeService],
+      providers: [WorkflowNodeService],
     }).compile();
 
-    service = module.get<WorlflowNodeService>(WorlflowNodeService);
+    service = module.get<WorkflowNodeService>(WorkflowNodeService);
   });
 
   it('should be defined', () => {
