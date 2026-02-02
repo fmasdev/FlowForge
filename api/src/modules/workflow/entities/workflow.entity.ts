@@ -1,8 +1,9 @@
 // src/modules/workflow/entities/workflow.entity.ts
 
-import { Entity, Column, ManyToOne, JoinColumn, Unique } from "typeorm";
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany, Unique} from "typeorm";
 import { BaseEntity } from '@/common/entities/base.entity';
 import { User } from "@/modules/user/entities/user.entity";
+import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
 
 @Entity('workflows')
 @Unique(['name'])
@@ -22,4 +23,7 @@ export class Workflow extends BaseEntity {
   })
   @JoinColumn({ name: 'created_by' })
   createdBy!: User;
+
+  @OneToMany(() => WorkflowNode, (workflowNode) => workflowNode.workflow, { cascade: true})
+  nodes!: WorkflowNode[]
 }

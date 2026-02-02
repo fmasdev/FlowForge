@@ -1,10 +1,13 @@
+// src/cli/cli.ts
+
 import { Command } from 'commander';
 import { AppModule } from '@/app.module';
-import { createUserCommand } from '@/cli/commands/create-user.command';
-import { seedCommand } from '@/cli/commands/seed.command';
 import { UserService } from '@/modules/user/user.service';
 import { NestFactory } from '@nestjs/core';
 import { DataSource } from 'typeorm';
+import { createUserCommand } from '@/cli/commands/create-user.command';
+import { seedWorkflowCommand } from '@/cli/commands/seed-workflow.command';
+import { seedWorkflowNodeCommand } from '@/cli/commands/seed-workflow-node.command';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.createApplicationContext(AppModule, {
@@ -18,7 +21,8 @@ const bootstrap = async (): Promise<void> => {
   const dataSource = app.get(DataSource);
   const program = new Command();
   program.addCommand(createUserCommand(userService));
-  program.addCommand(seedCommand(dataSource));
+  program.addCommand(seedWorkflowCommand(dataSource));
+  program.addCommand(seedWorkflowNodeCommand(dataSource));
 
   await program.parseAsync(process.argv);
 

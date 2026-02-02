@@ -89,26 +89,19 @@ export class UserService {
   }
 
   async remove(id: string, actor: AuthUserType): Promise<User | UpdateResult> {
-    if (actor.role === Role.ADMIN) {
-      const user: User | null = await this.userRepository.findOneBy({
-        id: id,
-      });
+    const user: User | null = await this.userRepository.findOneBy({
+      id: actor.id,
+    });
+    
+    if (!user) {   
+      throw new NotFoundException(`Cannot find user where id is #${id}`);
+    }
 
-      if (!user)
-        throw new NotFoundException(`Cannot find user where id is #${id}`);
-
-      return await this.userRepository.remove(user);
-    } else if (actor.role === Role.USER) {
-      const user: User | null = await this.userRepository.findOneBy({
-        id: actor.id,
-      });
-      if (!user)
-        throw new NotFoundException(`Cannot find user where id is #${id}`);
-
-      return await this.userRepository.softDelete(user);
-    } else {
+    if (user.id !== actor.id) {
       throw new ForbiddenException('Insufficient permissions');
     }
+    
+    return await this.userRepository.remove(user);
   }
 
   async updatePassword(id: string, dto: UpdatePasswordDto): Promise<User> {
