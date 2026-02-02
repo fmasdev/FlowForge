@@ -35,6 +35,7 @@ export const WorkflowCard = ({
 
       <CardHeader
         title={workflow.name}
+        link={`/workflows/${workflow.id}`}
         subtitle={workflow.createdBy?.firstname}
         subtitleTooltip={t('card.author')}
         displayActions={workflow.createdBy.id === user?.sub}

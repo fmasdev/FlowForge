@@ -8,6 +8,9 @@ export const workflowService = {
 
   create: async (data: WorkflowFormData): Promise<ItemApiResponse<Workflow>> => 
     await apiService.post('/workflows', data),
+  
+  fetchOne: async (id: string): Promise<ItemApiResponse<Workflow>> => 
+    await apiService.get(`/workflows/${id}`), 
 
   fetchAll: async (params?: Record<string, unknown>): Promise<ListApiResponse<Workflow>> =>
     await apiService.get('/workflows', params),
