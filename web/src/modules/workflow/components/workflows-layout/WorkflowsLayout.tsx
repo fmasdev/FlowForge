@@ -21,7 +21,7 @@ export interface FetchWorkflowProps {
     search?: string
 }
   
-export const WorkflowDashboard = (): JSX.Element => {
+export const WorkflowsLayout = (): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { t: tCommon } = useTranslation('common');
 
