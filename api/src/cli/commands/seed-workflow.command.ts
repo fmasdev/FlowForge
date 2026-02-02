@@ -5,7 +5,7 @@ import { DataSource } from 'typeorm';
 import { WorkflowSeeder } from '@/common/database/seeds';
 
 export const seedWorkflowCommand = (dataSource: DataSource): Command => {
-  const command = new Command('seed');
+  const command = new Command('seed-workflow');
 
   command
     .description('Seed database with fake data')
