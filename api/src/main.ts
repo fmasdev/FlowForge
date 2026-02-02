@@ -14,7 +14,10 @@ async function bootstrap() {
 
   // todo: put this variable in env file
   app.enableCors({
-    origin: 'http://127.0.0.1',
+    origin: [
+      'http://127.0.0.1',
+      'http://localhost',
+    ],
     credentials: true,
   });
   
