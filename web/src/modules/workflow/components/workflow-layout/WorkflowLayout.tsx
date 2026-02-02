@@ -2,18 +2,14 @@
 
 'use client';
 
-import { JSX, useEffect, useState, useTransition } from "react";
+import { JSX, useEffect, useState } from "react";
 import { workflowService } from "@/modules/workflow/workflow.service";
 import { WorkflowHeader } from "@/modules/workflow/components/workflow-header/WorkflowHeader";
-import { Workflow } from "@/modules/workflow/types/Workflow.types";
+import { Workflow, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
 import { ItemApiResponse } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { WorkflowCanvas } from "@/modules/workflow/components/workflow-canvas/WorkflowCanvas";
 import { WorkflowSidebar } from "@/modules/workflow/components/workflow-sidebar/WorkflowSidebar";
-
-export interface WorkflowProps {
-  id: string
-}
 
 export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
   const { t } = useTranslation('workflow');

@@ -7,10 +7,8 @@ import { useTranslation } from "react-i18next";
 export interface WorkflowSidebarProps {
 }
 
-
 export const WorkflowSidebar = ({}: WorkflowSidebarProps): JSX.Element => {
   const { t } = useTranslation('workflow');
-
 
   return (
     <Sidebar

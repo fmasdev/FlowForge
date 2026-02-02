@@ -48,3 +48,7 @@ export interface CreatedBy {
   lastname: string;
   email: string;
 }
+
+export interface WorkflowProps {
+  id: string
+}
