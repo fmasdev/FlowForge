@@ -10,6 +10,7 @@ import { ItemApiResponse } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { WorkflowCanvas } from "@/modules/workflow/components/workflow-canvas/WorkflowCanvas";
 import { WorkflowSidebar } from "@/modules/workflow/components/workflow-sidebar/WorkflowSidebar";
+import { NodeChange } from "@xyflow/react";
 
 export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
   const { t } = useTranslation('workflow');
@@ -20,6 +21,7 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
     try {
       const res: ItemApiResponse<Workflow> = await workflowService.fetchOne(id);
       setWorkflow(res.data);
+      console.log(res.data)
     } catch (err) {
       console.error(err)
     }
@@ -27,16 +29,26 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
 
   useEffect(() => {
     fetchWorkflow()
+    
   }, [])
+
+  const handleNodeChange = (changes: NodeChange) => {
+
+  }
+
+  const handleNodeSelect = (nodeId: string) => {
+
+  }
+
+  const handleNodeDelete = (nodeId: string) => { 
+
+  }
   
   return (
     <>
       {!!workflow ? (
-        <div className="flex gap-2 min-h-screen">
-          <WorkflowSidebar></WorkflowSidebar>
-          <div className="w-full px-4">
-        
-            <WorkflowHeader
+        <div className="flex gap-2 h-screen flex-col">
+          <WorkflowHeader
               workflow={workflow}
               actions={
                 <>
@@ -48,10 +60,18 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
                   </button>
                 </>
               }
-            ></WorkflowHeader>
-        
-
-            <WorkflowCanvas></WorkflowCanvas>
+          ></WorkflowHeader>
+          
+          <div className="flex flex-1 overflow-hidden">
+            <WorkflowSidebar></WorkflowSidebar>
+          
+            <WorkflowCanvas
+              workflowNodes={workflow.nodes}
+              workflowEdges={workflow?.edges}
+              onNodeChange={handleNodeChange}
+              onNodeDelete={handleNodeDelete}
+              onNodeSelect={handleNodeSelect}
+            />
           </div>
         </div>
       ) : (
