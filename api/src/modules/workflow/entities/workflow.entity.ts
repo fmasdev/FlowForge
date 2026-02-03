@@ -25,9 +25,13 @@ export class Workflow extends BaseEntity {
   @JoinColumn({ name: 'created_by' })
   createdBy!: User;
 
-  @OneToMany(() => WorkflowNode, (workflowNode) => workflowNode.workflow, { cascade: true })
+  @OneToMany(() => WorkflowNode, (workflowNode) => workflowNode.workflow, {
+    cascade: true,
+  })
   nodes!: WorkflowNode[];
 
-  @OneToMany(() => WorkflowEdge, (workflowEdge) => workflowEdge.workflow, { cascade: true })
+  @OneToMany(() => WorkflowEdge, (workflowEdge) => workflowEdge.workflow, {
+    cascade: true,
+  })
   edges!: WorkflowEdge[];
 }

@@ -7,7 +7,7 @@ import { UserModule } from '@/modules/user/user.module';
 import { AuthModule } from '@/modules/auth/auth.module';
 import { WorkflowModule } from '@/modules/workflow/workflow.module';
 import { WorkflowNodeModule } from '@/modules/workflow-node/workflow-node.module';
-import { WorkflowEdgeModule } from './workflow-edge/workflow-edge.module';
+import { WorkflowEdgeModule } from '@/modules/workflow-edge/workflow-edge.module';
 
 @Module({
   imports: [
