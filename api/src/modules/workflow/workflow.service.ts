@@ -51,19 +51,22 @@ export class WorkflowService {
     const workflow = await this.workflowRepository
       .createQueryBuilder('workflow')
       .leftJoinAndSelect('workflow.nodes', 'node')
+      .leftJoinAndSelect('workflow.edges', 'edge')
       .leftJoinAndSelect('workflow.createdBy', 'user')
+      .addSelect(['user.id', 'user.email', 'user.firstname', 'user.lastname'])
       .where('workflow.id = :id', { id })
       .getOne();
 
     if (!workflow) {
       throw new NotFoundException(`Cannot find workflow where id is #${id}`);
     }
-
+ 
     return {
       id: workflow.id,
       name: workflow.name,
       description: workflow.description,
       nodes: workflow.nodes,
+      edges: workflow.edges,
       createdBy: {
         id: workflow.createdBy.id,
         firstname: workflow.createdBy.firstname,
@@ -79,14 +82,16 @@ export class WorkflowService {
     sortBy = 'createdAt',
     sortDirection = SortDirection.DESC,
     search,
-  }: PaginationDto,
-    jwtUser: JwtUserPayload
-  ): Promise<ServiceResponse<Workflow[], Pagination>> {
+  }: PaginationDto): Promise<ServiceResponse<WorkflowResponseDto[], Pagination>> {
     const qb = this.workflowRepository.createQueryBuilder('workflow');
-    console.log(jwtUser.sub)
     qb.leftJoin('workflow.createdBy', 'user')
-      .addSelect(['user.id', 'user.email', 'user.firstname', 'user.lastname'])
-      .where('workflow.createdBy.id = :userId', { userId: jwtUser.sub });
+      .addSelect([
+      'user.id',
+      'user.email',
+      'user.firstname',
+      'user.lastname',
+      'user.role',
+    ]).where('workflow.createdBy.id = :userId', { userId: jwtUser.sub });
 
     if (search) {
       qb.andWhere(
@@ -119,7 +124,7 @@ export class WorkflowService {
     id: string,
     workflowInput: UpdateWorkflowDto,
     jwtUser: JwtUserPayload,
-  ): Promise<Workflow> {
+  ): Promise<WorkflowResponseDto> {
     const workflow: Workflow | null = await this.workflowRepository.findOne({
       where: { id: id },
       relations: ['createdBy'],
@@ -137,8 +142,8 @@ export class WorkflowService {
     }
 
     Object.assign(workflow, workflowInput);
-
-    return await this.workflowRepository.save(workflow);
+    const savedWorkflow = await this.workflowRepository.save(workflow);
+    return this.toWorkflowResponseDto(savedWorkflow);
   }
 
   async remove(id: string, jwtUser: JwtUserPayload): Promise<Workflow | null> {
@@ -164,5 +169,22 @@ export class WorkflowService {
       where: { id: workflowId, createdBy: { id: userId } },
       relations: ['createdBy'],
     });
+  }
+
+  toWorkflowResponseDto(workflow: Workflow): WorkflowResponseDto {
+    return {
+      id: workflow.id,
+      name: workflow.name,
+      description: workflow.description,
+      nodes: workflow.nodes,
+      edges: workflow.edges,
+      createdBy: {
+        id: workflow.createdBy.id,
+        firstname: workflow.createdBy.firstname,
+        lastname: workflow.createdBy.lastname,
+        email: workflow.createdBy.email,
+        role: workflow.createdBy.role
+      },
+    } as WorkflowResponseDto;
   }
 }

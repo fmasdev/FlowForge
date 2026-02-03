@@ -8,6 +8,7 @@ import { DataSource } from 'typeorm';
 import { createUserCommand } from '@/cli/commands/create-user.command';
 import { seedWorkflowCommand } from '@/cli/commands/seed-workflow.command';
 import { seedWorkflowNodeCommand } from '@/cli/commands/seed-workflow-node.command';
+import { seedWorkflowEdgeCommand } from '@/cli/commands/seed-workflow-edge.command';
 
 const bootstrap = async (): Promise<void> => {
   const app = await NestFactory.createApplicationContext(AppModule, {
@@ -23,6 +24,7 @@ const bootstrap = async (): Promise<void> => {
   program.addCommand(createUserCommand(userService));
   program.addCommand(seedWorkflowCommand(dataSource));
   program.addCommand(seedWorkflowNodeCommand(dataSource));
+  program.addCommand(seedWorkflowEdgeCommand(dataSource));
 
   await program.parseAsync(process.argv);
 

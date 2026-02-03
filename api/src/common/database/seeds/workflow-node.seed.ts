@@ -43,6 +43,6 @@ export class WorkflowNodeSeeder {
     }
 
     await nodeRepo.save(nodes);
-    console.log(`Seeded ${nodes.length} workflow nodes.`);
+    console.log(`✅ Seeded ${nodes.length} workflow nodes.`);
   }
 }
