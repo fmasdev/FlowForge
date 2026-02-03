@@ -16,10 +16,11 @@ export class WorkflowNodeService {
   constructor(
     @InjectRepository(WorkflowNode)
     private readonly workflowNodeRepository: Repository<WorkflowNode>,
-    private readonly workflowService: WorkflowService
+    private readonly workflowService: WorkflowService,
   ) {}
 
   async create(
+    workflowId: string,
     createWorkflowNodeDto: CreateWorkflowNodeDto,
     jwtUser: JwtUserPayload,
   ): Promise<WorkflowNode> {
@@ -27,7 +28,7 @@ export class WorkflowNodeService {
       createWorkflowNodeDto.workflowId,
       jwtUser.sub,
     );
-    
+
     if (!workflow) {
       throw new NotFoundException(
         `Cannot find workflow where id is #${createWorkflowNodeDto.workflowId}`,
@@ -47,22 +48,22 @@ export class WorkflowNodeService {
       positionY: createWorkflowNodeDto.positionY,
       workflow: workflow,
     });
-    
+
     return await this.workflowNodeRepository.save(workflowNode);
   }
 
   async update(
+    workflowId: string,
     workflowNodeId: string,
     UpdateWorkflowNodeDto: UpdateWorkflowNodeDto,
     jwtUser: JwtUserPayload,
   ): Promise<WorkflowNode> {
-    
     const workflowNode: WorkflowNode | null =
       await this.workflowNodeRepository.findOne({
         where: { id: workflowNodeId },
         relations: ['workflow', 'workflow.createdBy'],
       });
-      
+
     if (!workflowNode) {
       throw new NotFoundException(
         `Cannot find workflow node where id is #${workflowNodeId}`,
@@ -92,10 +93,10 @@ export class WorkflowNodeService {
   }
 
   async remove(
+    workflowId: string,
     workflowNodeId: string,
     jwtUser: JwtUserPayload,
   ): Promise<WorkflowNode> {
-
     const workflowNode: WorkflowNode | null =
       await this.workflowNodeRepository.findOne({
         where: { id: workflowNodeId },
@@ -113,7 +114,7 @@ export class WorkflowNodeService {
         'You cannot remove this workflow node because you are not the workflow owner.',
       );
     }
-    
+
     return await this.workflowNodeRepository.remove(workflowNode);
   }
 }

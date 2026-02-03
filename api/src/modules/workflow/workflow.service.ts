@@ -18,6 +18,7 @@ import { Repository } from 'typeorm';
 import { Pagination, ServiceResponse } from '@/common/types/response.types';
 import { SortDirection } from '@/common/enums/sortDirection.enum';
 
+
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -52,8 +53,9 @@ export class WorkflowService {
       .createQueryBuilder('workflow')
       .leftJoinAndSelect('workflow.nodes', 'node')
       .leftJoinAndSelect('workflow.edges', 'edge')
+      .leftJoinAndSelect('edge.source', 'sourceNode')
+      .leftJoinAndSelect('edge.target', 'targetNode')
       .leftJoinAndSelect('workflow.createdBy', 'user')
-      .addSelect(['user.id', 'user.email', 'user.firstname', 'user.lastname'])
       .where('workflow.id = :id', { id })
       .getOne();
 
@@ -76,13 +78,16 @@ export class WorkflowService {
     } as WorkflowResponseDto;
   }
 
-  async findAll({
-    page,
-    limit,
-    sortBy = 'createdAt',
-    sortDirection = SortDirection.DESC,
-    search,
-  }: PaginationDto): Promise<ServiceResponse<WorkflowResponseDto[], Pagination>> {
+  async findAll(
+    {
+      page,
+      limit,
+      sortBy = 'createdAt',
+      sortDirection = SortDirection.DESC,
+      search,
+    }: PaginationDto,
+    jwtUser: JwtUserPayload
+  ): Promise<ServiceResponse<WorkflowResponseDto[], Pagination>> {
     const qb = this.workflowRepository.createQueryBuilder('workflow');
     qb.leftJoin('workflow.createdBy', 'user')
       .addSelect([

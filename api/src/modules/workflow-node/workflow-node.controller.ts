@@ -6,11 +6,11 @@ import { JwtUserPayload } from '@/modules/auth/auth.service';
 import { CreateWorkflowNodeDto } from '@/modules/workflow-node/dto/create-workflow-node.dto';
 import { UpdateWorkflowNodeDto } from '@/modules/workflow-node/dto/update-workflow-node.dto';
 import { WorkflowNodeService } from '@/modules/workflow-node/workflow-node.service';
-import { Body, ClassSerializerInterceptor, Controller, Delete, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Param, Patch, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @UseGuards(JwtAuthGuard)
-@Controller('workflow-nodes')
+@Controller('workflows/:workflowId/nodes')
 export class WorkflowNodeController {
   constructor(
     private readonly workflowNodeService: WorkflowNodeService,
@@ -18,26 +18,29 @@ export class WorkflowNodeController {
   
   @Post()
   async create(
+    @Param('workflowId') workflowId: string,
     @Body() createWorlflowNodeDto: CreateWorkflowNodeDto,
     @User() user: JwtUserPayload,
   ) {
-    return await this.workflowNodeService.create(createWorlflowNodeDto, user);
+    return await this.workflowNodeService.create(workflowId, createWorlflowNodeDto, user);
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
+    @Param('workflowId') workflowId: string,
     @Param('id') id: string,
     @Body() updateWorlflowNodeDto: UpdateWorkflowNodeDto,
     @User() user: JwtUserPayload,
   ) {
-    return await this.workflowNodeService.update(id, updateWorlflowNodeDto, user);
+    return await this.workflowNodeService.update(workflowId,id, updateWorlflowNodeDto, user);
   }
 
   @Delete(':id')
   async remove(
+    @Param('workflowId') workflowId: string,
     @Param('id') id: string,
     @User() user: JwtUserPayload
   ) {
-    return this.workflowNodeService.remove(id, user);
+    return this.workflowNodeService.remove(workflowId, id, user);
   }
 }
