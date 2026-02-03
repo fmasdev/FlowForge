@@ -4,7 +4,7 @@ export interface Workflow {
   id?: string;
   name: string;
   description: string;
-  isActive: boolean;
+  lastExecution?: string;
   createdAt: string;
   updatedAt: string;
   createdBy: CreatedBy;
@@ -35,7 +35,6 @@ export interface WorkflowFormData {
   id?: string,
   name: string;
   description: string;
-  isActive: boolean;
 } 
 
 export interface WorkflowFormProps {
@@ -48,4 +47,8 @@ export interface CreatedBy {
   firstname: string;
   lastname: string;
   email: string;
+}
+
+export interface WorkflowProps {
+  id: string
 }

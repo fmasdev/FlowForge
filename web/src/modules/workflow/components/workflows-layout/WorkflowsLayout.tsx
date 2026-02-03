@@ -12,8 +12,8 @@ import { InfiniteObserver } from "@/components/infinite-scroll/InfiniteObserver"
 import { WorkflowCard } from "@/modules/workflow/components/workflow-card/WorkflowCard";
 import { WorkflowModal } from "@/modules/workflow/components/workflow-modal/WorkflowModal";
 import { workflowSchema } from "@/modules/workflow/schema/workflow.schema";
-import { w } from "vitest/dist/chunks/reporters.d.CWXNI2jG";
 import { sortByKey } from "@/helpers/arraySortHelper";
+import { SortState } from "@/types/sort.types";
 
 export interface FetchWorkflowProps {
     page?: number;
@@ -21,7 +21,7 @@ export interface FetchWorkflowProps {
     search?: string
 }
   
-export const WorkflowDashboard = (): JSX.Element => {
+export const WorkflowsLayout = (): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { t: tCommon } = useTranslation('common');
 
@@ -29,19 +29,22 @@ export const WorkflowDashboard = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [hasMore, setHasMore] = useState<boolean>(true);
   const currentPage = useRef<number>(1)
+  const [sort, setSort] = useState<SortState<Workflow>>({
+    field: 'name',
+    direction: 'asc',
+  });
+
   // modal
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalAction, setModalAction] = useState<'add' | 'delete' | 'edit'>('add')
   const [selectedWorkflow, setSelectedWorkflow] = useState<WorkflowFormData>({
     name: '',
     description: '',
-    isActive: true,
   })
 
   const setDefaultWorkflowForm = () => setSelectedWorkflow({
     name: '',
     description: '',
-    isActive: true,
   })
 
   const fetchWorkflows = async({ page, search, mode = 'replace' }: FetchWorkflowProps) => {
@@ -127,7 +130,6 @@ export const WorkflowDashboard = (): JSX.Element => {
         const { data: updatedWorkflow } = await workflowService.update(selectedWorkflow.id, {
           name: selectedWorkflow.name,
           description: selectedWorkflow.description,
-          isActive: selectedWorkflow.isActive
         });
         const workflowList = workflows.map((workflow) =>
           (workflow.id === updatedWorkflow.id ? updatedWorkflow : workflow));
@@ -146,6 +148,8 @@ export const WorkflowDashboard = (): JSX.Element => {
       setDefaultWorkflowForm();
     }
   };
+
+
 
   return (
     <>
@@ -169,8 +173,6 @@ export const WorkflowDashboard = (): JSX.Element => {
           </div>
         </div>
       </div>
-
-      {/* use workflow list */}
 
       <div className="flex gap-4 flex-wrap">
         {workflows.map((workflow) => (

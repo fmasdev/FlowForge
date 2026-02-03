@@ -14,19 +14,17 @@ export default function RootLayout({
     <html lang="en">
       <head></head>
       <body>
-        <main>
-          <I18nProvider>
-            <AuthProvider>
-              <main className="flex flex-col gap-24">
-                <header>
-                  <NavBar />
-                </header>
+        <I18nProvider>
+          <AuthProvider>
+            <main className="flex flex-col gap-17">
+              <header>
+                <NavBar />
+              </header>
 
-                {children}
-              </main>
-            </AuthProvider>
-          </I18nProvider>
-        </main>
+              {children}
+            </main>
+          </AuthProvider>
+        </I18nProvider>
       </body>
     </html>
   );

@@ -91,10 +91,10 @@ export class WorkflowService {
       'user.firstname',
       'user.lastname',
       'user.role',
-    ]);
+    ]).where('workflow.createdBy.id = :userId', { userId: jwtUser.sub });
 
     if (search) {
-      qb.where(
+      qb.andWhere(
         'workflow.name ILIKE :search OR workflow.description ILIKE :search',
         { search: `%${search}%` },
       );

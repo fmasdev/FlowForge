@@ -47,8 +47,9 @@ export class WorkflowController {
   @Get()
   async findAll(
     @Query() pagination: PaginationDto,
+    @User() jwtUser: JwtUserPayload,
   ) {
-    return await this.workflowService.findAll(pagination);
+    return await this.workflowService.findAll(pagination, jwtUser);
   }
 
   @Get(':id')

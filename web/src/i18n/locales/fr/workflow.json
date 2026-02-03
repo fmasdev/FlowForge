@@ -3,7 +3,8 @@
   "card": {
     "createdAt": "Créé le {{date}} à {{time}}",
     "updatedAt": "Modifié le {{date}} à {{time}}",
-    "author": "Auteur"
+    "author": "Auteur",
+    "lastExecution": "Dernière execution le {{date}} à {{time}}"
   },
   "form": {
     "name": "Nom",
@@ -20,5 +21,10 @@
   "cardHeader": {
     "active": "Workflow actif",
     "notActive": "Workflow inactif"
+  },
+  "action": {
+    "execute": "Executer",
+    "modify": "Modifier",
+    "relaunch": "Relancer"
   }
 }
