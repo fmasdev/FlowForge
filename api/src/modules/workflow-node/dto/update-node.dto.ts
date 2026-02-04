@@ -1,7 +1,7 @@
 // src/modules/workflow-node/dto/update-node-label.dto.ts
 
 import { NodePatchType } from "@/modules/workflow-node/enums/node-patch-type.enum";
-import { IsEnum, IsNumber, IsObject, IsString, ValidateIf } from "class-validator";
+import { IsNumber, IsObject, IsString, ValidateIf } from "class-validator";
 
 export class UpdateNodePositionDto {
   @IsNumber()
