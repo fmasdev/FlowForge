@@ -3,13 +3,17 @@
 import { JSX } from "react"
 import { Sidebar } from "@/components/sidebar/Sidebar"
 import { useTranslation } from "react-i18next";
+import { Node } from "@xyflow/react";
+import { WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 
 export interface WorkflowSidebarProps {
+  nodeDetail: Node<WorkflowNodeData> | null
 }
 
-export const WorkflowSidebar = ({}: WorkflowSidebarProps): JSX.Element => {
+export const WorkflowSidebar = ({
+  nodeDetail,
+}: WorkflowSidebarProps): JSX.Element => {
   const { t } = useTranslation('workflow');
-
   return (
     <Sidebar
       title="WorkflowSidebar"
@@ -20,14 +24,23 @@ export const WorkflowSidebar = ({}: WorkflowSidebarProps): JSX.Element => {
         </button>
       }
     >
-      <div>todo</div>
-      <ul>
-        <li>selected node detail</li>
-        <li>params</li>
-        <li>logs</li>
-        <li>errors</li>
-      </ul>
-      </Sidebar>
+      <>
+        {nodeDetail && (
+          <div>
+            <div>Node detail</div>
+            <p>{nodeDetail?.data?.label}</p>
+          </div>
+        )}
+
+        {/* <div>todo</div>
+        <ul>
+          <li>selected node detail</li>
+          <li>params</li>
+          <li>logs</li>
+          <li>errors</li>
+        </ul> */}
+      </>
+    </Sidebar>
 
   )
 }

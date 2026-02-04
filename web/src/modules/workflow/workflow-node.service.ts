@@ -1,9 +1,8 @@
 // src/modules/workflow/workflow.service.ts
 
 import { apiService } from "@/services/api/api.service";
-import { create } from "domain";
 
-export const WorkflowNodeService = {
+export const workflowNodeService = {
 
   create: async (workflowId: string, data: object) =>
     await apiService.post(`/workflows/${workflowId}/nodes`, data),

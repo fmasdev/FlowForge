@@ -1,6 +1,6 @@
 // src/modules/workflow/types/Workflow.types.ts
 
-import { NodeChange } from "@xyflow/react";
+import { Edge, Node } from "@xyflow/react";
 
 export interface Workflow {
   id?: string;
@@ -81,6 +81,7 @@ export interface WorkflowNode {
   config: WorkflowNodeConditionConfig | WorkflowNodeDelayConfig | WorkflowNodeHttpConfig;
   positionX: number;
   positionY: number;
+  label?: string;
 }
 export interface WorkflowEdge {
   id: string;
@@ -92,9 +93,9 @@ export interface WorkflowEdge {
 export interface WorkflowCanvasProps {
   workflowNodes?: WorkflowNode[];
   workflowEdges?: WorkflowEdge[];
-  onNodeChange: (changes: NodeChange) => void;
-  onNodeDelete: (nodeId: string) => void;
-  onNodeSelect: (nodeId: string) => void;
+  workflowId: string;
+  onNodeSelect: (node: Node<WorkflowNodeData> | null) => void;
+  onEdgeSelect: (node: Edge<WorkflowEdgeData> | null) => void;
 }
 
 export interface WorkflowNodeData extends Record<string, unknown> {

@@ -17,15 +17,22 @@ export class WorkflowNode extends BaseEntity {
   @JoinColumn({ name: 'workflow_id' })
   workflow!: Workflow;
 
-  @Column({ type: 'enum', enum: WorkflowNodeType, default: WorkflowNodeType.HTTP })
+  @Column({
+    type: 'enum',
+    enum: WorkflowNodeType,
+    default: WorkflowNodeType.HTTP,
+  })
   type!: WorkflowNodeType;
 
   @Column({ type: 'jsonb' })
   config!: HttpNodeConfigDto | ConditionNodeConfigDto | DelayNodeConfigDto;
 
-  @Column()
+  @Column({ type: 'float8', default: 0 })
   positionX!: number;
 
-  @Column()
+  @Column({ type: 'float8', default: 0 })
   positionY!: number;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  label?: string;
 }

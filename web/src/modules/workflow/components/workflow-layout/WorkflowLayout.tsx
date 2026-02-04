@@ -5,23 +5,23 @@
 import { JSX, useEffect, useState } from "react";
 import { workflowService } from "@/modules/workflow/workflow.service";
 import { WorkflowHeader } from "@/modules/workflow/components/workflow-header/WorkflowHeader";
-import { Workflow, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
+import { Workflow, WorkflowNodeData, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
 import { ItemApiResponse } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { WorkflowCanvas } from "@/modules/workflow/components/workflow-canvas/WorkflowCanvas";
 import { WorkflowSidebar } from "@/modules/workflow/components/workflow-sidebar/WorkflowSidebar";
-import { NodeChange } from "@xyflow/react";
+import { Node } from "@xyflow/react";
 
 export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
   const { t } = useTranslation('workflow');
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
+  const [selectedNode, setSelectedNode] = useState<Node<WorkflowNodeData> | null>(null);  
 
   const fetchWorkflow = async () => {
     try {
       const res: ItemApiResponse<Workflow> = await workflowService.fetchOne(id);
       setWorkflow(res.data);
-      console.log(res.data)
     } catch (err) {
       console.error(err)
     }
@@ -29,19 +29,10 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
 
   useEffect(() => {
     fetchWorkflow()
-    
   }, [])
 
-  const handleNodeChange = (changes: NodeChange) => {
-
-  }
-
-  const handleNodeSelect = (nodeId: string) => {
-
-  }
-
-  const handleNodeDelete = (nodeId: string) => { 
-
+  const handleNodeSelect = (node: Node<WorkflowNodeData> | null) => {
+    setSelectedNode(node);
   }
   
   return (
@@ -63,13 +54,14 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
           ></WorkflowHeader>
           
           <div className="flex flex-1 overflow-hidden">
-            <WorkflowSidebar></WorkflowSidebar>
+            <WorkflowSidebar
+              nodeDetail={selectedNode}
+            ></WorkflowSidebar>
           
             <WorkflowCanvas
               workflowNodes={workflow.nodes}
               workflowEdges={workflow?.edges}
-              onNodeChange={handleNodeChange}
-              onNodeDelete={handleNodeDelete}
+              workflowId={workflow.id!}
               onNodeSelect={handleNodeSelect}
             />
           </div>

@@ -2,14 +2,13 @@
 
 import { JwtUserPayload } from '@/modules/auth/auth.service';
 import { CreateWorkflowNodeDto } from '@/modules/workflow-node/dto/create-workflow-node.dto';
-import { UpdateWorkflowNodeDto } from '@/modules/workflow-node/dto/update-workflow-node.dto';
+import { UpdateNodeDto } from '@/modules/workflow-node/dto/update-node.dto';
 import { WorkflowNode } from '@/modules/workflow-node/entities/workflow-node.entity';
-import { Workflow } from '@/modules/workflow/entities/workflow.entity';
 import { WorkflowService } from '@/modules/workflow/workflow.service';
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { instanceToPlain } from 'class-transformer';
-import { Repository, UpdateResult } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class WorkflowNodeService {
@@ -53,9 +52,8 @@ export class WorkflowNodeService {
   }
 
   async update(
-    workflowId: string,
     workflowNodeId: string,
-    UpdateWorkflowNodeDto: UpdateWorkflowNodeDto,
+    UpdateWorkflowNodeDto: UpdateNodeDto,
     jwtUser: JwtUserPayload,
   ): Promise<WorkflowNode> {
     const workflowNode: WorkflowNode | null =
@@ -83,17 +81,15 @@ export class WorkflowNodeService {
     }
 
     const upToDateWorkflowNode: WorkflowNode = Object.assign(workflowNode, {
-      type: UpdateWorkflowNodeDto.type,
-      config: instanceToPlain(UpdateWorkflowNodeDto.config),
-      positionX: UpdateWorkflowNodeDto.positionX,
-      positionY: UpdateWorkflowNodeDto.positionY,
+      positionX: UpdateWorkflowNodeDto?.position?.x,
+      positionY: UpdateWorkflowNodeDto?.position?.y,
+      label: UpdateWorkflowNodeDto?.label,
     });
 
     return await this.workflowNodeRepository.save(upToDateWorkflowNode);
   }
 
   async remove(
-    workflowId: string,
     workflowNodeId: string,
     jwtUser: JwtUserPayload,
   ): Promise<WorkflowNode> {
@@ -102,7 +98,7 @@ export class WorkflowNodeService {
         where: { id: workflowNodeId },
         relations: ['workflow', 'workflow.createdBy'],
       });
-
+   
     if (!workflowNode) {
       throw new NotFoundException(
         `Cannot find workflow node where id is #${workflowNodeId}`,
