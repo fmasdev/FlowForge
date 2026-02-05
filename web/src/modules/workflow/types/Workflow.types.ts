@@ -1,6 +1,6 @@
 // src/modules/workflow/types/Workflow.types.ts
 
-import { Edge, Node } from "@xyflow/react";
+import { Edge, Node, NodeProps } from "@xyflow/react";
 
 export interface Workflow {
   id?: string;
@@ -107,3 +107,8 @@ export interface WorkflowEdgeData extends Record<string, unknown> {
   label?: string;
   originalEdge?: WorkflowEdge
 }
+
+export interface WorkflowNodeProps extends NodeProps {
+  data: WorkflowNodeData;
+  selected: boolean;
+};

@@ -3,11 +3,19 @@
 'use client';
 
 import { JSX, useCallback } from "react";
-import { applyNodeChanges, Edge, Node, NodeChange, NodeMouseHandler, NodePositionChange, NodeRemoveChange, ReactFlow, useEdgesState, useNodesInitialized, useNodesState } from '@xyflow/react';
+import { applyNodeChanges, Edge, Node, NodeChange, NodePositionChange, NodeRemoveChange, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
 import { WorkflowCanvasProps, WorkflowEdgeData,  WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 import { mapToReactFlowNode } from "@/modules/workflow/helpers/mapToReactFlowNode";
 import { mapToReactFlowEdges } from "@/modules/workflow/helpers/mapToReactFlowEdge";
 import { workflowNodeService } from "@/modules/workflow/workflow-node.service";
+import { ActionNode } from "@/modules/workflow/components/react-flow/nodes/ActionNode";
+import { ConditionNode } from "@/modules/workflow/components/react-flow/nodes/ConditionNode";
+import { HttpNode } from "@/modules/workflow/components/react-flow/nodes/HttpNode";
+import { WorkflowEdge } from "@/modules/workflow/components/react-flow/edges/WorkflowEdge";
+import { SuccessEdge } from "@/modules/workflow/components/react-flow/edges/SuccessEdge";
+import { ErrorEdge } from "@/modules/workflow/components/react-flow/edges/ErrorEdge";
+
+
 
 export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   workflowNodes,
@@ -21,6 +29,19 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   const [nodes, setNodes] = useNodesState(rfNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(rfEdges);
 
+  const nodeTypes = {
+    trigger: HttpNode,
+    action: ActionNode,
+    condition: ConditionNode,
+  };
+  console.log(nodes)
+  console.log(edges)
+  const edgeTypes = {
+    workflow: WorkflowEdge,
+    success: SuccessEdge,
+    error: ErrorEdge,
+  };
+  
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
       let nodeId = null;
@@ -109,6 +130,8 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         onNodesChange={handleNodesChange}
         onSelectionChange={onSelectionChange}
         selectNodesOnDrag={false}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
       />
     </div>
   );
