@@ -35,17 +35,20 @@ export class WorkflowNodeSeeder {
       const delayNode = nodeRepo.create(
         WorkflowNodeFactory.createDelayNode(workflow),
       );
-
       const emailNode = nodeRepo.create(
         WorkflowNodeFactory.createEmailNode(workflow),
+      );
+      const scriptNode = nodeRepo.create(
+        WorkflowNodeFactory.createScriptNode(workflow),
       );
       
       httpNode.workflow = workflow;
       conditionNode.workflow = workflow;
       delayNode.workflow = workflow;
       emailNode.workflow = workflow;
+      scriptNode.workflow = workflow;
 
-      nodes.push(httpNode, conditionNode, delayNode);
+      nodes.push(httpNode, conditionNode, delayNode, emailNode, scriptNode);
     }
 
     await nodeRepo.save(nodes);

@@ -13,7 +13,6 @@ import { WebhookNodeConfigDto } from '@/modules/workflow-node/dto/node-config/we
 
 @Entity('workflow_nodes')
 export class WorkflowNode extends BaseEntity {
-
   @Column({ type: 'varchar', length: 50 })
   label!: string;
 
@@ -35,19 +34,18 @@ export class WorkflowNode extends BaseEntity {
   type!: WorkflowNodeType;
 
   @Column({ type: 'jsonb' })
-  config!: HttpNodeConfigDto
-      | ConditionNodeConfigDto
-      | DelayNodeConfigDto 
-      | ScriptNodeConfigDto
-      | EmailNodeConfigDto
-      | ScriptNodeConfigDto
-      | WebhookNodeConfigDto;
+  config!:
+    | HttpNodeConfigDto
+    | ConditionNodeConfigDto
+    | DelayNodeConfigDto
+    | ScriptNodeConfigDto
+    | EmailNodeConfigDto
+    | ScriptNodeConfigDto
+    | WebhookNodeConfigDto;
 
   @Column({ type: 'float8', default: 0 })
   positionX!: number;
 
   @Column({ type: 'float8', default: 0 })
   positionY!: number;
-
-  
 }
