@@ -2,47 +2,36 @@
 
 import { WorkflowEdgeFactory } from "@/common/database/factories/workflow-edge.factory";
 import { WorkflowEdge } from "@/modules/workflow-edge/entities/workflow-edge.entity";
+import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
 import { Workflow } from "@/modules/workflow/entities/workflow.entity";
-import { NotFoundException } from "@nestjs/common";
 import { DataSource } from "typeorm";
 
 export class WorkflowEdgeSeeder {
   async run(dataSource: DataSource): Promise<void> {
     const workflowRepo = dataSource.getRepository(Workflow);
+    const nodeRepo = dataSource.getRepository(WorkflowNode);
     const edgeRepo = dataSource.getRepository(WorkflowEdge);
 
-    const workflows: Workflow[] = await workflowRepo.find({
-      relations: {
-        nodes: true,
-      },
+    const workflows = await workflowRepo.find({
+      relations: ['nodes'],
     });
 
-    if (!workflows.length) {
-      throw new NotFoundException(
-        'No workflows found. Seed workflows and nodes first.',
-      );
-    }
-
-    const edges: WorkflowEdge[] = [];
-
     for (const workflow of workflows) {
-      if (!workflow.nodes?.length) continue;
+      const nodes = await nodeRepo.find({
+        where: { workflow: { id: workflow.id } },
+      });
 
-      const workflowEdges = WorkflowEdgeFactory.createEdgesForWorkflow(
-        workflow,
-        workflow.nodes,
+      const edges = WorkflowEdgeFactory.createEdgesForWorkflow(workflow, nodes);
+
+      if (!edges.length) {
+        console.warn(`⚠️ No edges created for workflow ${workflow.id}`);
+        continue;
+      }
+
+      await edgeRepo.save(edges);
+      console.log(
+        `✅ Seeded ${edges.length} edges for workflow ${workflow.id}`,
       );
-
-      edges.push(...workflowEdges);
     }
-
-    if (!edges.length) {
-      console.warn('No workflow edges generated.');
-      return;
-    }
-
-    await edgeRepo.save(edges);
-
-    console.log(`✅ Seeded ${edges.length} workflow edges`);
   }
 }

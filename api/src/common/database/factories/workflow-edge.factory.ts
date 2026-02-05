@@ -1,6 +1,7 @@
 // src/common/database/factories/workflow-edge.factory.ts
 
 import { WorkflowEdge } from "@/modules/workflow-edge/entities/workflow-edge.entity";
+import { WorkflowEdgeType } from "@/modules/workflow-edge/enums/workflow-edge-type.enum";
 import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
 import { WorkflowNodeType } from "@/modules/workflow-node/enums/workflow-node-type.enum";
 import { Workflow } from "@/modules/workflow/entities/workflow.entity";
@@ -11,12 +12,18 @@ export class WorkflowEdgeFactory {
     source: WorkflowNode,
     target: WorkflowNode,
     label?: string,
+    type: WorkflowEdgeType = WorkflowEdgeType.WORKFLOW,
   ): WorkflowEdge {
+    if (target.type === WorkflowNodeType.HTTP) {
+      throw new Error('HTTP node cannot be a target');
+    }
+
     const edge = new WorkflowEdge();
     edge.workflow = workflow;
     edge.source = source;
     edge.target = target;
     edge.label = label;
+    edge.type = type;
 
     return edge;
   }
@@ -27,27 +34,37 @@ export class WorkflowEdgeFactory {
   ): WorkflowEdge[] {
     const edges: WorkflowEdge[] = [];
 
-    const httpNode = nodes.find(n => n.type === WorkflowNodeType.HTTP);
-    const conditionNode = nodes.find(n => n.type === WorkflowNodeType.CONDITION);
-    const delayNode = nodes.find(n => n.type === WorkflowNodeType.DELAY);
+    const httpNode = nodes.find((node) => node.type === WorkflowNodeType.HTTP);
+    const conditionNode = nodes.find(
+      (node) => node.type === WorkflowNodeType.CONDITION,
+  
+    );
+    const delayNode = nodes.find(
+      (node) => node.type === WorkflowNodeType.DELAY,
+    );
+    const emailNode = nodes.find(
+      (node) => node.type === WorkflowNodeType.EMAIL,
+    );
+    const scriptNode = nodes.find(
+      (node) => node.type === WorkflowNodeType.SCRIPT,
+    );
 
-    if (!httpNode || !conditionNode || !delayNode) {
+    if (!httpNode || !conditionNode || !delayNode || !scriptNode || !emailNode) {
       return edges;
     }
 
     // HTTP -> CONDITION
-    edges.push(this.create(workflow, httpNode, conditionNode, 'next'));
+    edges.push(this.create(workflow, httpNode, conditionNode, WorkflowEdgeType.WORKFLOW));
 
     // CONDITION true -> DELAY
-    edges.push(this.create(workflow, conditionNode, delayNode, 'true'));
-    
-    // CONDITION false → HTTP (simple loop )
-    edges.push(this.create(workflow, conditionNode, httpNode, 'false'));
+    edges.push(this.create(workflow, conditionNode, delayNode, WorkflowEdgeType.SUCCESS));
 
-    // DELAY -> HTTP
-    edges.push(this.create(workflow, delayNode, httpNode, 'next'));
+    // CONDITION false -> EMAIL
+    edges.push(this.create(workflow, conditionNode, emailNode, WorkflowEdgeType.ERROR));
+
+    // DELAY -> SCRIPT
+    edges.push(this.create(workflow, delayNode, scriptNode, WorkflowEdgeType.WORKFLOW));
 
     return edges;
   }
-  
 }
