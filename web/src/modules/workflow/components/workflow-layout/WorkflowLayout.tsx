@@ -5,12 +5,12 @@
 import { JSX, useEffect, useState } from "react";
 import { workflowService } from "@/modules/workflow/workflow.service";
 import { WorkflowHeader } from "@/modules/workflow/components/workflow-header/WorkflowHeader";
-import { Workflow, WorkflowNodeData, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
+import { Workflow, WorkflowEdgeData, WorkflowNodeData, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
 import { ItemApiResponse } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { WorkflowCanvas } from "@/modules/workflow/components/workflow-canvas/WorkflowCanvas";
 import { WorkflowSidebar } from "@/modules/workflow/components/workflow-sidebar/WorkflowSidebar";
-import { Node } from "@xyflow/react";
+import { Edge, Node } from "@xyflow/react";
 
 export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
   const { t } = useTranslation('workflow');
@@ -33,6 +33,10 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
 
   const handleNodeSelect = (node: Node<WorkflowNodeData> | null) => {
     setSelectedNode(node);
+  }
+
+  const handleEdgeSelect = (edge: Edge<WorkflowEdgeData> | null) => {
+    // setSelectedNode(edge);
   }
   
   return (
@@ -63,6 +67,7 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
               workflowEdges={workflow?.edges}
               workflowId={workflow.id!}
               onNodeSelect={handleNodeSelect}
+              onEdgeSelect={handleEdgeSelect}
             />
           </div>
         </div>
