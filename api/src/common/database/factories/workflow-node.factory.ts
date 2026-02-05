@@ -1,12 +1,15 @@
 // src/common/database/factories/workflow-node.factory.ts
 
 import { v4 as uuidv4 } from 'uuid';
-import { ConditionNodeConfigDto } from "@/modules/workflow-node/dto/condition-node-config.dto";
-import { DelayNodeConfigDto } from "@/modules/workflow-node/dto/delay-node-config.dto";
-import { HttpNodeConfigDto } from "@/modules/workflow-node/dto/http-node-config.dto";
-import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
+import { faker } from '@faker-js/faker';
 import { Workflow } from "@/modules/workflow/entities/workflow.entity";
+import { WorkflowNode } from "@/modules/workflow-node/entities/workflow-node.entity";
 import { WorkflowNodeType } from '@/modules/workflow-node/enums/workflow-node-type.enum';
+import { HttpNodeConfigDto } from '@/modules/workflow-node/dto/node-config/http-node-config.dto';
+import { ConditionNodeConfigDto } from '@/modules/workflow-node/dto/node-config/condition-node-config.dto';
+import { DelayNodeConfigDto } from '@/modules/workflow-node/dto/node-config/delay-node-config.dto';
+import { EmailNodeConfigDto } from '@/modules/workflow-node/dto/node-config/email-node-config.dto';
+import { ScriptNodeConfigDto } from '@/modules/workflow-node/dto/node-config/script-node-config.dto';
 
 export class WorkflowNodeFactory {
   static createHttpNode(workflow: Workflow): Partial<WorkflowNode> {
@@ -17,6 +20,7 @@ export class WorkflowNodeFactory {
     };
 
     return {
+      label: 'HTTP request',
       type: WorkflowNodeType.HTTP,
       workflow,
       config,
@@ -38,6 +42,7 @@ export class WorkflowNodeFactory {
     };
 
     return {
+      label: 'Condition',
       type: WorkflowNodeType.CONDITION,
       workflow,
       config,
@@ -53,9 +58,42 @@ export class WorkflowNodeFactory {
     };
 
     return {
+      label: 'Delay',
       type: WorkflowNodeType.DELAY,
       workflow,
       config,
+      positionX: Math.floor(Math.random() * 100),
+      positionY: Math.floor(Math.random() * 100),
+    };
+  }
+
+  static createEmailNode(workflow: Workflow): Partial<WorkflowNode> {
+    const config: EmailNodeConfigDto = {
+      to: faker.internet.email(),
+      subject: faker.lorem.words(2),
+      text: faker.lorem.sentence(),
+    };
+
+    return {
+      label: 'Email',
+      type: WorkflowNodeType.EMAIL,
+      workflow,
+      config,
+      positionX: Math.floor(Math.random() * 100),
+      positionY: Math.floor(Math.random() * 100),
+    };
+  }
+
+  static createScriptNode(workflow: Workflow): Partial<WorkflowNode> {
+    const config: ScriptNodeConfigDto = {
+      language: 'js',
+      code: 'console.log("Hello world")',
+    };
+    return {
+      label: 'Script',
+      type: WorkflowNodeType.SCRIPT,
+      workflow,
+      config: config,
       positionX: Math.floor(Math.random() * 100),
       positionY: Math.floor(Math.random() * 100),
     };

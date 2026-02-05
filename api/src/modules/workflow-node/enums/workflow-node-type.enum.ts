@@ -4,4 +4,7 @@ export enum WorkflowNodeType {
   HTTP = 'http',
   CONDITION = 'condition',
   DELAY = 'delay',
+  EMAIL = 'email',
+  WEBHOOK = 'webhook',
+  SCRIPT = 'script',
 }

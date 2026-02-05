@@ -23,6 +23,8 @@ export class WorkflowNodeSeeder {
     const nodes: WorkflowNode[] = [];
 
     for (const workflow of workflows) {
+      const rd = Math.floor(Math.random() * (2 - 0 + 1) + 0);
+
       // Crée les nodes
       const httpNode = nodeRepo.create(
         WorkflowNodeFactory.createHttpNode(workflow),
@@ -33,11 +35,15 @@ export class WorkflowNodeSeeder {
       const delayNode = nodeRepo.create(
         WorkflowNodeFactory.createDelayNode(workflow),
       );
+
+      const emailNode = nodeRepo.create(
+        WorkflowNodeFactory.createEmailNode(workflow),
+      );
       
-      // Attache la relation ManyToOne (FK)
       httpNode.workflow = workflow;
       conditionNode.workflow = workflow;
       delayNode.workflow = workflow;
+      emailNode.workflow = workflow;
 
       nodes.push(httpNode, conditionNode, delayNode);
     }
