@@ -3,6 +3,7 @@
   "card": {
     "createdAt": "Created on {{date}} at {{time}}",
     "updatedAt": "Updated on {{date}} at {{time}}",
+    "lastExecution": "Last execution on {{date}} at {{time}}",
     "author": "Author"
   },
   "form": {
@@ -30,6 +31,11 @@
   "cardHeader": {
     "active": "Active workflow",
     "notActive": "Workflow is not active"
+  },
+  "action": {
+    "execute": "Launch",
+    "modify": "Modify",
+    "relaunch": "Relaunch"
   },
   "notification": {
 

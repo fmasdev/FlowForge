@@ -9,7 +9,4 @@ export class CreateWorkflowDto {
   @IsOptional()
   @IsString()
   description?: string;
-
-  @IsBoolean()
-  isActive!: boolean;
 }

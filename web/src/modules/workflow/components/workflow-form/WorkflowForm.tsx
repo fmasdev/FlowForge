@@ -43,16 +43,6 @@ export const WorkflowForm: React.FC<WorkflowFormProps> = ({
           required={true}
         />
       </div>
-      
-      <div className="mb-4">
-        <ToggleButton
-          label={t('form.isActive')}
-          labelClassName="text-gray-400"
-          checked={form?.isActive}
-          onChange={(value) => onChange({ ...form, isActive: value })}
-        />
-      </div>
-
     </>
   );
 };

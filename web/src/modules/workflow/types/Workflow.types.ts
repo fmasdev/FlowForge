@@ -1,10 +1,15 @@
 // src/modules/workflow/types/Workflow.types.ts
 
+import { WorkflowEdgeType } from "@/modules/workflow/enums/workflow-edge-type.enum";
+import { Edge, Node, NodeProps } from "@xyflow/react";
+
 export interface Workflow {
   id?: string;
   name: string;
   description: string;
-  isActive: boolean;
+  lastExecution?: string;
+  nodes?: WorkflowNode[];
+  edges?: WorkflowEdge[];
   createdAt: string;
   updatedAt: string;
   createdBy: CreatedBy;
@@ -35,7 +40,6 @@ export interface WorkflowFormData {
   id?: string,
   name: string;
   description: string;
-  isActive: boolean;
 } 
 
 export interface WorkflowFormProps {
@@ -49,3 +53,66 @@ export interface CreatedBy {
   lastname: string;
   email: string;
 }
+
+export interface WorkflowProps {
+  id: string
+}
+
+export interface WorkflowNodeConditionConfig {
+  expression: string;
+  trueNodeId: string;
+  falseNodeId: string;
+  variables?: string[];
+}
+
+export interface WorkflowNodeDelayConfig {
+  durationMs: number;
+  jitterMs?: number;
+}
+
+export interface WorkflowNodeHttpConfig {
+  url: string;
+  method: string;
+  headers?: any;
+  body?: any;
+}
+export interface WorkflowNode {
+  id: string;
+  type: string;
+  config: WorkflowNodeConditionConfig | WorkflowNodeDelayConfig | WorkflowNodeHttpConfig;
+  positionX: number;
+  positionY: number;
+  label?: string;
+}
+export interface WorkflowEdge {
+  id: string;
+  source: WorkflowNode;
+  target: WorkflowNode;
+  label: string;
+  type: WorkflowEdgeType;
+}
+
+export interface WorkflowCanvasProps {
+  workflowNodes?: WorkflowNode[];
+  workflowEdges?: WorkflowEdge[];
+  workflowId: string;
+  onNodeSelect: (node: Node<WorkflowNodeData> | null) => void;
+  onEdgeSelect: (node: Edge<WorkflowEdgeData> | null) => void;
+  onError: (error: Error) => void;
+}
+
+export interface WorkflowNodeData extends Record<string, unknown> {
+  label: string;
+  originalNode?: WorkflowNode
+}
+
+export interface WorkflowEdgeData extends Record<string, unknown> {
+  label?: string;
+  originalEdge?: WorkflowEdge
+  selected?: boolean
+}
+
+export interface WorkflowNodeProps extends NodeProps {
+  data: WorkflowNodeData;
+  selected: boolean;
+};

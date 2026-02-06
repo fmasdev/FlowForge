@@ -6,9 +6,11 @@ import { JSX, useEffect, useRef, useState } from "react";
 import { SvgIcon } from "@/components/SvgIcon";
 import { CardHeaderProps } from "@/components/card/Card.types";
 import clsx from "clsx";
+import Link from "next/link";
 
 export const CardHeader: React.FC<CardHeaderProps> = ({
   title,
+  link,
   subtitle,
   subtitleTooltip,
   displayActions,
@@ -44,12 +46,23 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
     }
   )
 
+
   return (
     <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
       <div>
-        <h3 className="text-sm font-semibold text-white">
-          {title}
-        </h3>
+
+        {link ? (
+          <Link href={link}>
+            <h3 className="text-sm font-semibold text-white">
+              {title}
+            </h3>
+          </Link>
+        ): (
+          <h3 className="text-sm font-semibold text-white">
+            {title}
+          </h3>
+        )}  
+        
         {subtitle && (
           <h4
             title={subtitleTooltip ? subtitleTooltip : undefined}

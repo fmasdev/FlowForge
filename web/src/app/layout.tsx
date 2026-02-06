@@ -1,10 +1,11 @@
 // src/app/layout.tsx
 
 import { AuthProvider } from '@/modules/auth/auth.context';
-import './globals.css';
 import NavBar from '@/components/navbar/Navbar';
 import { I18nProvider } from '@/i18n/I18nProvider';
 import { NotificationProvider } from '@/components/notification/NotificationProvider';
+import '@xyflow/react/dist/style.css';
+import './globals.css';
 
 export default function RootLayout({
   children,
