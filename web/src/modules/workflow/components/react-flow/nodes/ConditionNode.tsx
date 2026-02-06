@@ -1,5 +1,6 @@
 // src/modules/workflow/components/react-flow/nodes/ConditionNode.tsx
 
+import { WorkflowEdgeType } from "@/modules/workflow/enums/workflow-edge-type.enum";
 import { WorkflowNodeProps } from "@/modules/workflow/types/Workflow.types";
 import { Handle, Position } from "@xyflow/react";
 
@@ -12,13 +13,13 @@ export function ConditionNode({ data, selected }: WorkflowNodeProps) {
       <strong>{data.label}</strong>
 
       <Handle type="target" position={Position.Top} />
-      <Handle type="source" position={Position.Left} id="false" style={{
+      <Handle type="source" position={Position.Left} id={WorkflowEdgeType.ERROR} style={{
           background: 'red',
           width: 6,
           height: 6,
           borderRadius: '50%',
         }} />
-      <Handle type="source" position={Position.Right} id="true" style={{
+      <Handle type="source" position={Position.Right} id={WorkflowEdgeType.SUCCESS} style={{
           background: 'green',
           width: 6,
           height: 6,
