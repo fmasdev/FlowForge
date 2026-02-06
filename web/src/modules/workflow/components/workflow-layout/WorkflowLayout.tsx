@@ -12,18 +12,24 @@ import { WorkflowCanvas } from "@/modules/workflow/components/workflow-canvas/Wo
 import { WorkflowSidebar } from "@/modules/workflow/components/workflow-sidebar/WorkflowSidebar";
 import { Edge, Node } from "@xyflow/react";
 
-export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
+export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
   const { t } = useTranslation('workflow');
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
   const [selectedNode, setSelectedNode] = useState<Node<WorkflowNodeData> | null>(null);  
+  const [selectedEdge, setSelectedEdge] = useState<Edge<WorkflowEdgeData> | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchWorkflow = async () => {
     try {
       const res: ItemApiResponse<Workflow> = await workflowService.fetchOne(id);
       setWorkflow(res.data);
     } catch (err) {
-      console.error(err)
+      const error = err instanceof Error
+        ? err
+        : new Error('Unknown error');
+
+      setError(error);
     }
   }
 
@@ -36,9 +42,9 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
   }
 
   const handleEdgeSelect = (edge: Edge<WorkflowEdgeData> | null) => {
-    // setSelectedNode(edge);
+    setSelectedEdge(edge);
   }
-  
+
   return (
     <>
       {!!workflow ? (
@@ -60,6 +66,7 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
           <div className="flex flex-1 overflow-hidden">
             <WorkflowSidebar
               nodeDetail={selectedNode}
+              edgeDetail={selectedEdge}
             ></WorkflowSidebar>
           
             <WorkflowCanvas
@@ -68,8 +75,10 @@ export const WorkflowLayout = ({id}: WorkflowProps): JSX.Element => {
               workflowId={workflow.id!}
               onNodeSelect={handleNodeSelect}
               onEdgeSelect={handleEdgeSelect}
+              onError={() =>setError(error)}
             />
           </div>
+          
         </div>
       ) : (
         <div>Loading...</div>

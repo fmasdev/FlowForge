@@ -2,7 +2,7 @@
 
 import { apiService } from "@/services/api/api.service";
 
-const workflowEdgeService = {
+export const workflowEdgeService = {
   create: async(workflowId: string, data: object) =>
     await apiService.post(`/workflows/${workflowId}/edges`, data),
 

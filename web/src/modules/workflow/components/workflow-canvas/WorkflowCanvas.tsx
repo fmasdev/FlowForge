@@ -3,7 +3,7 @@
 'use client';
 
 import { JSX, useCallback } from "react";
-import { applyNodeChanges, Edge, Node, NodeChange, NodePositionChange, NodeRemoveChange, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
+import { applyEdgeChanges, applyNodeChanges, Edge, EdgeChange, Node, NodeChange, NodePositionChange, NodeRemoveChange, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
 import { WorkflowCanvasProps, WorkflowEdgeData,  WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 import { mapToReactFlowNode } from "@/modules/workflow/helpers/mapToReactFlowNode";
 import { mapToReactFlowEdges } from "@/modules/workflow/helpers/mapToReactFlowEdge";
@@ -14,37 +14,50 @@ import { HttpNode } from "@/modules/workflow/components/react-flow/nodes/HttpNod
 import { WorkflowEdge } from "@/modules/workflow/components/react-flow/edges/WorkflowEdge";
 import { SuccessEdge } from "@/modules/workflow/components/react-flow/edges/SuccessEdge";
 import { ErrorEdge } from "@/modules/workflow/components/react-flow/edges/ErrorEdge";
-
-
+import { ArrowClosedEdgeMarker } from "@/modules/workflow/components/react-flow/edge-markers/ArrowClosedEdgeMarker";
+import { no } from "zod/v4/locales";
+import { workflowEdgeService } from "@/modules/workflow/workflow-edge.service";
+import { set } from "zod";
 
 export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   workflowNodes,
   workflowEdges,
   workflowId,
-  onNodeSelect
-}: WorkflowCanvasProps): JSX.Element => {
+  onNodeSelect,
+  onEdgeSelect,
+  onError,
+}): JSX.Element => {
 
   const rfNodes: Node<WorkflowNodeData>[] = workflowNodes ? mapToReactFlowNode(workflowNodes) : [];
   const rfEdges: Edge<WorkflowEdgeData>[] = workflowEdges ? mapToReactFlowEdges(workflowEdges) : [];
+
   const [nodes, setNodes] = useNodesState(rfNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(rfEdges);
+  const [edges, setEdges] = useEdgesState(rfEdges);
 
   const nodeTypes = {
     trigger: HttpNode,
     action: ActionNode,
     condition: ConditionNode,
   };
-  console.log(nodes)
-  console.log(edges)
+
   const edgeTypes = {
     workflow: WorkflowEdge,
     success: SuccessEdge,
     error: ErrorEdge,
   };
   
+  // Handle selection
+  const handleSelectionChange = useCallback(
+    ({ nodes, edges }: { nodes: Node<WorkflowNodeData>[], edges: Edge<WorkflowEdgeData>[] }) => {
+      onNodeSelect(nodes[0] ?? null);
+      onEdgeSelect(edges[0] ?? null);
+    },
+    [onNodeSelect, onEdgeSelect]
+  );
+
+  // Handle node changes
   const handleNodesChange = useCallback(
     (changes: NodeChange[]) => {
-      let nodeId = null;
       setNodes((nds) => {
         const updatedNodes = applyNodeChanges(changes, nds) as Node<WorkflowNodeData>[];
 
@@ -67,14 +80,14 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
               }
             });
           } catch (err) {
-            console.error(err)
+            const error = err instanceof Error
+              ? err
+              : new Error('Unknown error');
+
+            onError(error);
           }
         });
         
-        updatedNodes.forEach(updatedNode => {
-          nodeId = updatedNode.id
-        })
-
         // Filter remove changes for DELETE backend
         const removeChanges = changes.filter(
           (c): c is NodeRemoveChange => c.type === 'remove'
@@ -88,34 +101,58 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
       });
     }, []);
   
+  // Handle edge changes
+  const handleEdgeChange = useCallback(
+    (changes: EdgeChange<Edge<WorkflowEdgeData>>[]) => {
+      setEdges((eds) => applyEdgeChanges(changes, eds));
+  }, [])
+  
   const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Delete' || event.key === 'Backspace') {
       setNodes((nodes) => {
-        const notDeletedNodes = nodes.filter((node) => !node.selected)
-        const deletedNodes = nodes.filter((node) => node.selected)
+        const notDeletedNodes = nodes.filter((node) => !node.selected);
+        const deletedNodes = nodes.filter((node) => node.selected);
         deletedNodes.forEach((node) => {
           try {
             workflowNodeService.remove(workflowId, node.id);
           } catch (err) {
-            console.error(err)
+            const error = err instanceof Error
+              ? err
+              : new Error('Unknown error');
+
+            onError(error);
           }
         });
       
         return notDeletedNodes;
       });
-      setEdges((eds) => eds.filter((e) => !e.selected));
+      setEdges((edges) => {
+        const notDeletedEdges = edges.filter((edge) => !edge.selected);
+        const deletedEdges = edges.filter((edge) => edge.selected);
+        deletedEdges.forEach((edge) => {
+          try {
+            throw new Error('Not implemented')
+            // workflowEdgeService.remove(workflowId, edge.id);
+          } catch (err: unknown) {
+            const error = err instanceof Error
+              ? err
+              : new Error('Unknown error');
+
+            onError(error);
+          }
+        });
+        return notDeletedEdges;
+      });
     }
   }, []);
 
-  const onSelectionChange = useCallback(
-    ({ nodes, edges }: { nodes: Node<WorkflowNodeData>[]; edges: Edge<WorkflowEdgeData>[] }) => {
-      onNodeSelect(nodes.length ? nodes[0] : null);
-      if (edges.length) {
-        console.log('selected edges', edges);
-      }
-    },
-    []
-  );
+  
+
+  
+
+  
+
+
 
   return (
     <div
@@ -128,11 +165,15 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         edges={edges}
         nodesDraggable
         onNodesChange={handleNodesChange}
-        onSelectionChange={onSelectionChange}
+        onEdgesChange={handleEdgeChange}
+        onSelectionChange={handleSelectionChange}
         selectNodesOnDrag={false}
+        elementsSelectable={true}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-      />
+      >
+        <ArrowClosedEdgeMarker />
+      </ReactFlow>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 // src/modules/workflow/types/Workflow.types.ts
 
+import { WorkflowEdgeType } from "@/modules/workflow/enums/workflow-edge-type.enum";
 import { Edge, Node, NodeProps } from "@xyflow/react";
 
 export interface Workflow {
@@ -88,6 +89,7 @@ export interface WorkflowEdge {
   source: WorkflowNode;
   target: WorkflowNode;
   label: string;
+  type: WorkflowEdgeType;
 }
 
 export interface WorkflowCanvasProps {
@@ -96,6 +98,7 @@ export interface WorkflowCanvasProps {
   workflowId: string;
   onNodeSelect: (node: Node<WorkflowNodeData> | null) => void;
   onEdgeSelect: (node: Edge<WorkflowEdgeData> | null) => void;
+  onError: (error: Error) => void;
 }
 
 export interface WorkflowNodeData extends Record<string, unknown> {
@@ -106,6 +109,7 @@ export interface WorkflowNodeData extends Record<string, unknown> {
 export interface WorkflowEdgeData extends Record<string, unknown> {
   label?: string;
   originalEdge?: WorkflowEdge
+  selected?: boolean
 }
 
 export interface WorkflowNodeProps extends NodeProps {

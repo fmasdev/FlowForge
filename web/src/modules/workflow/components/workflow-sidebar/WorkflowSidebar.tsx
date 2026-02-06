@@ -1,18 +1,20 @@
 // src/modules/workflow/components/workflow-sidebar/WorkflowSidebar.tsx
 
-import { JSX } from "react"
+import React, { JSX } from "react"
 import { Sidebar } from "@/components/sidebar/Sidebar"
 import { useTranslation } from "react-i18next";
-import { Node } from "@xyflow/react";
-import { WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
+import { Edge, Node } from "@xyflow/react";
+import { WorkflowEdgeData, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 
 export interface WorkflowSidebarProps {
-  nodeDetail: Node<WorkflowNodeData> | null
+  nodeDetail: Node<WorkflowNodeData> | null;
+  edgeDetail: Edge<WorkflowEdgeData> | null;
 }
 
-export const WorkflowSidebar = ({
+export const WorkflowSidebar: React.FC<WorkflowSidebarProps> = ({
   nodeDetail,
-}: WorkflowSidebarProps): JSX.Element => {
+  edgeDetail
+}): JSX.Element => {
   const { t } = useTranslation('workflow');
   return (
     <Sidebar
@@ -31,7 +33,12 @@ export const WorkflowSidebar = ({
             <p>{nodeDetail?.data?.label}</p>
           </div>
         )}
-
+        {edgeDetail && (
+          <div>
+            <div>Edge detail</div>
+            <p>{edgeDetail?.data?.label}</p>
+          </div>
+        )}
         {/* <div>todo</div>
         <ul>
           <li>selected node detail</li>
