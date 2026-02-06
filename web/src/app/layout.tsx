@@ -4,6 +4,7 @@ import { AuthProvider } from '@/modules/auth/auth.context';
 import './globals.css';
 import NavBar from '@/components/navbar/Navbar';
 import { I18nProvider } from '@/i18n/I18nProvider';
+import { NotificationProvider } from '@/components/notification/NotificationProvider';
 
 export default function RootLayout({
   children,
@@ -16,15 +17,17 @@ export default function RootLayout({
       <body>
         <main>
           <I18nProvider>
-            <AuthProvider>
-              <main className="flex flex-col gap-24">
-                <header>
-                  <NavBar />
-                </header>
+            <NotificationProvider>
+              <AuthProvider>
+                <main className="flex flex-col gap-24">
+                  <header>
+                    <NavBar />
+                  </header>
 
-                {children}
-              </main>
-            </AuthProvider>
+                  {children}
+                </main>
+                </AuthProvider>
+              </NotificationProvider>
           </I18nProvider>
         </main>
       </body>

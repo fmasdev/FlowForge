@@ -2,7 +2,7 @@
 
 import { IconName } from "@/assets/svg";
 
-export type NotificationType = 'info' | 'success' | 'danger';
+export type NotificationType = 'info' | 'success' | 'error';
 export type NotificationPosition =
   | 'bottom-right'
   | 'bottom-left'
@@ -14,8 +14,24 @@ export interface NotificationStyle {
   iconColor: string;
 }
 
-export type NotificationProps = {
+export interface NotificationProps {
   type: NotificationType;
   message: string;
+  onClose: () => void;
+}
+
+export interface NotificationContextValue {
+  notify: (type: NotificationType, message: string) => void;
+}
+
+export interface NotificationStackProps {
+  notifications: NotificationItem[];
+  onClose: (id: number) => void;
   position?: NotificationPosition;
+}
+
+export type NotificationItem = {
+  id: number;
+  type: NotificationType;
+  message: string;
 };

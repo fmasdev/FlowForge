@@ -1,86 +1,54 @@
 // src/components/notification/Notification.stories.tsx
 
-import type { Meta, StoryObj } from '@storybook/react';
+'use client';
+
+import { useState } from 'react';
+import { Meta, StoryObj } from '@storybook/react';
 import { Notification } from './Notification';
 
 const meta: Meta<typeof Notification> = {
-  title: 'Components/UI/Notification',
+  title: 'Components/Notification',
   component: Notification,
-  parameters: {
-    layout: 'fullscreen',
-  },
-  argTypes: {
-    type: {
-      control: 'select',
-      options: ['info', 'success', 'danger'],
-    },
-    position: {
-      control: 'select',
-      options: ['bottom-right', 'bottom-left', 'bottom-center'],
-    },
-    message: {
-      control: 'text',
-    },
-  },
-  args: {
-    type: 'info',
-    position: 'bottom-right',
-    message: 'This is an information notification.',
-  },
 };
-
 export default meta;
 
 type Story = StoryObj<typeof Notification>;
 
-// -------------------------------------
-// Stories
-// -------------------------------------
-
 export const Info: Story = {
-  args: {
-    type: 'info',
-    message: 'Information message',
+  render: () => {
+    const [visible, setVisible] = useState(true);
+    return visible ? (
+      <Notification
+        type="info"
+        message="Ceci est une notification d'information."
+        onClose={() => setVisible(false)}
+      />
+    ) : null;
   },
 };
 
 export const Success: Story = {
-  args: {
-    type: 'success',
-    message: 'Operation completed successfully',
+  render: () => {
+    const [visible, setVisible] = useState(true);
+    return visible ? (
+      <Notification
+        type="success"
+        message="Opération réussie !"
+        onClose={() => setVisible(false)}
+      />
+    ) : null;
   },
 };
 
 export const Danger: Story = {
-  args: {
-    type: 'danger',
-    message: 'Something went wrong',
+  render: () => {
+    const [visible, setVisible] = useState(true);
+    return visible ? (
+      <Notification
+        type="error"
+        message="Une erreur est survenue."
+        onClose={() => setVisible(false)}
+      />
+    ) : null;
   },
-};
-
-export const BottomRight: Story = {
-  args: {
-    position: 'bottom-right',
-    message: 'Bottom right notification',
-  },
-};
-
-export const BottomLeft: Story = {
-  args: {
-    position: 'bottom-left',
-    message: 'Bottom left notification',
-  },
-};
-
-export const BottomCenter: Story = {
-  args: {
-    position: 'bottom-center',
-    message: 'Bottom center notification',
-  },
-};
-
-export const Playground: Story = {
-  render: (args: React.ComponentProps<typeof Notification>) => (
-    <Notification key={JSON.stringify(args)} {...args} />
-  ),
 };
