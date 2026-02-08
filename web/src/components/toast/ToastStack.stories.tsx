@@ -1,43 +1,43 @@
-// src/components/notification/NotificationStack.stories.tsx
+// src/components/Toast/ToastStack.stories.tsx
 
 'use client';
 
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { NotificationStack } from './NotificationStack';
-import { NotificationItem, NotificationType } from '@/components/notification/Notification.type';
+import { ToastStack } from './ToastStack';
+import { ToastItem, ToastType } from '@/components/toast/Toast.type';
 
-const meta: Meta<typeof NotificationStack> = {
-  title: 'Components/NotificationStack',
-  component: NotificationStack,
+const meta: Meta<typeof ToastStack> = {
+  title: 'Components/ToastStack',
+  component: ToastStack,
 };
 export default meta;
 
-type Story = StoryObj<typeof NotificationStack>;
+type Story = StoryObj<typeof ToastStack>;
 
 let nextId = 1;
 
 export const InteractiveStack: Story = {
   render: () => {
-    const [notifications, setNotifications] = useState<NotificationItem[]>([
-      { id: 1, type: 'info', message: 'Notification info' },
-      { id: 2, type: 'success', message: 'Notification succès' },
-      { id: 3, type: 'error', message: 'Notification erreur' },
+    const [Toasts, setToasts] = useState<ToastItem[]>([
+      { id: 1, type: 'info', message: 'Toast info' },
+      { id: 2, type: 'success', message: 'Toast succès' },
+      { id: 3, type: 'error', message: 'Toast erreur' },
     ]);
 
     const handleClose = (id: number) => {
-      setNotifications((prev) => prev.filter((n) => n.id !== id));
+      setToasts((prev) => prev.filter((n) => n.id !== id));
     };
 
-    const addNotification = (type: NotificationType) => {
+    const addToast = (type: ToastType) => {
       const id = nextId++;
-      const messages: Record<NotificationType, string> = {
+      const messages: Record<ToastType, string> = {
         info: 'Nouvelle info !',
         success: 'Opération réussie !',
         error: 'Une erreur est survenue !',
       };
 
-      setNotifications((prev) => [
+      setToasts((prev) => [
         ...prev,
         { id, type, message: messages[type] },
       ]);
@@ -48,26 +48,26 @@ export const InteractiveStack: Story = {
         <div className="flex gap-2">
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded"
-            onClick={() => addNotification('info')}
+            onClick={() => addToast('info')}
           >
             Ajouter Info
           </button>
           <button
             className="px-4 py-2 bg-green-500 text-white rounded"
-            onClick={() => addNotification('success')}
+            onClick={() => addToast('success')}
           >
             Ajouter Succès
           </button>
           <button
             className="px-4 py-2 bg-red-500 text-white rounded"
-            onClick={() => addNotification('error')}
+            onClick={() => addToast('error')}
           >
             Ajouter Erreur
           </button>
         </div>
 
-        <NotificationStack
-          notifications={notifications}
+        <ToastStack
+          Toasts={Toasts}
           position="bottom-right"
           onClose={handleClose}
         />
