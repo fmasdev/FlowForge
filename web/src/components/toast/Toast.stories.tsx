@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { Notification } from './Notification';
+import { Toast } from './Toast';
 
 const meta: Meta<typeof Notification> = {
   title: 'Components/Notification',
@@ -12,15 +12,15 @@ const meta: Meta<typeof Notification> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof Notification>;
+type Story = StoryObj<typeof Toast>;
 
 export const Info: Story = {
   render: () => {
     const [visible, setVisible] = useState(true);
     return visible ? (
-      <Notification
+      <Toast
         type="info"
-        message="Ceci est une notification d'information."
+        message="This is info toast."
         onClose={() => setVisible(false)}
       />
     ) : null;
@@ -31,9 +31,9 @@ export const Success: Story = {
   render: () => {
     const [visible, setVisible] = useState(true);
     return visible ? (
-      <Notification
+      <Toast
         type="success"
-        message="Opération réussie !"
+        message="Process successfull !"
         onClose={() => setVisible(false)}
       />
     ) : null;
@@ -44,9 +44,9 @@ export const Danger: Story = {
   render: () => {
     const [visible, setVisible] = useState(true);
     return visible ? (
-      <Notification
+      <Toast
         type="error"
-        message="Une erreur est survenue."
+        message="An unknown error has occurred."
         onClose={() => setVisible(false)}
       />
     ) : null;

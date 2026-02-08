@@ -1,12 +1,12 @@
-// src/components/Notification.tsx
+// src/components/Toast.tsx
 
 'use client';
 
 import { JSX } from 'react';
 import { SvgIcon } from '@/components/SvgIcon';
-import { NotificationProps, NotificationType } from '@/components/notification/Notification.type';
+import { ToastProps, ToastType } from '@/components/toast/Toast.type';
 
-const typeStyles: Record<NotificationType, { bg: string; icon: NotificationType; iconColor: string }> = {
+const typeStyles: Record<ToastType, { bg: string; icon: ToastType; iconColor: string }> = {
   info: {
     bg: 'bg-blue-100 text-blue-900',
     icon: 'info',
@@ -24,7 +24,7 @@ const typeStyles: Record<NotificationType, { bg: string; icon: NotificationType;
   },
 };
 
-export const Notification: React.FC<NotificationProps> = ({
+export const Toast: React.FC<ToastProps> = ({
   type,
   message,
   onClose
@@ -43,7 +43,7 @@ export const Notification: React.FC<NotificationProps> = ({
         type="button"
         onClick={onClose}
         className="text-gray-500 hover:text-gray-800 font-bold text-lg"
-        aria-label="Close notification"
+        aria-label="Close Toast"
       >
         ×
       </button>
