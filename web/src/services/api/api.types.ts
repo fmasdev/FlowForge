@@ -17,10 +17,24 @@ export interface ApiResponse<T, M = unknown> {
   meta?: M | null;
 }
 
-export interface ApiErrorResponse<T = unknown> {
-  success: boolean;
-  message: string;
-  data: T | null;
-  path: string;
+export interface ApiErrorPayload {
+  code: string;
+  message?: string;
+  context?: Record<string, unknown>;
+}
+
+export interface ApiErrorResponse {
+  success: false;
+  error: ApiErrorPayload;
   timestamp: string;
+  path: string;
+}
+
+export interface NormalizedError {
+  code: string;
+  message: string;
+  rawMessage?: string;
+  context?: Record<string, unknown>;
+  status?: number;
+  isInfraError: boolean;
 }

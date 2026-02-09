@@ -1,5 +1,7 @@
 {
-
+  "workflowList": {
+    "noWorkflow": "Aucun workflow trouvé."
+  },
   "card": {
     "createdAt": "Créé le {{date}} à {{time}}",
     "updatedAt": "Modifié le {{date}} à {{time}}",
@@ -27,4 +29,5 @@
     "modify": "Modifier",
     "relaunch": "Relancer"
   }
+
 }

@@ -1,5 +1,7 @@
 {
-
+  "workflowList": {
+    "noWorkflow": "No workflow found"
+  },
   "card": {
     "createdAt": "Created on {{date}} at {{time}}",
     "updatedAt": "Updated on {{date}} at {{time}}",
@@ -37,7 +39,17 @@
     "modify": "Modify",
     "relaunch": "Relaunch"
   },
-  "notification": {
-
+  "workflowError": {
+    "create": {
+      "userNotFound": "User not found"
+    },
+    "update": {
+      "notFound": "Workflow to update not found",
+      "unauthorized": "You are not authorized to update this workflow"
+    },
+    "remove": {
+      "notFound": "Workflow to remove not found",
+      "unauthorized": "You are not authorized to delete this workflow"
+    }
   }
 }

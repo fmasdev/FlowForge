@@ -115,11 +115,6 @@ export class WorkflowService {
 
     const [data, total] = await qb.getManyAndCount();
 
-    throw new NotFoundException({
-      code: 'workflow.create.userNotFound',
-      context: {workflowId: jwtUser.sub}
-    });
-
     return {
       data,
       meta: {
@@ -144,14 +139,14 @@ export class WorkflowService {
 
     if (!workflow) {
       throw new NotFoundException({
-        code: 'workflow.update.notFound',
+        code: 'workflowError.update.notFound',
         context: { workflowId: id }
       });
     };
 
     if (workflow.createdBy.id !== jwtUser.sub) {
       throw new UnauthorizedException({
-        code: 'workflow.update.unauthorized',
+        code: 'workflowError.update.unauthorized',
       });
     }
 
@@ -168,14 +163,14 @@ export class WorkflowService {
 
     if (!workflow) {
       throw new NotFoundException({
-        code: 'workflow.remove.notFound',
-        context: { workflowId: id }
+        code: 'workflowError.remove.notFound',
+        context: { workflowId: id },
       });
     }
 
     if (jwtUser.sub !== workflow.createdBy.id) {
       throw new UnauthorizedException({
-        code: 'workflow.remove.unauthorized',
+        code: 'workflowError.remove.unauthorized',
       });
     }
 

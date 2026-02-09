@@ -14,6 +14,8 @@ import { WorkflowModal } from "@/modules/workflow/components/workflow-modal/Work
 import { workflowSchema } from "@/modules/workflow/schema/workflow.schema";
 import { sortByKey } from "@/helpers/arraySortHelper";
 import { SortState } from "@/types/sort.types";
+import { useToast } from "@/components/toast/ToastProvider";
+import { NormalizedError } from "@/services/api/api.types";
 
 export interface FetchWorkflowProps {
     page?: number;
@@ -24,6 +26,7 @@ export interface FetchWorkflowProps {
 export const WorkflowsLayout = (): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { t: tCommon } = useTranslation('common');
+  const { toastify } = useToast();
 
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -63,9 +66,12 @@ export const WorkflowsLayout = (): JSX.Element => {
 
       setHasMore(more ?? false);
       currentPage.current = Number(meta.page)
-      
     } catch (err) {
-      console.error(err)
+      const error = err as NormalizedError;
+
+      if (!error.isInfraError) {
+        toastify('error', t(error.code, error.context));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -105,13 +111,17 @@ export const WorkflowsLayout = (): JSX.Element => {
     if (!selectedWorkflow?.id) return
     try {
       const { data: removedWorkflow } = await workflowService.delete(selectedWorkflow.id);
-      console.log(removedWorkflow)
+      
       if (removedWorkflow) {
         setWorkflows((prev) => prev.filter((w) => w.id !== removedWorkflow.id));
       }
 
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      const error = err as NormalizedError;
+
+      if (!error.isInfraError) {
+        toastify('error', t(error.code, error.context));
+      }
     } finally {
       setModalOpen(false);
       setDefaultWorkflowForm();
@@ -125,6 +135,7 @@ export const WorkflowsLayout = (): JSX.Element => {
       console.error(parsed.error.flatten());
       return;
     }
+    
     try {
       if (selectedWorkflow?.id) {
         const { data: updatedWorkflow } = await workflowService.update(selectedWorkflow.id, {
@@ -142,7 +153,11 @@ export const WorkflowsLayout = (): JSX.Element => {
         }
       }
     } catch (err) {
-      console.error(err)
+      const error = err as NormalizedError;
+
+      if (!error.isInfraError) {
+        toastify('error', t(error.code, error.context));
+      }
     } finally {
       setModalOpen(false);
       setDefaultWorkflowForm();
@@ -174,32 +189,43 @@ export const WorkflowsLayout = (): JSX.Element => {
         </div>
       </div>
 
-      <div className="flex gap-4 flex-wrap">
-        {workflows.map((workflow) => (
-          <WorkflowCard
-            key={workflow.id}
-            workflow={workflow}
-            onEdit={() => {
-              setModalAction('edit');
-              setSelectedWorkflow(workflow)
-              setModalOpen(true)
-            }}
-            onDelete={() => {
-              setModalAction('delete')
-              setSelectedWorkflow(workflow)
-              setModalOpen(true)
-            }}
-          />
-        ))}
-      </div>
-      
-      <div>
-        <InfiniteObserver
-          hasMore={hasMore}
-          isLoading={isLoading}
-          onLoadMore={fetchNextPage}
-        />
-      </div >
+      {!!workflows.length ? (
+        <>
+          <div className="flex gap-4 flex-wrap">
+            {workflows.map((workflow) => (
+              <WorkflowCard
+                key={workflow.id}
+                workflow={workflow}
+                onEdit={() => {
+                  setModalAction('edit');
+                  setSelectedWorkflow(workflow)
+                  setModalOpen(true)
+                }}
+                onDelete={() => {
+                  setModalAction('delete')
+                  setSelectedWorkflow(workflow)
+                  setModalOpen(true)
+                }}
+              />
+            ))}
+          </div>
+          
+          <div>
+            <InfiniteObserver
+              hasMore={hasMore}
+              isLoading={isLoading}
+              onLoadMore={fetchNextPage}
+            />
+          </div >
+        </>
+      ) : (
+          <div className="flex items-center justify-center">
+            <div>
+              {t('workflowList.noWorkflow')}
+            </div>
+          </div>
+      )}
+
     
       {/* modal */}
       <WorkflowModal

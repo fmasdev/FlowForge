@@ -7,8 +7,5 @@
   "searchBar": {
     "placeholder": "Search…",
     "clearLabel": "Clear"
-  },
-  "notifications": {
-    "unknownError": "An unknown error has occurred."
   }
 }
