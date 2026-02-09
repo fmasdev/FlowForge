@@ -4,22 +4,14 @@ import React, { JSX } from "react"
 import { Sidebar } from "@/components/sidebar/Sidebar"
 import { useTranslation } from "react-i18next";
 import { WorkflowEdgeData, WorkflowNodeData, WorkflowSidebarProps } from "@/modules/workflow/types/Workflow.types";
+import { WorkflowNodeDetail } from "@/modules/workflow/components/WorkflowNodeDetail";
 
 
 export const WorkflowSidebar: React.FC<WorkflowSidebarProps> = ({
-  selectedElt
+  selectedNode,
+  selectedEdge,
 }): JSX.Element => {
   const { t } = useTranslation('workflow');
-  console.log(('selectedElt'));
-  console.log(selectedElt);
-  const isWorkflowNodeSelected = (
-    el: WorkflowNodeData | WorkflowEdgeData | null
-  ): el is WorkflowNodeData => el?._type === 'node';
-  
-  const isEdgeSelected = (
-    el: WorkflowNodeData | WorkflowEdgeData | null
-  ): el is WorkflowEdgeData => el?._type === 'edge';
-
 
   return (
     <Sidebar
@@ -32,23 +24,23 @@ export const WorkflowSidebar: React.FC<WorkflowSidebarProps> = ({
       }
     >
       <>
-        {isWorkflowNodeSelected(selectedElt) && (
+        {!!selectedNode && (
           <div>
             <div>Node detail</div>
-            <p>{selectedElt?.label}</p>
+            <p>{selectedNode.label}</p>
             <div>
-              {/* <WorkflowNodeDetail
-                node={selectedElt}
-              /> */}
+              <WorkflowNodeDetail
+                node={selectedNode}
+              />
             </div>
           </div>
         )}
-        {/* {(selectedElt && selectedElt._type === 'edge') && (
+        {!!selectedEdge && (
           <div>
             <div>Edge detail</div>
-            <div>{edgeDetail?.data?.label}</div>
+            {/* <div>{selectedEdge?.data?.label}</div> */}
           </div>
-        )} */}
+        )}
         {/* <div>todo</div>
         <ul>
           <li>selected node detail</li>

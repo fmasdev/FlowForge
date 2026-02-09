@@ -25,7 +25,8 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   workflowNodes,
   workflowEdges,
   workflowId,
-  onElementSelect,
+  onNodeSelect,
+  onEdgeSelect,
 }): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { toastify } = useToast();
@@ -48,20 +49,20 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
     error: ErrorEdge,
   };
   
+  const normalizeSelectedElement = (
+    nodes: Node<WorkflowNodeData>[],
+    edges: Edge<WorkflowEdgeData>[]
+  ): Node<WorkflowNodeData> | Edge<WorkflowEdgeData> | null => {
+    return nodes[0] ?? edges[0] ?? null;
+  };
+  
   // Handle selection
   const handleSelectionChange = useCallback(
     ({ nodes, edges }: { nodes: Node<WorkflowNodeData>[], edges: Edge<WorkflowEdgeData>[] }) => {
-      console.log(nodes)
-      console.log(edges)
-      if (nodes.length) {
-        onElementSelect(nodes[0]);
-      } else if (edges.length) {
-        onElementSelect(edges[0]);
-      } else {
-        onElementSelect(null);
-      }
+      onNodeSelect(nodes[0] ?? null);
+      onEdgeSelect(edges[0] ?? null);
     },
-    [onElementSelect]
+    [onNodeSelect, onEdgeSelect]
   );
 
   // Handle node changes

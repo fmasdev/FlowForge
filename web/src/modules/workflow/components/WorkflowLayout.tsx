@@ -19,7 +19,8 @@ export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
   const { toastify } = useToast();
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
-  const [selectedElement, setSelectedElement] = useState<Node<WorkflowNodeData> | Edge<WorkflowEdgeData> | null>(null);  
+  const [selectedNode, setSelectedNode] = useState<Node<WorkflowNodeData> | null>(null);  
+  const [selectedEdge, setSelectedEdge] = useState<Edge<WorkflowEdgeData> | null>(null);  
 
   const fetchWorkflow = async () => {
     try {
@@ -57,14 +58,16 @@ export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
           
           <div className="flex flex-1 overflow-hidden">
             <WorkflowSidebar
-              selectedElt={selectedElement?.data}
+              selectedNode={selectedNode?.data ?? null}
+              selectedEdge={selectedEdge?.data ?? null}
             ></WorkflowSidebar>
           
             <WorkflowCanvas
               workflowNodes={workflow.nodes}
               workflowEdges={workflow?.edges}
               workflowId={workflow.id!}
-              onElementSelect={setSelectedElement}
+              onNodeSelect={setSelectedNode}
+              onEdgeSelect={setSelectedEdge}
             />
           </div>
           
