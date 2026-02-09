@@ -1,6 +1,6 @@
 import { ROLES_KEY } from '@/common/decorators/role.decorator';
 import { Role } from '@/common/enums/role.enum';
-import { AuthUserType } from '@/common/types/auth-user.type';
+import { AuthUserType } from '@/common/types/auth-user.types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';

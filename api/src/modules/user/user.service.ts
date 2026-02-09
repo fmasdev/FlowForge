@@ -15,10 +15,9 @@ import { QueryFailedError, Repository } from 'typeorm';
 import { UpdatePasswordDto } from '@/modules/user/dto/update-password.dto';
 import { UpdateResult } from 'typeorm/browser';
 import { UpdateEmailDto } from '@/modules/user/dto/update-email.dto';
-import { Role } from '@/common/enums/role.enum';
 import { CreateUserCli } from '@/cli/commands/create-user.command';
-import { AuthUserType } from '@/common/types/auth-user.type';
-import { DriverErrorType } from '@/common/types/error.typs';
+import { AuthUserType } from '@/common/types/auth-user.types';
+import { TypeOrmDriverError } from '@/common/types/error.types';
 
 @Injectable()
 export class UserService {
@@ -48,7 +47,7 @@ export class UserService {
       return await this.userRepository.save(user);
     } catch (error) {
       if (error instanceof QueryFailedError) {
-        const driverError = error.driverError as DriverErrorType;
+        const driverError = error.driverError as TypeOrmDriverError;
         if (driverError?.code === '23505') {
           throw new ConflictException('Email already exists');
         }

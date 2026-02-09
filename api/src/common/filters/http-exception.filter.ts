@@ -1,124 +1,141 @@
+// src/common/filters/http-exception.filter.ts
+
 import {
   ArgumentsHost,
   Catch,
   ExceptionFilter,
   HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { QueryFailedError } from 'typeorm';
 import { Request, Response } from 'express';
-import { DriverErrorType } from '@/common/types/error.typs';
+import { ApiErrorPayload, TypeOrmDriverError } from '@/common/types/error.types';
+import { isApiErrorPayload, isDatabaseConnectionError } from '@/common/guards/error.guards';
 
-interface HttpExceptionResponse {
-  message?: string | string[];
-  error?: string;
-  statusCode?: number;
-}
-
-interface MessageStatusType {
-  message: string | string[];
-  status: number;
+export interface ApiErrorResponse {
+  success: false;
+  error: ApiErrorPayload;
+  timestamp: string;
+  path: string;
 }
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    let status =
-      exception instanceof HttpException ? exception.getStatus() : 500;
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let error: ApiErrorPayload = {
+      code: 'internal.error',
+    };
 
-    let message =
-      exception instanceof HttpException
-        ? exception.getResponse()
-        : 'Internal server error';
+    // =====================================================
+    //  HttpException (PRIORITAIRE)
+    // =====================================================
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      const res = exception.getResponse();
 
-    if (exception instanceof QueryFailedError) {
-      ({ message, status } = loadTypeOrmException(exception));
-      console.error(exception);
-    } else if (exception instanceof HttpException) {
-      ({ message, status } = loadHttpException(exception));
-      console.error(exception);
-    } else if (hasMessage(exception)) {
-      // Other errors
-      message = exception.message;
-      console.error(exception.message);
+      if (isApiErrorPayload(res)) {
+        error = res;
+      } else if (typeof res === 'string') {
+        error = {
+          code: 'http.error',
+          message: res,
+        };
+      }
     }
-    
-    response.status(status).json({
+
+    // =====================================================
+    //  TypeORM Query Errors
+    // =====================================================
+    else if (exception instanceof QueryFailedError) {
+      const driverError = exception.driverError as TypeOrmDriverError;
+      ({ status, error } = mapTypeOrmError(driverError));
+    }
+
+    // =====================================================
+    //  DB Connection Errors
+    // =====================================================
+    else if (isDatabaseConnectionError(exception)) {
+      status = HttpStatus.SERVICE_UNAVAILABLE;
+      error = {
+        code: 'database.connectionFailed',
+        message: exception instanceof Error ? exception.message : undefined,
+      };
+    }
+
+    // =====================================================
+    //  Generic JS Error
+    // =====================================================
+    else if (exception instanceof Error) {
+      error = {
+        code: 'internal.error',
+        message: exception.message,
+      };
+    }
+
+    const body: ApiErrorResponse = {
       success: false,
-      message,
-      data: {},
+      error,
       timestamp: new Date().toISOString(),
       path: request.url,
-    });
+    };
+
+    response.status(status).json(body);
   }
 }
 
-// Guard type for exception with message
-const hasMessage = (obj: unknown): obj is { message: string } => {
-  return (
-    typeof obj === 'object' &&
-    obj !== null &&
-    'message' in obj &&
-    typeof (obj as { message?: unknown }).message === 'string'
-  );
-};
-
-// TypeORM - SQL errors
-const loadTypeOrmException = (
-  exception: QueryFailedError<any>,
-): MessageStatusType => {
-  const driverError = exception.driverError as DriverErrorType;
-
+const mapTypeOrmError = (
+  driverError: TypeOrmDriverError,
+): { status: number; error: ApiErrorPayload } => {
   switch (driverError.code) {
     case '23505':
       return {
-        message: 'Email already exists',
-        status: 409,
+        status: HttpStatus.CONFLICT,
+        error: {
+          code: 'database.uniqueViolation',
+          message: driverError.detail,
+        },
       };
+
     case '23503':
       return {
-        message: 'Foreign key violation',
-        status: 409,
+        status: HttpStatus.CONFLICT,
+        error: {
+          code: 'database.foreignKeyViolation',
+          message: driverError.detail,
+        },
       };
+
+    case '23502':
+      return {
+        status: HttpStatus.BAD_REQUEST,
+        error: {
+          code: 'database.notNullViolation',
+          context: { column: driverError.column },
+        },
+      };
+
+    case 'ECONNREFUSED':
+    case 'ENOTFOUND':
+    case '57P01':
+      return {
+        status: HttpStatus.SERVICE_UNAVAILABLE,
+        error: {
+          code: 'database.connectionFailed',
+        },
+      };
+
     default:
       return {
-        message: 'Database error',
-        status: 500,
+        status: HttpStatus.INTERNAL_SERVER_ERROR,
+        error: {
+          code: 'database.error',
+          message: driverError.message,
+        },
       };
   }
-};
-
-// NestJS HttpException
-const loadHttpException = (exception: HttpException): MessageStatusType => {
-  const status = exception.getStatus();
-  const res = exception.getResponse();
-
-  if (typeof res === 'string') {
-    return {
-      status: status,
-      message: res,
-    };
-  } else if (typeof res === 'object' && !res) {
-    const response = res as HttpExceptionResponse;
-
-    if (Array.isArray(response.message)) {
-      return {
-        status: status,
-        message: response.message.join(', '),
-      };
-    } else if (typeof response.message === 'string') {
-      return {
-        status: status,
-        message: response.message,
-      };
-    }
-  }
-
-  return {
-    message: exception.message,
-    status: status,
-  };
 };

@@ -18,7 +18,6 @@ import { Repository } from 'typeorm';
 import { Pagination, ServiceResponse } from '@/common/types/response.types';
 import { SortDirection } from '@/common/enums/sortDirection.enum';
 
-
 @Injectable()
 export class WorkflowService {
   constructor(
@@ -34,9 +33,9 @@ export class WorkflowService {
     const user: User | null = await this.userService.findOneById(jwtUser.sub);
 
     if (!user) {
-      throw new NotFoundException(
-        `Cannot find user where id is #${jwtUser.sub}`,
-      );
+      throw new NotFoundException({
+        code: 'workflow.create.userNotFound',
+      });
     }
 
     const workflow = this.workflowRepository.create({
@@ -60,7 +59,10 @@ export class WorkflowService {
       .getOne();
 
     if (!workflow) {
-      throw new NotFoundException(`Cannot find workflow where id is #${id}`);
+      throw new NotFoundException({
+        code: 'workflow.notFound',
+        context: {workflowId: id}
+      });
     }
  
     return {
@@ -112,7 +114,12 @@ export class WorkflowService {
     qb.take(limit).skip((page - 1) * limit);
 
     const [data, total] = await qb.getManyAndCount();
-    
+
+    throw new NotFoundException({
+      code: 'workflow.create.userNotFound',
+      context: {workflowId: jwtUser.sub}
+    });
+
     return {
       data,
       meta: {
@@ -135,15 +142,17 @@ export class WorkflowService {
       relations: ['createdBy'],
     });
 
-    if (!workflow)
-      throw new NotFoundException(
-        `Cannot find workflow where id is #${id}`,
-      );
+    if (!workflow) {
+      throw new NotFoundException({
+        code: 'workflow.update.notFound',
+        context: { workflowId: id }
+      });
+    };
 
     if (workflow.createdBy.id !== jwtUser.sub) {
-      throw new UnauthorizedException(
-        'You cannot update this workflow because you are not author.',
-      );
+      throw new UnauthorizedException({
+        code: 'workflow.update.unauthorized',
+      });
     }
 
     Object.assign(workflow, workflowInput);
@@ -157,13 +166,19 @@ export class WorkflowService {
       relations: ['createdBy'],
     });
 
-    if (!workflow)
-      throw new NotFoundException(`Cannot find workflow where id is #${id}`);
+    if (!workflow) {
+      throw new NotFoundException({
+        code: 'workflow.remove.notFound',
+        context: { workflowId: id }
+      });
+    }
 
-    if (jwtUser.sub !== workflow.createdBy.id)
-      throw new UnauthorizedException(
-        'You cannot remove this workflow because you are not author.',
-      );
+    if (jwtUser.sub !== workflow.createdBy.id) {
+      throw new UnauthorizedException({
+        code: 'workflow.remove.unauthorized',
+      });
+    }
+
     const removed = await this.workflowRepository.remove(workflow);
     
     return removed ? workflow : null

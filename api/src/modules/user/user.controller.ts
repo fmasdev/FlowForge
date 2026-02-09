@@ -17,11 +17,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdatePasswordDto } from '@/modules/user/dto/update-password.dto';
 import { UpdateEmailDto } from '@/modules/user/dto/update-email.dto';
-import { RolesGuard } from '@/common/guards/roles.guard';
+import { RolesGuard } from '@/common/guards/roles.guards';
 import { JwtAuthGuard } from '@/modules/auth/auth.guard';
 import { User } from '@/modules/user/entities/user.entity';
 import { Request } from 'express';
-import { AuthUserType } from '@/common/types/auth-user.type';
+import { AuthUserType } from '@/common/types/auth-user.types';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')
