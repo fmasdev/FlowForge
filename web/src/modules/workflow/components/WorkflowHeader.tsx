@@ -16,7 +16,7 @@ export const WorkflowHeader: React.FC<WorkflowHeaderProps> = ({
   const { t } = useTranslation('workflow')
 
   return (
-    <header className="flex flex-col gap-4 pt-4 border-b border-white/10 pb-2">
+    <header className="flex flex-col gap-4 border-b border-white/10 pb-2">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h1 className="truncate text-2xl font-semibold text-white">
