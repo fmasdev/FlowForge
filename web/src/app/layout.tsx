@@ -20,7 +20,7 @@ export default function RootLayout({
           <I18nProvider>
             <ToastProvider>
               <AuthProvider>
-                <main className="flex flex-col gap-24">
+                <main className="flex flex-col gap-20">
                   <header>
                     <NavBar />
                   </header>
