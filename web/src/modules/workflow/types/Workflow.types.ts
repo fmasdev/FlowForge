@@ -1,62 +1,14 @@
-// src/modules/workflow/types/Workflow.types.ts
+// src/modules/workflow/types/WorkflowNode.types.ts
 
 import { WorkflowEdgeType } from "@/modules/workflow/enums/workflow-edge-type.enum";
-import { Edge, Node, NodeProps } from "@xyflow/react";
+import { WorkflowNodeType } from "@/modules/workflow/enums/workflow-node-type.enum";
+import { WorkflowEdgeData } from "@/modules/workflows/types/Workflows.types";
+import { Node, NodeProps, Edge } from "@xyflow/react";
 
-export interface Workflow {
-  id?: string;
-  name: string;
-  description: string;
-  lastExecution?: string;
-  nodes?: WorkflowNode[];
-  edges?: WorkflowEdge[];
-  createdAt: string;
-  updatedAt: string;
-  createdBy: CreatedBy;
-}
-
-export interface WorkflowCardProps {
-  workflow: Workflow
-  onEdit: (() => void)
-  onDelete: (() => void)
-}
-
-export interface WorkflowSearchParams {
-  page?: number;
-  search?: string;
-}
-
-export interface WorkflowModalProps {
-  isOpen: boolean;
-  action: 'add'| 'edit' | 'delete';
-  form: WorkflowFormData;
-  onChange: (form: WorkflowFormData) => void;
-  onSubmit: () => void;
-  onDelete: () => void;
-  onClose: () => void;
-}
-
-export interface WorkflowFormData {
-  id?: string,
-  name: string;
-  description: string;
-} 
-
-export interface WorkflowFormProps {
-  form: WorkflowFormData ;
-  onChange: (f: WorkflowFormData) => void;
-}
-
-export interface CreatedBy {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-}
-
-export interface WorkflowProps {
-  id: string
-}
+export interface WorkflowNodeProps extends NodeProps {
+  data: WorkflowNodeData;
+  selected: boolean;
+};
 
 export interface WorkflowNodeConditionConfig {
   expression: string;
@@ -76,10 +28,11 @@ export interface WorkflowNodeHttpConfig {
   headers?: any;
   body?: any;
 }
+
 export interface WorkflowNode {
   id: string;
-  type: string;
-  config: WorkflowNodeConditionConfig | WorkflowNodeDelayConfig | WorkflowNodeHttpConfig;
+  type: WorkflowNodeType;
+  config: WorkflowNodeConditionConfig | WorkflowNodeDelayConfig | WorkflowNodeHttpConfig | WorkflowNodeEmailConfig | WorkflowNodeWebhookConfig;
   positionX: number;
   positionY: number;
   label?: string;
@@ -96,22 +49,23 @@ export interface WorkflowCanvasProps {
   workflowNodes?: WorkflowNode[];
   workflowEdges?: WorkflowEdge[];
   workflowId: string;
-  onNodeSelect: (node: Node<WorkflowNodeData> | null) => void;
-  onEdgeSelect: (node: Edge<WorkflowEdgeData> | null) => void;
+  onElementSelect: (node: Node<WorkflowNodeData> | Edge<WorkflowEdgeData> | null) => void;
 }
 
 export interface WorkflowNodeData extends Record<string, unknown> {
   label: string;
-  originalNode?: WorkflowNode
+  originalNode: WorkflowNode
+  _type: 'node';
 }
+
 
 export interface WorkflowEdgeData extends Record<string, unknown> {
   label?: string;
-  originalEdge?: WorkflowEdge
+  originalEdge: WorkflowEdge
   selected?: boolean
+  _type: 'edge';
 }
 
-export interface WorkflowNodeProps extends NodeProps {
-  data: WorkflowNodeData;
-  selected: boolean;
-};
+export interface WorkflowSidebarProps {
+  selectedElt: WorkflowNodeData | WorkflowEdgeData | null;
+}

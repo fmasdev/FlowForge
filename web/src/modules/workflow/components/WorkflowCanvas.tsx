@@ -4,7 +4,6 @@
 
 import { JSX, useCallback } from "react";
 import { applyEdgeChanges, applyNodeChanges, Edge, EdgeChange, Node, NodeChange, NodePositionChange, NodeRemoveChange, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
-import { WorkflowCanvasProps, WorkflowEdgeData,  WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 import { mapToReactFlowNode } from "@/modules/workflow/helpers/mapToReactFlowNode";
 import { mapToReactFlowEdges } from "@/modules/workflow/helpers/mapToReactFlowEdge";
 import { workflowNodeService } from "@/modules/workflow/workflow-node.service";
@@ -19,13 +18,14 @@ import { workflowEdgeService } from "@/modules/workflow/workflow-edge.service";
 import { NormalizedError } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/components/toast/ToastProvider";
+import { WorkflowCanvasProps, WorkflowEdgeData, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
+
 
 export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   workflowNodes,
   workflowEdges,
   workflowId,
-  onNodeSelect,
-  onEdgeSelect,
+  onElementSelect,
 }): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { toastify } = useToast();
@@ -51,10 +51,17 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   // Handle selection
   const handleSelectionChange = useCallback(
     ({ nodes, edges }: { nodes: Node<WorkflowNodeData>[], edges: Edge<WorkflowEdgeData>[] }) => {
-      onNodeSelect(nodes[0] ?? null);
-      onEdgeSelect(edges[0] ?? null);
+      console.log(nodes)
+      console.log(edges)
+      if (nodes.length) {
+        onElementSelect(nodes[0]);
+      } else if (edges.length) {
+        onElementSelect(edges[0]);
+      } else {
+        onElementSelect(null);
+      }
     },
-    [onNodeSelect, onEdgeSelect]
+    [onElementSelect]
   );
 
   // Handle node changes

@@ -1,8 +1,8 @@
 // src/modules/workflow/components/workflow-header/WorkflowHeader.tsx
 
+import { Workflow } from "@/modules/workflows/types/Workflows.types";
 import { JSX } from "react"
 import { useTranslation } from "react-i18next";
-import { Workflow } from "@/modules/workflow/types/Workflow.types";
 
 export interface WorkflowHeaderProps {
   workflow: Workflow

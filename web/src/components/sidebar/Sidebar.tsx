@@ -26,6 +26,7 @@ export function Sidebar({
   className,
   width = 'md',
 }: SidebarProps): JSX.Element {
+  console.log(children)
   return (
     <aside
       className={clsx(

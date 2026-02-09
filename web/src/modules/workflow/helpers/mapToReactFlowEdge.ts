@@ -1,7 +1,8 @@
 // src/modules/workflow/helpers/mapToReactFlowEdge.ts
 
 import { WorkflowEdgeType } from "@/modules/workflow/enums/workflow-edge-type.enum";
-import { WorkflowEdge, WorkflowEdgeData } from "@/modules/workflow/types/Workflow.types";
+import { WorkflowEdge } from "@/modules/workflow/types/Workflow.types";
+import { WorkflowEdgeData } from "@/modules/workflows/types/Workflows.types";
 import { Edge } from "@xyflow/react";
 
 export function mapToReactFlowEdges(workflowEdges: WorkflowEdge[]): Edge<WorkflowEdgeData>[] {
@@ -15,6 +16,7 @@ export function mapToReactFlowEdges(workflowEdges: WorkflowEdge[]): Edge<Workflo
     selectable: true,
     type: workflowEdge.type,
     data: {
+      _type: 'edge',
       label: workflowEdge.label,
       originalEdge: workflowEdge,
       selected: false,

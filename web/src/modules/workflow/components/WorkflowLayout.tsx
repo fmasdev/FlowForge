@@ -3,23 +3,23 @@
 'use client';
 
 import { JSX, useEffect, useState } from "react";
-import { workflowService } from "@/modules/workflow/workflow.service";
-import { Workflow, WorkflowEdgeData, WorkflowNodeData, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
 import { ItemApiResponse, NormalizedError } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { Edge, Node } from "@xyflow/react";
-import { WorkflowHeader } from "@/modules/workflow/components/WorkflowHeader";
 import { WorkflowSidebar } from "@/modules/workflow/components/WorkflowSidebar";
-import { WorkflowCanvas } from "@/modules/workflow/components/WorkflowCanvas";
 import { useToast } from "@/components/toast/ToastProvider";
+import { WorkflowHeader } from "@/modules/workflow/components/WorkflowHeader";
+import { WorkflowCanvas } from "@/modules/workflow/components/WorkflowCanvas";
+import { workflowService } from "@/modules/workflows/workflow.service";
+import { WorkflowEdgeData, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
+import { Workflow, WorkflowProps } from "@/modules/workflows/types/Workflows.types";
 
 export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { toastify } = useToast();
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
-  const [selectedNode, setSelectedNode] = useState<Node<WorkflowNodeData> | null>(null);  
-  const [selectedEdge, setSelectedEdge] = useState<Edge<WorkflowEdgeData> | null>(null);
+  const [selectedElement, setSelectedElement] = useState<Node<WorkflowNodeData> | Edge<WorkflowEdgeData> | null>(null);  
 
   const fetchWorkflow = async () => {
     try {
@@ -36,14 +36,6 @@ export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
   useEffect(() => {
     fetchWorkflow()
   }, [])
-
-  const handleNodeSelect = (node: Node<WorkflowNodeData> | null) => {
-    setSelectedNode(node);
-  }
-
-  const handleEdgeSelect = (edge: Edge<WorkflowEdgeData> | null) => {
-    setSelectedEdge(edge);
-  }
 
   return (
     <>
@@ -65,16 +57,14 @@ export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
           
           <div className="flex flex-1 overflow-hidden">
             <WorkflowSidebar
-              nodeDetail={selectedNode}
-              edgeDetail={selectedEdge}
+              selectedElt={selectedElement?.data}
             ></WorkflowSidebar>
           
             <WorkflowCanvas
               workflowNodes={workflow.nodes}
               workflowEdges={workflow?.edges}
               workflowId={workflow.id!}
-              onNodeSelect={handleNodeSelect}
-              onEdgeSelect={handleEdgeSelect}
+              onElementSelect={setSelectedElement}
             />
           </div>
           

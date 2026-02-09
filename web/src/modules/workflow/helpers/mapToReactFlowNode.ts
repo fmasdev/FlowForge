@@ -1,5 +1,6 @@
 // src/modules/workflow/helpers/mapToReactFlowNode.ts
 
+
 import { WorkflowNode, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 import { Node } from "@xyflow/react";
 
@@ -22,6 +23,7 @@ export function mapToReactFlowNode(workflowNodes: WorkflowNode[]): Node<Workflow
     id: workflowNode.id,
     type: getNodeType(workflowNode),
     data: {
+      _type: 'node',
       label: workflowNode.label ? `${workflowNode.label} (${workflowNode.type})` : workflowNode.type,
       originalNode: workflowNode
     },
