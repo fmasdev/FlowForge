@@ -7,9 +7,10 @@ import { WorkflowNodeRequestType } from "@/modules/workflow/enums/workfow-node-r
 import { Workflow } from "@/modules/workflows/types/Workflows.types";
 import { Node, NodeProps, Edge } from "@xyflow/react";
 
-
-
-
+export interface WorkflowHeaderProps {
+  workflow: Workflow
+  actions?: React.ReactNode;
+}
 
 export interface WorkflowCanvasProps {
   workflowNodes?: WorkflowNode[];

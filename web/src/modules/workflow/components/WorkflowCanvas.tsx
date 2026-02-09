@@ -3,22 +3,38 @@
 'use client';
 
 import { JSX, useCallback } from "react";
-import { applyEdgeChanges, applyNodeChanges, Edge, EdgeChange, Node, NodeChange, NodePositionChange, NodeRemoveChange, ReactFlow, useEdgesState, useNodesState } from '@xyflow/react';
-import { mapToReactFlowNode } from "@/modules/workflow/helpers/mapToReactFlowNode";
-import { mapToReactFlowEdges } from "@/modules/workflow/helpers/mapToReactFlowEdge";
-import { workflowNodeService } from "@/modules/workflow/workflow-node.service";
-import { ActionNode } from "@/modules/workflow/components/react-flow/nodes/ActionNode";
-import { ConditionNode } from "@/modules/workflow/components/react-flow/nodes/ConditionNode";
-import { HttpNode } from "@/modules/workflow/components/react-flow/nodes/HttpNode";
-import { WorkflowEdge } from "@/modules/workflow/components/react-flow/edges/WorkflowEdge";
-import { SuccessEdge } from "@/modules/workflow/components/react-flow/edges/SuccessEdge";
-import { ErrorEdge } from "@/modules/workflow/components/react-flow/edges/ErrorEdge";
-import { ArrowClosedEdgeMarker } from "@/modules/workflow/components/react-flow/edge-markers/ArrowClosedEdgeMarker";
-import { workflowEdgeService } from "@/modules/workflow/workflow-edge.service";
+import {
+  applyEdgeChanges,
+  applyNodeChanges,
+  Edge,
+  EdgeChange,
+  Node,
+  NodeChange,
+  NodePositionChange,
+  NodeRemoveChange,
+  ReactFlow,
+  useEdgesState,
+  useNodesState
+} from '@xyflow/react';
 import { NormalizedError } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
 import { useToast } from "@/components/toast/ToastProvider";
-import { WorkflowCanvasProps, WorkflowEdgeData, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
+import { workflowNodeService } from "@/modules/workflow/workflow-node.service";
+import { mapToReactFlowNode } from "@/modules/workflow/helpers/mapToReactFlowNode";
+import { mapToReactFlowEdges } from "@/modules/workflow/helpers/mapToReactFlowEdge";
+import { ActionNode } from "@/modules/workflow/components/react-flow/nodes/ActionNode";
+import { ConditionNode } from "@/modules/workflow/components/react-flow/nodes/ConditionNode";
+import { HttpNode } from "@/modules/workflow/components/react-flow/nodes/HttpNode";
+import { SuccessEdge } from "@/modules/workflow/components/react-flow/edges/SuccessEdge";
+import { WorkflowEdge } from "@/modules/workflow/components/react-flow/edges/WorkflowEdge";
+import { ErrorEdge } from "@/modules/workflow/components/react-flow/edges/ErrorEdge";
+import { workflowEdgeService } from "@/modules/workflow/workflow-edge.service";
+import { ArrowClosedEdgeMarker } from "@/modules/workflow/components/react-flow/edge-markers/ArrowClosedEdgeMarker";
+import type {
+  WorkflowCanvasProps,
+  WorkflowEdgeData,
+  WorkflowNodeData
+} from "@/modules/workflow/types/Workflow.types";
 
 
 export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({

@@ -1,12 +1,20 @@
 // src/modules/workflow/components/WorkflowNodeDetail.tsx
 
 import { WorkflowNodeType } from "@/modules/workflow/enums/workflow-node-type.enum";
-import { WorkflowNodeConditionConfig, WorkflowNodeData, WorkflowNodeDelayConfig, WorkflowNodeDetailProps, WorkflowNodeEmailConfig, WorkflowNodeHttpConfig, WorkflowNodeScriptConfig, WorkflowNodeWebhookConfig } from "@/modules/workflow/types/Workflow.types";
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
+import type {
+  WorkflowNodeConditionConfig,
+  WorkflowNodeDelayConfig,
+  WorkflowNodeDetailProps,
+  WorkflowNodeEmailConfig,
+  WorkflowNodeHttpConfig,
+  WorkflowNodeScriptConfig,
+  WorkflowNodeWebhookConfig
+} from "@/modules/workflow/types/Workflow.types";
 
 export const WorkflowNodeDetail: React.FC<WorkflowNodeDetailProps> = ({
   node,
-}: WorkflowNodeDetailProps): JSX.Element => {
+}): JSX.Element => {
 
   switch (node.originalNode.type) {
     case WorkflowNodeType.HTTP:

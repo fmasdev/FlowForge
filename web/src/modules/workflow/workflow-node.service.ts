@@ -10,6 +10,6 @@ export const workflowNodeService = {
   update: async(workflowId: string, id: string, data: object) =>
     await apiService.patch(`/workflows/${workflowId}/nodes/${id}`, data),
 
-  remove: async (workflowId: string,id: string) =>
+  remove: async (workflowId: string, id: string) =>
     await apiService.delete(`/workflows/${workflowId}/nodes/${id}`),
 }

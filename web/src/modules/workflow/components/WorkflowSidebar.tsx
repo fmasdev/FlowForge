@@ -3,8 +3,8 @@
 import React, { JSX } from "react"
 import { Sidebar } from "@/components/sidebar/Sidebar"
 import { useTranslation } from "react-i18next";
-import { WorkflowEdgeData, WorkflowNodeData, WorkflowSidebarProps } from "@/modules/workflow/types/Workflow.types";
 import { WorkflowNodeDetail } from "@/modules/workflow/components/WorkflowNodeDetail";
+import type { WorkflowSidebarProps } from "@/modules/workflow/types/Workflow.types";
 
 
 export const WorkflowSidebar: React.FC<WorkflowSidebarProps> = ({

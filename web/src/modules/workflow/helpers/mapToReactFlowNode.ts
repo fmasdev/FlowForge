@@ -1,9 +1,13 @@
 // src/modules/workflow/helpers/mapToReactFlowNode.ts
 
 
-import { WorkflowNode, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
 import { Node } from "@xyflow/react";
+import type {
+  WorkflowNode,
+  WorkflowNodeData
+} from "@/modules/workflow/types/Workflow.types";
 
+// todo revies trigger and action
 const getNodeType = (workflowNode: WorkflowNode) => {
   switch (workflowNode.type) {
     case 'http':

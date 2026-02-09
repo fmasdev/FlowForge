@@ -3,16 +3,16 @@
 'use client';
 
 import { JSX, useEffect, useState } from "react";
-import { ItemApiResponse, NormalizedError } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
-import { Edge, Node } from "@xyflow/react";
 import { WorkflowSidebar } from "@/modules/workflow/components/WorkflowSidebar";
 import { useToast } from "@/components/toast/ToastProvider";
 import { WorkflowHeader } from "@/modules/workflow/components/WorkflowHeader";
 import { WorkflowCanvas } from "@/modules/workflow/components/WorkflowCanvas";
 import { workflowService } from "@/modules/workflows/workflow.service";
-import { WorkflowEdgeData, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
-import { Workflow, WorkflowProps } from "@/modules/workflows/types/Workflows.types";
+import type { ItemApiResponse, NormalizedError } from "@/services/api/api.types";
+import type { Edge, Node } from "@xyflow/react";
+import type { WorkflowEdgeData, WorkflowNodeData } from "@/modules/workflow/types/Workflow.types";
+import type { Workflow, WorkflowProps } from "@/modules/workflows/types/Workflows.types";
 
 export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
   const { t } = useTranslation('workflow');

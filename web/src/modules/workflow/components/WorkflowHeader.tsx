@@ -1,13 +1,8 @@
 // src/modules/workflow/components/workflow-header/WorkflowHeader.tsx
 
-import { Workflow } from "@/modules/workflows/types/Workflows.types";
 import { JSX } from "react"
 import { useTranslation } from "react-i18next";
-
-export interface WorkflowHeaderProps {
-  workflow: Workflow
-  actions?: React.ReactNode;
-}
+import type { WorkflowHeaderProps } from "@/modules/workflow/types/Workflow.types";
 
 export const WorkflowHeader: React.FC<WorkflowHeaderProps> = ({
   workflow,
