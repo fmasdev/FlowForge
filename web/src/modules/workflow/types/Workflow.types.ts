@@ -98,7 +98,6 @@ export interface WorkflowCanvasProps {
   workflowId: string;
   onNodeSelect: (node: Node<WorkflowNodeData> | null) => void;
   onEdgeSelect: (node: Edge<WorkflowEdgeData> | null) => void;
-  onError: (error: Error) => void;
 }
 
 export interface WorkflowNodeData extends Record<string, unknown> {

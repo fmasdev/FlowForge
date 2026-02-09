@@ -4,32 +4,32 @@
 
 import { JSX, useEffect, useState } from "react";
 import { workflowService } from "@/modules/workflow/workflow.service";
-import { WorkflowHeader } from "@/modules/workflow/components/workflow-header/WorkflowHeader";
 import { Workflow, WorkflowEdgeData, WorkflowNodeData, WorkflowProps } from "@/modules/workflow/types/Workflow.types";
-import { ItemApiResponse } from "@/services/api/api.types";
+import { ItemApiResponse, NormalizedError } from "@/services/api/api.types";
 import { useTranslation } from "react-i18next";
-import { WorkflowCanvas } from "@/modules/workflow/components/workflow-canvas/WorkflowCanvas";
-import { WorkflowSidebar } from "@/modules/workflow/components/workflow-sidebar/WorkflowSidebar";
 import { Edge, Node } from "@xyflow/react";
+import { WorkflowHeader } from "@/modules/workflow/components/WorkflowHeader";
+import { WorkflowSidebar } from "@/modules/workflow/components/WorkflowSidebar";
+import { WorkflowCanvas } from "@/modules/workflow/components/WorkflowCanvas";
+import { useToast } from "@/components/toast/ToastProvider";
 
 export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
   const { t } = useTranslation('workflow');
+  const { toastify } = useToast();
 
   const [workflow, setWorkflow] = useState<Workflow | null>(null);
   const [selectedNode, setSelectedNode] = useState<Node<WorkflowNodeData> | null>(null);  
   const [selectedEdge, setSelectedEdge] = useState<Edge<WorkflowEdgeData> | null>(null);
-  const [error, setError] = useState<Error | null>(null);
 
   const fetchWorkflow = async () => {
     try {
       const res: ItemApiResponse<Workflow> = await workflowService.fetchOne(id);
       setWorkflow(res.data);
     } catch (err) {
-      const error = err instanceof Error
-        ? err
-        : new Error('Unknown error');
-
-      setError(error);
+      const error = err as NormalizedError;
+      if (!error.isInfraError) {
+        toastify('error', t(error.code, error.context));
+      }
     }
   }
 
@@ -75,7 +75,6 @@ export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
               workflowId={workflow.id!}
               onNodeSelect={handleNodeSelect}
               onEdgeSelect={handleEdgeSelect}
-              onError={() =>setError(error)}
             />
           </div>
           
@@ -85,6 +84,5 @@ export const WorkflowLayout: React.FC<WorkflowProps> = ({id}): JSX.Element => {
       )}
     </>
   )
-    
 };
 

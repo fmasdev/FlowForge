@@ -1,6 +1,6 @@
 // src/app/(protected)/workflows/[id].tsx
 
-import { WorkflowLayout } from "@/modules/workflow/components/workflow-layout/WorkflowLayout";
+import { WorkflowLayout } from "@/modules/workflow/components/WorkflowLayout";
 import { JSX } from "react";
 
 export interface PageProps {

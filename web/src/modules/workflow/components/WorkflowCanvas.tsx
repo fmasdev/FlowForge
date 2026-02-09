@@ -15,9 +15,10 @@ import { WorkflowEdge } from "@/modules/workflow/components/react-flow/edges/Wor
 import { SuccessEdge } from "@/modules/workflow/components/react-flow/edges/SuccessEdge";
 import { ErrorEdge } from "@/modules/workflow/components/react-flow/edges/ErrorEdge";
 import { ArrowClosedEdgeMarker } from "@/modules/workflow/components/react-flow/edge-markers/ArrowClosedEdgeMarker";
-import { no } from "zod/v4/locales";
 import { workflowEdgeService } from "@/modules/workflow/workflow-edge.service";
-import { set } from "zod";
+import { NormalizedError } from "@/services/api/api.types";
+import { useTranslation } from "react-i18next";
+import { useToast } from "@/components/toast/ToastProvider";
 
 export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   workflowNodes,
@@ -25,8 +26,9 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   workflowId,
   onNodeSelect,
   onEdgeSelect,
-  onError,
 }): JSX.Element => {
+  const { t } = useTranslation('workflow');
+  const { toastify } = useToast();
 
   const rfNodes: Node<WorkflowNodeData>[] = workflowNodes ? mapToReactFlowNode(workflowNodes) : [];
   const rfEdges: Edge<WorkflowEdgeData>[] = workflowEdges ? mapToReactFlowEdges(workflowEdges) : [];
@@ -80,11 +82,11 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
               }
             });
           } catch (err) {
-            const error = err instanceof Error
-              ? err
-              : new Error('Unknown error');
+            const error = err as NormalizedError
 
-            onError(error);
+            if (!error.isInfraError) {
+              toastify('error', t(error.code, error.context));
+            }
           }
         });
         
@@ -94,7 +96,14 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         );
 
         removeChanges.forEach((c) => {
-          workflowNodeService.remove(workflowId, c.id);
+          try {
+            workflowNodeService.remove(workflowId, c.id);
+          } catch (err) {
+            const error = err as NormalizedError;
+            if (!error.isInfraError) {
+              toastify('error', t(error.code, error.context));
+            }
+          }
         });
 
         return updatedNodes;
@@ -109,6 +118,7 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   
   const onKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Delete' || event.key === 'Backspace') {
+      
       setNodes((nodes) => {
         const notDeletedNodes = nodes.filter((node) => !node.selected);
         const deletedNodes = nodes.filter((node) => node.selected);
@@ -116,43 +126,34 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
           try {
             workflowNodeService.remove(workflowId, node.id);
           } catch (err) {
-            const error = err instanceof Error
-              ? err
-              : new Error('Unknown error');
-
-            onError(error);
+            const error = err as NormalizedError;
+            if (!error.isInfraError) {
+              toastify('error', t(error.code, error.context));
+            }
           }
         });
       
         return notDeletedNodes;
       });
+
       setEdges((edges) => {
         const notDeletedEdges = edges.filter((edge) => !edge.selected);
         const deletedEdges = edges.filter((edge) => edge.selected);
         deletedEdges.forEach((edge) => {
           try {
-            throw new Error('Not implemented')
-            // workflowEdgeService.remove(workflowId, edge.id);
+            workflowEdgeService.remove(workflowId, edge.id);
           } catch (err: unknown) {
-            const error = err instanceof Error
-              ? err
-              : new Error('Unknown error');
+            const error = err as NormalizedError;
 
-            onError(error);
+            if (!error.isInfraError) {
+              toastify('error', t(error.code, error.context));
+            }
           }
         });
         return notDeletedEdges;
       });
     }
   }, []);
-
-  
-
-  
-
-  
-
-
 
   return (
     <div
