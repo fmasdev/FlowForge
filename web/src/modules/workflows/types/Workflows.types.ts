@@ -56,3 +56,9 @@ export interface CreatedBy {
 export interface WorkflowProps {
   id: string
 }
+
+export interface FetchWorkflowProps {
+    page?: number;
+    mode: 'append' | 'replace';
+    search?: string
+}

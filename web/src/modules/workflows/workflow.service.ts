@@ -1,8 +1,10 @@
 // src/modules/dashboard/dashboard.service.tsx
 
-import { Workflow, WorkflowFormData } from "@/modules/workflow/types/Workflow.types";
+
+import { WorkflowFormData } from "@/modules/workflow/schema/workflow.schema";
 import { apiService } from "@/services/api/api.service";
-import { ItemApiResponse, ListApiResponse } from "@/services/api/api.types";
+import type { Workflow } from "@/modules/workflows/types/Workflows.types";
+import type { ItemApiResponse, ListApiResponse } from "@/services/api/api.types";
 
 export const workflowService = {
 

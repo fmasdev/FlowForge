@@ -1,15 +1,15 @@
 // src/modules/workflow/components/workflow-modal/WorkflowModal.tsx
 
+import { useTranslation } from "react-i18next";
 import { Cta } from "@/components/cta/Cta";
 import { Modal } from "@/components/modal/Modal";
 import { ModalBody } from "@/components/modal/ModalBody";
 import { ModalFooter } from "@/components/modal/ModalFooter";
 import { ModalHeader } from "@/components/modal/ModalHeader";
 import { WorkflowForm } from "@/modules/workflows/components/WorkflowForm";
-import { WorkflowModalProps } from "@/modules/workflows/types/Workflows.types";
-import { useTranslation } from "react-i18next";
+import type { WorkflowModalProps } from "@/modules/workflows/types/Workflows.types";
 
-export const WorkflowModal = ({
+export const WorkflowModal: React.FC<WorkflowModalProps> = ({
   isOpen,
   action,
   form,
@@ -17,7 +17,7 @@ export const WorkflowModal = ({
   onClose,
   onSubmit,
   onDelete,
-}: WorkflowModalProps) => {
+}) => {
   const { t } = useTranslation('workflow');
 
   const getModalTitle = (): string => 

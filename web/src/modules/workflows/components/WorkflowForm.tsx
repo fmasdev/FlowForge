@@ -2,13 +2,13 @@
 
 
 import React, { JSX } from "react";
-import { WorkflowFormProps } from "@/modules/workflows/types/Workflows.types";
 import { useTranslation } from "react-i18next";
+import type { WorkflowFormProps } from "@/modules/workflows/types/Workflows.types";
 
 export const WorkflowForm: React.FC<WorkflowFormProps> = ({
   form,
   onChange,
-}: WorkflowFormProps): JSX.Element => {
+}): JSX.Element => {
   const { t } = useTranslation('workflow')
   
   return (

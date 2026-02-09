@@ -2,21 +2,21 @@
 
 'use client';
 
+import { useAuth } from "@/modules/auth/hooks/useAuth"
+import { useTranslation } from "react-i18next"
 import { Card } from "@/components/card/Card"
 import { CardBody } from "@/components/card/CardBody"
 import { CardFooter } from "@/components/card/CardFooter"
 import { CardHeader } from "@/components/card/CardHeader"
 import { dateStringToDateAndTimeLocaleFormat } from "@/helpers/dateHelper"
-import { useAuth } from "@/modules/auth/hooks/useAuth"
-import { WorkflowCardProps } from "@/modules/workflows/types/Workflows.types";
-import { JSX } from "react"
-import { useTranslation } from "react-i18next"
+import React, { JSX } from "react"
+import type { WorkflowCardProps } from "@/modules/workflows/types/Workflows.types";
 
-export const WorkflowCard = ({
+export const WorkflowCard: React.FC<WorkflowCardProps> = ({
   workflow,
   onEdit,
   onDelete
-}: WorkflowCardProps): JSX.Element => {
+}): JSX.Element => {
   const { t } = useTranslation('workflow');
   const { user } = useAuth();
 
