@@ -1,8 +1,8 @@
 // src/modules/workflow/components/WorkflowForm.tsx
 
-import ToggleButton from "@/components/toggle-button/ToggleButton";
-import { WorkflowFormProps } from "@/modules/workflow/types/Workflow.types";
-import { JSX } from "react";
+
+import React, { JSX } from "react";
+import { WorkflowFormProps } from "@/modules/workflows/types/Workflows.types";
 import { useTranslation } from "react-i18next";
 
 export const WorkflowForm: React.FC<WorkflowFormProps> = ({

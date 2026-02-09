@@ -15,7 +15,6 @@ export const workflowSchema = z.object({
     .min(1, 'description.required')
     .max(200, 'description.maxLength'),
 
-  isActive: z.boolean(),
 });
 
 export type WorkflowFormData = z.infer<typeof workflowSchema>;

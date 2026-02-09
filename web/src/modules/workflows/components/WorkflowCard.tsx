@@ -8,7 +8,7 @@ import { CardFooter } from "@/components/card/CardFooter"
 import { CardHeader } from "@/components/card/CardHeader"
 import { dateStringToDateAndTimeLocaleFormat } from "@/helpers/dateHelper"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
-import { WorkflowCardProps } from "@/modules/workflow/types/Workflow.types"
+import { WorkflowCardProps } from "@/modules/workflows/types/Workflows.types";
 import { JSX } from "react"
 import { useTranslation } from "react-i18next"
 

@@ -3,12 +3,11 @@
 'use client';
 
 import { JSX, useEffect, useRef, useState } from "react";
-import { workflowService } from "@/modules/workflow/workflow.service";
-import { SearchBar } from "@/components/searchBar/SearchBar";
 import { useTranslation } from "react-i18next";
+import { SearchBar } from "@/components/searchBar/SearchBar";
 import { ModalBtn } from "@/components/modal/ModalBtn";
 import { InfiniteObserver } from "@/components/infinite-scroll/InfiniteObserver";
-import { WorkflowFormData, workflowSchema } from "@/modules/workflow/schema/workflow.schema";
+import { WorkflowFormData, workflowSchema } from "@/modules/workflows/schema/workflow.schema";
 import { sortByKey } from "@/helpers/arraySortHelper";
 import { SortState } from "@/types/sort.types";
 import { useToast } from "@/components/toast/ToastProvider";
@@ -16,6 +15,7 @@ import { NormalizedError } from "@/services/api/api.types";
 import { WorkflowCard } from "@/modules/workflows/components/WorkflowCard";
 import { WorkflowModal } from "@/modules/workflows/components/WorkflowModal";
 import { Workflow } from "@/modules/workflows/types/Workflows.types";
+import { workflowService } from "@/modules/workflows/workflow.service";
 
 export interface FetchWorkflowProps {
     page?: number;
