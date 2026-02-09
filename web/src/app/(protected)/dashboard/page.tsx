@@ -1,7 +1,7 @@
 // src/app/(protected)/dashboard/page.tsx
 
+import { WorkflowsLayout } from '@/modules/workflow/components/WorkflowsLayout';
 import { JSX } from 'react';
-import { WorkflowsLayout } from '@/modules/workflow/components/workflows-layout/WorkflowsLayout';
 
 export default function Page(): JSX.Element {
   return (

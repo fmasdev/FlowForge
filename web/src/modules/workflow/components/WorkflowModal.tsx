@@ -5,7 +5,7 @@ import { Modal } from "@/components/modal/Modal";
 import { ModalBody } from "@/components/modal/ModalBody";
 import { ModalFooter } from "@/components/modal/ModalFooter";
 import { ModalHeader } from "@/components/modal/ModalHeader";
-import { WorkflowForm } from "@/modules/workflow/components/workflow-form/WorkflowForm";
+import { WorkflowForm } from "@/modules/workflow/components/WorkflowForm";
 import { WorkflowModalProps } from "@/modules/workflow/types/Workflow.types";
 import { useTranslation } from "react-i18next";
 

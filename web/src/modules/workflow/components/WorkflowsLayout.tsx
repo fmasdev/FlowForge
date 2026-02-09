@@ -9,13 +9,13 @@ import { SearchBar } from "@/components/searchBar/SearchBar";
 import { useTranslation } from "react-i18next";
 import { ModalBtn } from "@/components/modal/ModalBtn";
 import { InfiniteObserver } from "@/components/infinite-scroll/InfiniteObserver";
-import { WorkflowCard } from "@/modules/workflow/components/workflow-card/WorkflowCard";
-import { WorkflowModal } from "@/modules/workflow/components/workflow-modal/WorkflowModal";
 import { workflowSchema } from "@/modules/workflow/schema/workflow.schema";
 import { sortByKey } from "@/helpers/arraySortHelper";
 import { SortState } from "@/types/sort.types";
 import { useToast } from "@/components/toast/ToastProvider";
 import { NormalizedError } from "@/services/api/api.types";
+import { WorkflowCard } from "@/modules/workflow/components/WorkflowCard";
+import { WorkflowModal } from "@/modules/workflow/components/WorkflowModal";
 
 export interface FetchWorkflowProps {
     page?: number;
